@@ -1,14 +1,10 @@
 <?php
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Some config option
-    |--------------------------------------------------------------------------
-    |
-    | Give a description of what each config option is like this
-    |
-    */
+    'custom-components'  => [
+    ],
 
-    // TODO
+    'views' => '',
+
+    'application_model' => \Javaabu\Paperless\Models\Application::class,
 ];

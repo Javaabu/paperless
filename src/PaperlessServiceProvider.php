@@ -6,10 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     */
-    public function boot()
+    public function boot(): void
     {
         // declare publishes
         if ($this->app->runningInConsole()) {
@@ -17,12 +14,11 @@ class PaperlessServiceProvider extends ServiceProvider
                 __DIR__ . '/../config/config.php' => config_path('paperless.php'),
             ], 'paperless-config');
         }
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'paperless');
     }
 
-    /**
-     * Register the application services.
-     */
-    public function register()
+    public function register(): void
     {
         // merge package config with user defined config
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'paperless');

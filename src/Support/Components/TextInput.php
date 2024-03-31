@@ -1,0 +1,29 @@
+<?php
+
+namespace Javaabu\Paperless\Support\Components;
+
+use Illuminate\Contracts\Support\Htmlable;
+use Javaabu\Paperless\Support\Components\Traits\HasInputType;
+use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
+use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
+
+class TextInput extends Field implements Htmlable
+{
+    use HasInputType;
+    use HasPlaceholder;
+    use CanBeRepeated;
+
+
+    protected string $view = 'paperless::field-components.text-input';
+
+    public function __construct(
+        string $name
+    ) {
+        $this->name = str($name)->slug('_')->__toString();
+    }
+
+    public static function make(string $name): self
+    {
+        return new self($name);
+    }
+}
