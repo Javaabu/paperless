@@ -3,17 +3,23 @@
 namespace Javaabu\Paperless\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Access\AuthorizationException;
 
-class ServicesController
+class ServicesController extends Controller
 {
     use AuthorizesRequests;
 
+    public function getModelClass(): string
+    {
+        return config('paperless.models.service');
+    }
+
     public function __construct()
     {
-        $this->authorizeResource(config('paperless.models.service'));
+        $this->authorizeResource($this->getModelClass());
     }
 
     protected static function initOrderbys()
@@ -28,11 +34,9 @@ class ServicesController
     public function index(Request $request, $trashed = false)
     {
         $title = __('All Services');
-        $orderby = $this->getOrderBy($request, 'created_at');
-        $order = $this->getOrder($request, 'created_at', $orderby);
-        $per_page = $this->getPerPage($request);
 
-        $services = Service::orderBy($orderby, $order);
+        $services = $this->getModelClass()::query()
+            ->orderBy('created_at', 'DESC');
 
         if ($search = $request->input('search')) {
             $services->search($search);
@@ -43,15 +47,10 @@ class ServicesController
             $services->onlyTrashed();
         }
 
-        if ($request->download) {
-            return (new ServicesExport($services))
-                ->download(Str::slug(get_setting('app_name').'-services-export').'.xlsx');
-        }
+        $services = $services->paginate(20)
+            ->appends($request->except('page'));
 
-        $services = $services->paginate($per_page)
-                                           ->appends($request->except('page'));
-
-        return view('admin.services.index', compact('services', 'title', 'per_page', 'trashed'));
+        return view('paperless::admin.services.index', compact('services', 'title', 'per_page', 'trashed'));
     }
 
     public function create(Request $request)

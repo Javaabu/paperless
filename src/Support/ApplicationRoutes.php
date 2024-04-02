@@ -3,6 +3,7 @@
 namespace Javaabu\Paperless\Support;
 
 use Illuminate\Support\Facades\Route;
+use Javaabu\Paperless\Controllers\ServicesController;
 use Javaabu\Paperless\Models\FormSection;
 
 class ApplicationRoutes

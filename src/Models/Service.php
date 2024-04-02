@@ -2,17 +2,14 @@
 
 namespace Javaabu\Paperless\Models;
 
-use App\Helpers\AdminModel\HasUrl;
-use App\Helpers\AdminModel\AdminModel;
 use Illuminate\Database\Eloquent\Model;
-use App\Helpers\AdminModel\IsAdminModel;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class Service extends Model implements AdminModel, HasUrl
+class Service extends Model
 {
-    use IsAdminModel;
     use LogsActivity;
     use SoftDeletes;
 
@@ -45,5 +42,10 @@ class Service extends Model implements AdminModel, HasUrl
     public function url(string $action = 'show'): string
     {
         return route("admin.services.$action", $this);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        // TODO: Implement getActivitylogOptions() method.
     }
 }
