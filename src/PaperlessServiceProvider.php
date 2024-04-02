@@ -27,7 +27,7 @@ class PaperlessServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/config.php',
+            __DIR__ . '/../config/paperless.php',
             'paperless'
         );
     }
@@ -39,7 +39,7 @@ class PaperlessServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/../config/config.php' => config_path('paperless.php'),
+            __DIR__.'/../config/paperless.php' => config_path('paperless.php'),
         ], 'paperless-config');
 
         // Offer publishing for all the migrations in this package
