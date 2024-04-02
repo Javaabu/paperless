@@ -1,0 +1,223 @@
+<?php
+
+namespace Javaabu\Paperless\Models;
+
+use App\Application\Enums\ApplicationTypes;
+use App\Application\Traits\HasApplicationSpecificPermissions;
+use App\Helpers\AdminModel\AdminModel;
+use App\Helpers\AdminModel\HasUrl;
+use App\Helpers\AdminModel\IsAdminModel;
+use App\Helpers\Enums\ApplicationTypeCategory;
+use App\Helpers\Media\AllowedMimeTypes;
+use App\Helpers\Traits\HasBlockEditor;
+use Javaabu\Paperless\Models\Application;
+use Javaabu\Paperless\Models\DocumentType;
+use Javaabu\Paperless\Models\Entity;
+use Javaabu\Paperless\Models\EntityType;
+use Javaabu\Paperless\Models\FieldGroup;
+use Javaabu\Paperless\Models\FormField;
+use Javaabu\Paperless\Models\FormSection;
+use Javaabu\Paperless\Models\Individual;
+use Javaabu\Paperless\Models\Service;
+use Javaabu\Paperless\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\File;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class ApplicationType extends Model implements AdminModel, HasUrl, HasMedia
+{
+    use HasApplicationSpecificPermissions;
+    use HasBlockEditor;
+    use InteractsWithMedia;
+    use IsAdminModel;
+    use LogsActivity;
+
+    protected static array $logAttributes = ['*'];
+    protected static bool $logOnlyDirty = true;
+
+    protected $fillable = [
+        'description',
+        'eta_duration',
+        'alert_duration',
+    ];
+
+    protected $casts = [
+        'application_category' => ApplicationTypeCategory::class,
+        'code' => ApplicationTypes::class,
+        'description' => 'array',
+    ];
+
+    protected array $searchable = [
+        'name',
+        'code',
+        'description',
+    ];
+
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    public function documentTypes(): BelongsToMany
+    {
+        return $this->belongsToMany(DocumentType::class, 'document_type_application_type')
+                    ->withPivot(['id', 'is_required']);
+    }
+
+    public function services(): BelongsToMany
+    {
+        return $this->belongsToMany(Service::class, 'application_type_service')
+                    ->withPivot(['id', 'is_applied_automatically']);
+    }
+
+    public function entityTypes(): BelongsToMany
+    {
+        return $this->belongsToMany(EntityType::class, 'entity_type_application_type');
+    }
+
+    public function assignedUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'application_type_users',
+            'application_type_id',
+            'assigned_user_id',
+            'id',
+            'id'
+        )
+            ->withPivot(['id', 'is_active']);
+    }
+
+    public function formSections(): HasMany
+    {
+        return $this->hasMany(FormSection::class);
+    }
+
+    public function fieldGroups(): HasMany
+    {
+        return $this->hasMany(FieldGroup::class);
+    }
+
+    public function formFields(): HasMany
+    {
+        return $this->hasMany(FormField::class);
+    }
+
+    public function scopeWhereHasEntityType($query, EntityType|int $entity_type): void
+    {
+        $entity_type_id = $entity_type instanceof EntityType ? $entity_type->id : $entity_type;
+        $query->whereHas('entityTypes', fn ($q) => $q->where('entity_types.id', $entity_type_id));
+    }
+
+    public function scopeUserVisible($query, ?\App\Helpers\User\User $user = null): void
+    {
+        $user = $user ?? auth()->user();
+        $view_any_codes = self::getViewAnyCodes($user);
+        if ($view_any_codes) {
+            $query->whereIn('code', $view_any_codes);
+            return;
+        }
+
+        $query->where('application_types.id', -1);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('description_images')
+             ->acceptsFile(function (File $file) {
+                 return AllowedMimeTypes::isAllowedMimeType($file->mimeType, 'image');
+             });
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('large')
+             ->width(1200)
+             ->height(1200)
+             ->fit('max', 1200, 1200)
+             ->nonQueued()
+             ->performOnCollections('description_images');
+    }
+
+    public function getAdminUrlAttribute(): string
+    {
+        return route('admin.application-types.edit', $this);
+    }
+
+    public function url(string $action = 'show'): string
+    {
+        return match($action) {
+            'index' => route('admin.application-types.index'),
+            'create' => route('admin.application-types.create'),
+            default => route("admin.application-types.$action", $this),
+        };
+    }
+
+    public function render(Entity|Individual $entity, Collection | null $form_inputs = null, bool $with_admin_sections = false): string
+    {
+        $form_sections = $this->formSections;
+        if (! $with_admin_sections) {
+            $form_sections = $form_sections->where('is_admin_section', false);
+        }
+
+        $form_sections = $form_sections->sortBy('order_column');
+        $form_fields = $this->formFields->sortBy('order_column');
+
+        $html = '';
+
+        foreach ($form_sections as $form_section) {
+            $section_form_field_ids = $form_fields->where('form_section_id', $form_section->id)->pluck('id');
+            $section_inputs = $form_inputs->whereIn('form_field_id', $section_form_field_ids);
+            $html .= $form_section->render($entity, $section_inputs);
+        }
+
+        return $html;
+    }
+
+    public function canMarkAsProcessed(Application $application): bool
+    {
+        return true;
+    }
+
+    public function getApplicationTypeClass(): ?string
+    {
+        $application_type_classes = config('paperless.application_types');
+        foreach ($application_type_classes as $application_type_class) {
+            if ((new $application_type_class())->getCode() == $this->code->value) {
+                return $application_type_class;
+            }
+        }
+
+        return null;
+    }
+
+    public function requiresPayment(): bool
+    {
+        $this->loadMissing('services');
+        return $this->services->where('pivot.is_applied_automatically', true)->isNotEmpty();
+    }
+
+    public function getManuallyRaisedPaymentServices()
+    {
+        $this->loadMissing('services');
+        return $this->services->where('pivot.is_applied_automatically', false);
+    }
+
+    public function getAutomaticallyRaisedPaymentServices()
+    {
+        $this->loadMissing('services');
+        return $this->services->where('pivot.is_applied_automatically', true);
+    }
+
+    public function getFormFieldLabels(): array
+    {
+        $this->loadMissing('formFields');
+        return $this->formFields->pluck('name', 'id')->toArray();
+    }
+}

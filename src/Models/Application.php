@@ -2,32 +2,21 @@
 
 namespace Javaabu\Paperless\Models;
 
-use App\Models\User;
-use App\Models\Payment;
-use App\Models\FormInput;
-use App\Models\FormField;
-use App\Models\PublicUser;
-use App\Models\ApplicationType;
-use App\Helpers\Enums\Countries;
+use Javaabu\Auth\User;
+use Javaabu\Paperless\Enums\ApplicationStatuses;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Collection;
-use App\DataObjects\IndividualData;
-use App\Helpers\Enums\FormFieldTypes;
-use App\Helpers\Media\AllowedMimeTypes;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Application\Enums\ApplicationStatuses;
 use Javaabu\StatusEvents\Interfaces\Trackable;
 use Javaabu\StatusEvents\Traits\HasStatusEvents;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Javaabu\Paperless\Support\Components\Section;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use App\Application\StatusActions\ApplicationStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use App\Actions\Applications\FirstOrCreateIndividualAction;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 
 class Application extends Model implements HasMedia, Trackable
@@ -52,8 +41,14 @@ class Application extends Model implements HasMedia, Trackable
         'submitted_at' => 'datetime',
         'verified_at'  => 'datetime',
         'approved_at'  => 'datetime',
-        'status'       => ApplicationStatuses::class,
     ];
+
+    public function casts(): array
+    {
+        return [
+            'status' => ApplicationStatuses::class,
+        ];
+    }
 
     public function applicationType(): BelongsTo
     {
