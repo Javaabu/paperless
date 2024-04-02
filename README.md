@@ -15,6 +15,33 @@ Find yourself stuck using the package? Found a bug? Do you have general question
 
 If you've found a bug regarding security please mail [info@javaabu.com](mailto:info@javaabu.com) instead of using the issue tracker.
 
+## Installation
+To get started, you need to install the package via Composer:
+
+```bash
+composer require javaabu/paperless
+```
+
+After installing the package, you need to publish the configuration file:
+
+```bash
+php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="config"
+```
+
+This will create a `paperless.php` file in your `config` directory.
+
+Next, you need to publish the migrations:
+
+```bash
+php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="migrations"
+```
+
+After publishing the migrations, you can create the tables by running the migrations:
+
+```bash
+php artisan migrate
+```
+
 
 ## Testing
 
