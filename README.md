@@ -25,7 +25,7 @@ composer require javaabu/paperless
 After installing the package, you need to publish the configuration file:
 
 ```bash
-php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="paperless-config"
 ```
 
 This will create a `paperless.php` file in your `config` directory.
@@ -33,7 +33,7 @@ This will create a `paperless.php` file in your `config` directory.
 Next, you need to publish the migrations:
 
 ```bash
-php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="paperless-migrations"
 ```
 
 After publishing the migrations, you can create the tables by running the migrations:

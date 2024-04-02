@@ -34,6 +34,7 @@ class ServicesController extends Controller
     public function index(Request $request, $trashed = false)
     {
         $title = __('All Services');
+        $per_page = $request->input('per_page', 20);
 
         $services = $this->getModelClass()::query()
             ->orderBy('created_at', 'DESC');
@@ -47,7 +48,7 @@ class ServicesController extends Controller
             $services->onlyTrashed();
         }
 
-        $services = $services->paginate(20)
+        $services = $services->paginate($per_page)
             ->appends($request->except('page'));
 
         return view('paperless::admin.services.index', compact('services', 'title', 'per_page', 'trashed'));

@@ -11,8 +11,10 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('applications', function (Blueprint $table) {
+            $public_user_table = config('paperless.public_user_table');
+
             $table->id();
-            $table->foreignId('public_user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('public_user_id')->nullable()->constrained($public_user_table)->nullOnDelete();
             $table->morphs('applicant'); // individual and entity
             $table->foreignId('application_type_id')->constrained('application_types')->cascadeOnDelete();
 
