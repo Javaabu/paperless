@@ -1,5 +1,4 @@
 <x-forms::card>
-
     <x-forms::text name="name" maxlength="255" :required="true" :inline="true" />
     <x-forms::text name="code" maxlength="255" :required="true" :inline="true" />
     <x-forms::number name="fee" :min="0"  :required="true" :inline="true">
