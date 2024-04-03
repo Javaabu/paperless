@@ -21,6 +21,13 @@ Javaabu\Paperless\Paperless::routes();
 ```
 
 # Creating New Application Type
+
+First create an enum to define entity types and add it to the config file, implement EntityTypeEnumInterface
+```php
+    'entity_type_enum' => App\Paperless\Enums\EntityTypes::class,
+```
+
+
 To create a sample application types
 ```bash
 php artisan paperless:paperless:sample-application-type

@@ -5,6 +5,10 @@ return [
 
     'application_model' => \App\Models\Application::class,
 
+    'entity_type_enum' => null,
+
+    'language_enum' => Javaabu\Paperless\Enums\Languages::class,
+
     'field_types' => [
         \Javaabu\Paperless\FieldTypes\Types\TextInput::class,
     ],
@@ -31,7 +35,7 @@ return [
         'application'      => \Javaabu\Paperless\Models\Application::class,
         'application_type' => \Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType::class,
         'document_type'    => \Javaabu\Paperless\Domains\DocumentTypes\DocumentType::class,
-        'entity_type'      => \Javaabu\Paperless\Models\EntityType::class,
+        'entity_type'      => \Javaabu\Paperless\Domains\EntityTypes\EntityType::class,
         'form_field'       => \Javaabu\Paperless\Models\FormField::class,
         'form_input'       => \Javaabu\Paperless\Models\FormInput::class,
         'form_section'     => \Javaabu\Paperless\Models\FormSection::class,

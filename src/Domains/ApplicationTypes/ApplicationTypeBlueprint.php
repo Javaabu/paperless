@@ -67,7 +67,8 @@ abstract class ApplicationTypeBlueprint
     public function seedEntityTypes(ApplicationType $application_type): void
     {
         $entity_types = $this->getEntityTypes();
-        $entity_types = EntityType::whereIn('slug', $entity_types)->get();
+        $entity_type_model = config('paperless.models.entity_type');
+        $entity_types = $entity_type_model::whereIn('slug', $entity_types)->get();
         $application_type->entityTypes()->sync($entity_types);
     }
 

@@ -2,9 +2,7 @@
 
 namespace Javaabu\Paperless\Models;
 
-use App\Helpers\Enums\FormFieldTypes;
-use App\Helpers\Enums\Languages;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Javaabu\Paperless\Enums\Languages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
@@ -13,14 +11,12 @@ use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 
 class FormField extends Model
 {
-    use HasFactory;
 
     protected $attributes = [
         'language' => Languages::English,
     ];
 
     protected $casts = [
-        'type'                        => FormFieldTypes::class,
         'language'                    => Languages::class,
         'additional_validation_rules' => 'array',
         'options'                     => 'array',
