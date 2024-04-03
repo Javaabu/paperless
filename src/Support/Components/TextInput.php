@@ -9,9 +9,9 @@ use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
 
 class TextInput extends Field implements Htmlable
 {
+    use CanBeRepeated;
     use HasInputType;
     use HasPlaceholder;
-    use CanBeRepeated;
 
 
     protected string $view = 'paperless::field-components.text-input';

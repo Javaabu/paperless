@@ -5,18 +5,14 @@ namespace Javaabu\Paperless\Support\Builders;
 use App\Models\FormField;
 use App\Models\FormInput;
 use App\Helpers\Enums\FormFieldTypes;
-use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\Application;
 use Javaabu\Paperless\Interfaces\Applicant;
-use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 
 abstract class ComponentBuilder
 {
-
     public function __construct(
         public FormField $form_field,
-    )
-    {
+    ) {
     }
 
     public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = []): array

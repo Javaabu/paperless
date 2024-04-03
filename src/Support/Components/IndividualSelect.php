@@ -4,9 +4,7 @@ namespace Javaabu\Paperless\Support\Components;
 
 use App\Models\Individual;
 use Illuminate\Contracts\Support\Htmlable;
-use Javaabu\Paperless\Support\Components\Traits\HasInputType;
 use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
-use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
 
 class IndividualSelect extends Field implements Htmlable
 {

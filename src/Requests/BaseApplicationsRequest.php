@@ -43,7 +43,7 @@ abstract class BaseApplicationsRequest extends FormRequest
                 $group = $section->fieldGroups->firstWhere('id', $group_id);
 
                 if ($group->slug == 'certificates') {
-                    $rules[] = (new GetCertificateValidationRulesAction)->handle($request_data);
+                    $rules[] = (new GetCertificateValidationRulesAction())->handle($request_data);
                 }
             }
         }

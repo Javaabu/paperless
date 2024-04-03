@@ -11,11 +11,11 @@ use Javaabu\Paperless\Support\Components\Traits\HasRepeatingChildComponents;
 
 class RepeatingGroup extends Component
 {
-    use HasRepeatingChildComponents;
     use HasChildComponents;
     use HasDescription;
     use HasHeading;
     use HasId;
+    use HasRepeatingChildComponents;
 
     protected string $view = 'paperless::view-components.repeating-group';
 

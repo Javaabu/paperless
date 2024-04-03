@@ -2,18 +2,17 @@
 
 namespace Javaabu\Paperless\FieldTypes;
 
+use Javaabu\Paperless\Models\FormField;
 use App\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
-use Javaabu\Paperless\Models\FormField;
 
 class FormFieldTypes
 {
-
     public static function getBuilder(FormField $form_field): IsComponentBuilder
     {
         $field_types = config('paperless.field_types');
         foreach($field_types as $field_type) {
-            if ((new $field_type)->getSlug() === $form_field->type) {
+            if ((new $field_type())->getSlug() === $form_field->type) {
                 return new $field_type($form_field);
             }
         }

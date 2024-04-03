@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Support\Builders;
 
-use App\Models\FormField;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Support\Components\Select;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;

@@ -2,12 +2,12 @@
 
 namespace Javaabu\Paperless\Models;
 
-use App\Helpers\AdminModel\AdminModel;
 use App\Helpers\AdminModel\HasUrl;
-use App\Helpers\AdminModel\IsAdminModel;
+use App\Helpers\AdminModel\AdminModel;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Helpers\AdminModel\IsAdminModel;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DocumentType extends Model implements AdminModel, HasUrl
 {

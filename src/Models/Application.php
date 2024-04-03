@@ -3,13 +3,13 @@
 namespace Javaabu\Paperless\Models;
 
 use Javaabu\Auth\User;
-use Javaabu\Paperless\Enums\ApplicationStatuses;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Javaabu\StatusEvents\Interfaces\Trackable;
+use Javaabu\Paperless\Enums\ApplicationStatuses;
 use Javaabu\StatusEvents\Traits\HasStatusEvents;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Javaabu\Paperless\Support\Components\Section;
@@ -202,7 +202,7 @@ class Application extends Model implements HasMedia, Trackable
                     $individual_data = IndividualData::fromCitizenData($citizen_data);
                 }
 
-                $individual = (new FirstOrCreateIndividualAction)->handle($individual_data);
+                $individual = (new FirstOrCreateIndividualAction())->handle($individual_data);
 
                 $form_input = $this->formInputs()
                                    ->where('form_field_id', $student_field->id)
@@ -290,8 +290,7 @@ class Application extends Model implements HasMedia, Trackable
         Collection|null $documents = null,
         Collection|null $uploaded_documents = null,
         string|null     $section_label = null
-    )
-    {
+    ) {
         $documents_html = "";
         if ($documents) {
             foreach ($documents as $document) {

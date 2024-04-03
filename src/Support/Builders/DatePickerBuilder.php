@@ -2,10 +2,9 @@
 
 namespace Javaabu\Paperless\Support\Builders;
 
-use App\Models\FormField;
 use Javaabu\Paperless\Interfaces\Applicant;
-use Javaabu\Paperless\Support\Components\DatePicker;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
+use Javaabu\Paperless\Support\Components\DatePicker;
 
 class DatePickerBuilder extends ComponentBuilder implements IsComponentBuilder
 {

@@ -6,16 +6,16 @@ use Closure;
 use Javaabu\Paperless\Support\Components\Traits\HasHeading;
 use Javaabu\Paperless\Support\Components\Traits\CanBeRemoved;
 use Javaabu\Paperless\Support\Components\Traits\HasDescription;
-use Javaabu\Paperless\Support\Components\Traits\HasContainerAttributes;
 use Javaabu\Paperless\Support\Components\Traits\HasChildComponents;
+use Javaabu\Paperless\Support\Components\Traits\HasContainerAttributes;
 
 class Section extends Component
 {
+    use CanBeRemoved;
     use HasChildComponents;
+    use HasContainerAttributes;
     use HasDescription;
     use HasHeading;
-    use HasContainerAttributes;
-    use CanBeRemoved;
 
     protected string $view = 'paperless::view-components.section';
 

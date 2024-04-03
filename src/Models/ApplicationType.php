@@ -2,34 +2,25 @@
 
 namespace Javaabu\Paperless\Models;
 
-use App\Application\Enums\ApplicationTypes;
-use App\Application\Traits\HasApplicationSpecificPermissions;
-use App\Helpers\AdminModel\AdminModel;
+use Spatie\MediaLibrary\HasMedia;
 use App\Helpers\AdminModel\HasUrl;
-use App\Helpers\AdminModel\IsAdminModel;
-use App\Helpers\Enums\ApplicationTypeCategory;
-use App\Helpers\Media\AllowedMimeTypes;
-use App\Helpers\Traits\HasBlockEditor;
-use Javaabu\Paperless\Models\Application;
-use Javaabu\Paperless\Models\DocumentType;
-use Javaabu\Paperless\Models\Entity;
-use Javaabu\Paperless\Models\EntityType;
-use Javaabu\Paperless\Models\FieldGroup;
-use Javaabu\Paperless\Models\FormField;
-use Javaabu\Paperless\Models\FormSection;
-use Javaabu\Paperless\Models\Individual;
-use Javaabu\Paperless\Models\Service;
-use Javaabu\Paperless\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Spatie\Activitylog\LogOptions;
+use App\Helpers\AdminModel\AdminModel;
+use App\Helpers\Traits\HasBlockEditor;
+use App\Helpers\Media\AllowedMimeTypes;
+use Illuminate\Database\Eloquent\Model;
+use App\Helpers\AdminModel\IsAdminModel;
+use App\Application\Enums\ApplicationTypes;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Helpers\Enums\ApplicationTypeCategory;
 use Spatie\MediaLibrary\MediaCollections\File;
+use Javaabu\Paperless\Domains\Services\Service;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Application\Traits\HasApplicationSpecificPermissions;
 
 class ApplicationType extends Model implements AdminModel, HasUrl, HasMedia
 {

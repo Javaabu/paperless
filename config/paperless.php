@@ -48,6 +48,6 @@ return [
         'form_input' => \Javaabu\Paperless\Models\FormInput::class,
         'form_section' => \Javaabu\Paperless\Models\FormSection::class,
         'field_group' => \Javaabu\Paperless\Models\FieldGroup::class,
-        'service' => \Javaabu\Paperless\Models\Service::class,
+        'service' => \Javaabu\Paperless\Domains\Services\Service::class,
     ],
 ];

@@ -2,12 +2,11 @@
 
 namespace Javaabu\Paperless;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Collection;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
-use Illuminate\Filesystem\Filesystem;
-
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
@@ -101,7 +100,7 @@ class PaperlessServiceProvider extends ServiceProvider
             'create_form_inputs_table.php',
         ];
 
-        $publishing_array =[];
+        $publishing_array = [];
 
         foreach ($migrations as $migration) {
             $publishing_array[__DIR__.'/../database/migrations/'.$migration] = $this->getMigrationFileName($migration);

@@ -1,12 +1,13 @@
 <?php
 
-namespace Javaabu\Paperless\Controllers;
+namespace Javaabu\Paperless\Domains\Services;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Javaabu\Paperless\Controllers\Service;
 use Illuminate\Auth\Access\AuthorizationException;
+use Javaabu\Paperless\Controllers\ServicesRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ServicesController extends Controller
 {

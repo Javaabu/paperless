@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Support\Builders;
 
-use App\Models\FormField;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Support\Components\ApiSelect;
@@ -10,7 +9,6 @@ use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 
 class ApiSelectBuilder extends ComponentBuilder implements IsComponentBuilder
 {
-
     public function render(Model|string|null $input = null, ?string $api_url = '', ?array $filter_by = [])
     {
         return ApiSelect::make($this->form_field->slug)

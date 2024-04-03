@@ -9,7 +9,6 @@ use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Javaabu\Paperless\Support\InfoLists\Components\TextEntry;
 
 class FormField extends Model
 {

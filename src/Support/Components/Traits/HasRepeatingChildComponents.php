@@ -2,8 +2,6 @@
 
 namespace Javaabu\Paperless\Support\Components\Traits;
 
-use Illuminate\Support\Collection;
-
 trait HasRepeatingChildComponents
 {
     protected string $repeatingSchema = '';

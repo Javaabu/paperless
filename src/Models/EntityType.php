@@ -3,11 +3,10 @@
 namespace Javaabu\Paperless\Models;
 
 use App\Helpers\AdminModel\AdminModel;
-use App\Helpers\AdminModel\IsAdminModel;
-use Javaabu\Paperless\Models\Entity;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Helpers\AdminModel\IsAdminModel;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EntityType extends Model implements AdminModel
 {

@@ -4,7 +4,6 @@ namespace Javaabu\Paperless\FieldTypes\Types;
 
 abstract class FieldType
 {
-
     public function getSlug(): string
     {
         return $this->slug;

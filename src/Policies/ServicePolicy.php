@@ -2,10 +2,10 @@
 
 namespace Javaabu\Paperless\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
-use Javaabu\Activitylog\Models\Activity;
 use Javaabu\Auth\UserContract;
-use Javaabu\Paperless\Models\Service;
+use Javaabu\Activitylog\Models\Activity;
+use Javaabu\Paperless\Domains\Services\Service;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ServicePolicy
 {
