@@ -5,29 +5,45 @@
             <div class="table-actions actions">
                 <a class="actions__item"><span>{{ __('ID: :id', ['id' => $document_type->id]) }}</span></a>
 
-                @can('view', $document_type)
-                    <a class="actions__item zmdi zmdi-eye"
-                       href="{{ route('admin.document-types.show', $document_type) }}"
-                       title="View">
-                        <span>{{ __('View') }}</span>
-                    </a>
-                @endcan
+                @if($document_type->trashed())
+                    @can('forceDelete', $document_type)
+                        <a class="actions__item delete-link zmdi zmdi-delete" href="#" data-request-url="{{ route('admin.document-types.force-delete', $document_type) }}"
+                           data-redirect-url="{{ Request::fullUrl() }}" title="Delete Permanently">
+                            <span>{{ __('Delete Permanently') }}</span>
+                        </a>
+                    @endcan
 
-                @can('update', $document_type)
-                    <a class="actions__item zmdi zmdi-edit"
-                       href="{{ route('admin.document-types.edit', $document_type) }}"
-                       title="Edit">
-                        <span>{{ __('Edit') }}</span>
-                    </a>
-                @endcan
+                    @can('restore', $document_type)
+                        <a class="actions__item restore-link zmdi zmdi-time-restore-setting" href="#" data-post-url="{{ route('admin.document-types.restore', $document_type) }}"
+                           data-redirect-url="{{ Request::fullUrl() }}" title="Restore">
+                            <span>{{ __('Restore') }}</span>
+                        </a>
+                    @endcan
+                @else
+                    @can('view', $document_type)
+                        <a class="actions__item zmdi zmdi-eye"
+                           href="{{ route('admin.document-types.show', $document_type) }}"
+                           title="View">
+                            <span>{{ __('View') }}</span>
+                        </a>
+                    @endcan
 
-                @can('delete', $document_type)
-                    <a class="actions__item delete-link zmdi zmdi-delete" href="#"
-                       data-request-url="{{ route('admin.document-types.destroy', $document_type) }}"
-                       data-redirect-url="{{ Request::fullUrl() }}" title="Delete">
-                        <span>{{ __('Delete') }}</span>
-                    </a>
-                @endcan
+                    @can('update', $document_type)
+                        <a class="actions__item zmdi zmdi-edit"
+                           href="{{ route('admin.document-types.edit', $document_type) }}"
+                           title="Edit">
+                            <span>{{ __('Edit') }}</span>
+                        </a>
+                    @endcan
+
+                    @can('delete', $document_type)
+                        <a class="actions__item delete-link zmdi zmdi-delete" href="#"
+                           data-request-url="{{ route('admin.document-types.destroy', $document_type) }}"
+                           data-redirect-url="{{ Request::fullUrl() }}" title="Delete">
+                            <span>{{ __('Delete') }}</span>
+                        </a>
+                    @endcan
+                @endif
             </div>
         </x-forms::table.cell>
 
