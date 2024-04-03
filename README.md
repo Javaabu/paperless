@@ -76,6 +76,13 @@ To create a sample application types
 php artisan paperless:paperless:sample-application-type
 ```
 
+This will generate the following files
+```bash
+app/Paperless/ApplicationTypes/RegisterNewUser.php
+app/Paperless/ApplicationTypes/Services/RegisterNewUserService.php
+app/Paperless/ApplicationTypes/FieldDefinitions/RegisterNewUserFieldDefinitions.php
+```
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
