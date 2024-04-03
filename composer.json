@@ -25,7 +25,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Javaabu\\Paperless\\": "src/"
+            "Javaabu\\Paperless\\": "src/",
+            "Javaabu\\Paperless\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {

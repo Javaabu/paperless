@@ -3,6 +3,8 @@
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
 
+use Javaabu\Paperless\Models\DocumentType;
+
 abstract class ApplicationTypeBlueprint
 {
     public int $eta_duration = 5;
@@ -58,7 +60,7 @@ abstract class ApplicationTypeBlueprint
     {
         $form_fields = $this->getRequiredFormFields();
         if ($form_fields) {
-            (new CreateFormFields())->handle($application_type, $form_fields);
+            (new CreateFormFieldsAction())->handle($application_type, $form_fields);
         }
     }
 

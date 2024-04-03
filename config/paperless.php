@@ -13,18 +13,6 @@ return [
     'views'        => '',
 
     'application_types' => [
-        \App\Application\ApplicationTypes\CreateAcademy::class,
-        \App\Application\ApplicationTypes\CreateAgency::class,
-        \App\Application\ApplicationTypes\AddInstructor::class,
-        \App\Application\ApplicationTypes\RemoveInstructor::class,
-        \App\Application\ApplicationTypes\AddBatchCertificates::class,
-        \App\Application\ApplicationTypes\AddExistingCertificate::class,
-        \App\Application\ApplicationTypes\AddExistingLicense::class,
-        \App\Application\ApplicationTypes\NewLicense::class,
-        \App\Application\ApplicationTypes\AddCategory::class,
-        \App\Application\ApplicationTypes\TemporaryLicense::class,
-        \App\Application\ApplicationTypes\TonnageEndorsement::class,
-        \App\Application\ApplicationTypes\RenewLicense::class,
     ],
 
     'custom-components' => [
