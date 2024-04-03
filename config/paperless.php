@@ -41,7 +41,7 @@ return [
     'models'            => [
         'application'      => \Javaabu\Paperless\Models\Application::class,
         'application_type' => \Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType::class,
-        'document_type'    => \Javaabu\Paperless\Models\DocumentType::class,
+        'document_type'    => \Javaabu\Paperless\Domains\DocumentTypes\DocumentType::class,
         'entity_type'      => \Javaabu\Paperless\Models\EntityType::class,
         'form_field'       => \Javaabu\Paperless\Models\FormField::class,
         'form_input'       => \Javaabu\Paperless\Models\FormInput::class,
