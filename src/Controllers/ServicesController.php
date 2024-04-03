@@ -56,7 +56,7 @@ class ServicesController extends Controller
 
     public function create(Request $request)
     {
-        return view('admin.services.create', ['service' => new Service()]);
+        return view('paperless::admin.services.create', ['service' => new ($this->getModelClass())]);
     }
 
     public function store(ServicesRequest $request)

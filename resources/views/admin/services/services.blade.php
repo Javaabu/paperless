@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends(config('paperless.views_layout'))
 
 @section('title', 'Services')
 @section('page-title', __('Services'))

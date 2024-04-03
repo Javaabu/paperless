@@ -9,6 +9,7 @@ return [
         \Javaabu\Paperless\FieldTypes\Types\TextInput::class,
     ],
 
+    'views_layout' => 'layouts.admin',
     'views' => '',
 
     'application_types' => [
@@ -31,6 +32,8 @@ return [
 
     'public_user' => '',
     'public_user_table' => 'public_users',
+
+
 
     /**
      * The model classes that are used in this application. You can extend the

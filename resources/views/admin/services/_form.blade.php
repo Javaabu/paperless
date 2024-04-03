@@ -1,19 +1,16 @@
-<x-admin.form-container with-floating-submit>
+<x-forms::card>
 
-    <x-admin.input-group for="name" :label="__('Name')" required>
-        <x-admin.input-text name="name" required :placeholder="__('Name')" :value="old('name', $service->name)" />
-    </x-admin.input-group>
+    <x-forms::text name="name" maxlength="255" :required="true" :inline="true" />
+    <x-forms::text name="code" maxlength="255" :required="true" :inline="true" />
+    <x-forms::number name="fee" :min="0"  :required="true" :inline="true" />
 
-    <x-admin.input-group for="code" :label="__('Code')" required>
-        <x-admin.input-text name="code" required :placeholder="__('Code')" :value="old('code', $service->code)" />
-    </x-admin.input-group>
+    <x-forms::button-group :inline="true">
+        <x-forms::submit color="success" class="btn--icon-text btn--raised">
+            <i class="zmdi zmdi-check"></i> {{ __('Save') }}
+        </x-forms::submit>
 
-    <x-admin.input-group for="fee" :label="__('Fee')" required>
-        <x-admin.input-number prepend="MVR" name="fee" required :placeholder="__('Fee')" :value="old('fee', $service->fee)" />
-    </x-admin.input-group>
-
-    <x-slot:buttons>
-        <x-admin.form-save-buttons :cancel-url="route('admin.services.index')" />
-    </x-slot:buttons>
-
-</x-admin.form-container>
+        <x-forms::link-button color="light" class="btn--icon-text" :url="route('admin.services.index')">
+            <i class="zmdi zmdi-close-circle"></i> {{ __('Cancel') }}
+        </x-forms::link-button>
+    </x-forms::button-group>
+</x-forms::card>
