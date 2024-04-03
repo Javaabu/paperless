@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Paperless\ApplicationTypeCategories;
+
+use Javaabu\Paperless\Domains\ApplicationTypes\Categories\ApplicationTypeCategoryInterface;
+
+class {{ ApplicationTypeCategoryClass }} implements ApplicationTypeCategoryInterface
+{
+    public function getApplicationTypeCategorySlug(): string
+    {
+        return '{{ ApplicationTypeCategorySlug }}';
+    }
+
+    public function getApplicationTypeCategoryLabel(): string
+    {
+        return '{{ ApplicationTypeCategoryLabel }}';
+    }
+}

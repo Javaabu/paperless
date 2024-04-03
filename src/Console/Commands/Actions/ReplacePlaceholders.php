@@ -13,6 +13,9 @@ class ReplacePlaceholders
                 '{{ ServiceClassName }}',
                 '{{ application_type_title }}',
                 '{{ FieldDefinitionClassName }}',
+                '{{ ApplicationTypeCategoryClass }}',
+                '{{ ApplicationTypeCategorySlug }}',
+                '{{ ApplicationTypeCategoryLabel }}',
             ],
             [
                 str($name)->studly()->singular()->toString(),
@@ -20,6 +23,9 @@ class ReplacePlaceholders
                 str($name)->studly()->singular()->toString() . 'Service',
                 str($name)->title()->replace('_', ' ')->toString(),
                 str($name)->studly()->singular()->toString() . 'FieldDefinition',
+                str($name)->studly()->singular()->toString(),
+                str($name)->slug('_'),
+                str($name)->title()->replace('_', ' ')->toString(),
             ],
             $content
         );

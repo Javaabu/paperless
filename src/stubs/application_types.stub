@@ -18,6 +18,12 @@ class {{ MainClassName }} extends ApplicationTypeBlueprint
         return __('{{ application_type_title }}');
     }
 
+    public function getCategory(): string
+    {
+        // TODO: return the category here
+    }
+
+
     public function getAutomaticallyAppliedServices(): array
     {
         return [

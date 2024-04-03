@@ -44,8 +44,6 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     ];
 
     protected $casts = [
-        'application_category' => ApplicationTypeCategory::class,
-        'code' => ApplicationTypes::class,
         'description' => 'array',
     ];
 
@@ -57,18 +55,21 @@ class ApplicationType extends Model implements AdminModel, HasMedia
 
     public function applications(): HasMany
     {
-        return $this->hasMany(Application::class);
+        $application_model = config('paperless.models.application');
+        return $this->hasMany($application_model);
     }
 
     public function documentTypes(): BelongsToMany
     {
-        return $this->belongsToMany(DocumentType::class, 'document_type_application_type')
+        $document_type_model = config('paperless.models.document_type');
+        return $this->belongsToMany($document_type_model, 'document_type_application_type')
                     ->withPivot(['id', 'is_required']);
     }
 
     public function services(): BelongsToMany
     {
-        return $this->belongsToMany(Service::class, 'application_type_service')
+        $service_model = config('paperless.models.service');
+        return $this->belongsToMany($service_model, 'application_type_service')
                     ->withPivot(['id', 'is_applied_automatically']);
     }
 
@@ -79,8 +80,9 @@ class ApplicationType extends Model implements AdminModel, HasMedia
 
     public function assignedUsers(): BelongsToMany
     {
+        $user_model = config('paperless.models.user');
         return $this->belongsToMany(
-            User::class,
+            $user_model,
             'application_type_users',
             'application_type_id',
             'assigned_user_id',
@@ -219,6 +221,8 @@ class ApplicationType extends Model implements AdminModel, HasMedia
 
     public function getActivitylogOptions(): LogOptions
     {
-        // TODO: Implement getActivitylogOptions() method.
+        return LogOptions::defaults()
+                         ->logExcept($this->hidden)
+                         ->logOnly(static::$logAttributes);
     }
 }

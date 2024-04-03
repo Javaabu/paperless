@@ -27,6 +27,7 @@ return [
      * classes and override from here
      */
     'models'            => [
+        'user'             => \App\Models\User::class,
         'application'      => \Javaabu\Paperless\Models\Application::class,
         'application_type' => \Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType::class,
         'document_type'    => \Javaabu\Paperless\Domains\DocumentTypes\DocumentType::class,

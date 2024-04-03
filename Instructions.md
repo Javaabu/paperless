@@ -32,9 +32,20 @@ app/Paperless/ApplicationTypes/RegisterNewUser.php
 app/Paperless/ApplicationTypes/Services/RegisterNewUserService.php
 app/Paperless/ApplicationTypes/FieldDefinitions/RegisterNewUserFieldDefinitions.php
 ```
+
+Create a new application type category using the following command
+```bash
+php artisan paperless:paperless:application-type-category user_category
+```
+
+Add the created category to the RegisterNewUser.php file
+```php
+protected $category = 'user_category';
+```
+
 Update the RegisterNewUserFields.php with the fields you need. See SampleApplicationTypeFields.md for reference.
 
 Seed the application type.
 ```bash
-php artisan db:seed --class=Javaabu\\Paperless\\Database\\Seeders\\ApplicationTypeSeeder
+php artisan db:seed --class=Javaabu\Paperless\Database\Seeders\ApplicationTypesSeeder
 ```

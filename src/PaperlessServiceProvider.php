@@ -17,6 +17,7 @@ use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
 use Javaabu\Paperless\Console\Commands\CreateNewApplicationTypeCommand;
 use Javaabu\Paperless\Console\Commands\CreateSampleApplicationTypeCommand;
+use Javaabu\Paperless\Console\Commands\CreateApplicationTypeCategoryCommand;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
@@ -74,6 +75,7 @@ class PaperlessServiceProvider extends ServiceProvider
             PaperlessTestCommand::class,
             CreateNewApplicationTypeCommand::class,
             CreateSampleApplicationTypeCommand::class,
+            CreateApplicationTypeCategoryCommand::class,
         ]);
 
         // Stops the execution of the function so that the

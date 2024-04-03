@@ -76,7 +76,8 @@ abstract class ApplicationTypeBlueprint
         $automatically_applied_services = $this->getAutomaticallyAppliedServices();
         $manually_applied_services = $this->getManuallyAppliedServices();
 
-        $services = Service::whereIn('code', array_merge(
+        $service_model = config('paperless.models.service');
+        $services = $service_model::whereIn('code', array_merge(
             $automatically_applied_services,
             $manually_applied_services
         ))->get();
