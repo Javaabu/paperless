@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Javaabu\Paperless\Domains\Services\Service;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Javaabu\Paperless\Domains\Services\ServicePolicy;
+use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
@@ -36,6 +37,7 @@ class PaperlessServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'service'          => Service::class,
             'application_type' => ApplicationType::class,
+            'document_type'    => DocumentType::class,
         ]);
     }
 
