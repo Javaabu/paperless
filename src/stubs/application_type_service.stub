@@ -9,6 +9,6 @@ class {{ ServiceClassName }} extends ApplicationTypeService
 {
     public function doAfterApproval(Application $application): void
     {
-        //
+        // TODO: Implement doAfterApproval() method.
     }
 }

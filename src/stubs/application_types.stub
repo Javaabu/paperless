@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Application\ApplicationTypes;
+namespace App\Paperless\ApplicationTypes;
 
 use Illuminate\Support\Collection;
+use App\Paperless\ApplicationTypes\Services\{{ ServiceClassName }};
+use App\Paperless\ApplicationTypes\FieldDefinitions\{{ FieldDefinitionClassName }};
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypeBlueprint;
 
-class AddCategory extends ApplicationTypeBlueprint
+class {{ MainClassName }} extends ApplicationTypeBlueprint
 {
     public string $code = 'at_{{ application_type_slug }}';
 

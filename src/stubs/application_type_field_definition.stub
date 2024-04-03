@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Paperless\ApplicationTypes\FieldDefinitions;
+
+class {{ FieldDefinitionClassName }}
+{
+    public static function getFields(): array
+    {
+        return [
+            // TODO: Add fields
+        ];
+    }
+}

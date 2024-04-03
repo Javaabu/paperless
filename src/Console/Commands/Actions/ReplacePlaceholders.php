@@ -8,15 +8,17 @@ class ReplacePlaceholders
     {
         return str_replace(
             [
+                '{{ MainClassName }}',
                 '{{ application_type_slug }}',
                 '{{ ServiceClassName }}',
                 '{{ application_type_title }}',
                 '{{ FieldDefinitionClassName }}',
             ],
             [
+                str($name)->studly()->singular()->toString(),
                 $name,
                 str($name)->studly()->singular()->toString() . 'Service',
-                str($name)->title()->toString(),
+                str($name)->title()->replace('_', ' ')->toString(),
                 str($name)->studly()->singular()->toString() . 'FieldDefinition',
             ],
             $content
