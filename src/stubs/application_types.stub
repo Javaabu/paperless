@@ -1,0 +1,79 @@
+<?php
+
+namespace App\Application\ApplicationTypes;
+
+use App\Models\Application;
+use Illuminate\Support\Collection;
+use App\Helpers\Enums\ExamStatuses;
+use App\Helpers\Enums\EntityTypeEnums;
+use App\Helpers\Enums\ApplicationTypeCategory;
+use App\Application\ApplicationTypes\Services\AddCategoryToLicenseService;
+use App\Application\ApplicationTypes\Blueprints\AddCategoriesToLicenseFields;
+
+class AddCategory extends ApplicationTypeBlueprint
+{
+    public string $code = 'at_{{ application_type_slug }}';
+
+    public string $service = AddCategoryToLicenseService::class;
+
+    public function getName(): string
+    {
+        return __('Add Category');
+    }
+
+    public function getDescription(): string
+    {
+        return __('Apply to add more categories to the license');
+    }
+
+    public function getCategory(): string
+    {
+        return ApplicationTypeCategory::License->value;
+    }
+
+    public function getAutomaticallyAppliedServices(): array
+    {
+        return [
+            'SML009',
+        ];
+    }
+
+    public function getManuallyAppliedServices(): array
+    {
+        return [
+            'SML004'
+        ];
+    }
+
+    public function getRequiredDocumentTypes(): array
+    {
+        return [
+            'police_report',
+        ];
+    }
+
+    public function getRequiredFormFields(): array
+    {
+        return AddCategoriesToLicenseFields::getFields();
+    }
+
+    public function getEntityTypes(): array
+    {
+        return [
+            EntityTypeEnums::Individual->value,
+        ];
+    }
+
+    public function requiresPreProcessing(Application $application): bool
+    {
+        return ! $application->exams()->where('status', ExamStatuses::Complete)->exists();
+    }
+
+    public function getApplicationTypeSpecificPayments(Application $application): Collection
+    {
+        $application->loadMissing('examAttempts.payments');
+        return $application->examAttempts->map(function ($examAttempt) {
+            return $examAttempt->payments;
+        })->flatten();
+    }
+}

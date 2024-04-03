@@ -12,6 +12,8 @@ use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
+use Javaabu\Paperless\Console\Commands\CreateNewApplicationTypeCommand;
+use Javaabu\Paperless\Console\Commands\CreateSampleApplicationTypeCommand;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
@@ -31,10 +33,6 @@ class PaperlessServiceProvider extends ServiceProvider
             'service' => Service::class,
             'application_type' => ApplicationType::class,
         ]);
-
-        // Register package policies
-//        Gate::policy(Service::class, Domains\Services\ServicePolicy::class);
-//        Gate::policy(ApplicationType::class, Domains\ApplicationTypes\ApplicationTypePolicy::class);
     }
 
     public function register(): void
@@ -67,7 +65,9 @@ class PaperlessServiceProvider extends ServiceProvider
     {
         // Commands accessible at all times go here.
         $this->commands([
-            PaperlessTestCommand::class
+            PaperlessTestCommand::class,
+            CreateNewApplicationTypeCommand::class,
+            CreateSampleApplicationTypeCommand::class,
         ]);
 
         // Stops the execution of the function so that the

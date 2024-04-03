@@ -8,10 +8,10 @@
     @if($application_types->isNotEmpty() || config('paperless.models.application_type')::exists())
         <div class="card">
             {!! Form::open(['route' => 'admin.application-types.index', 'id' => 'filter', 'method' => 'GET']) !!}
-            @include('admin.application-types._filter')
+            @include('paperless::admin.application-types._filter')
             {!! Form::close() !!}
 
-            @include('admin.application-types._table')
+            @include('paperless::admin.application-types._table')
         </div>
     @else
         <div class="no-items">
