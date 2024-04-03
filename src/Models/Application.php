@@ -2,22 +2,23 @@
 
 namespace Javaabu\Paperless\Models;
 
-use Javaabu\Auth\User;
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Javaabu\StatusEvents\Interfaces\Trackable;
-use Javaabu\Paperless\Enums\ApplicationStatuses;
-use Javaabu\StatusEvents\Traits\HasStatusEvents;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Javaabu\Paperless\Support\Components\Section;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
+use Javaabu\Auth\User;
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
+use Javaabu\Paperless\Enums\ApplicationStatuses;
+use Javaabu\Paperless\Support\Components\Section;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
+use Javaabu\StatusEvents\Interfaces\Trackable;
+use Javaabu\StatusEvents\Traits\HasStatusEvents;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Application extends Model implements HasMedia, Trackable
 {

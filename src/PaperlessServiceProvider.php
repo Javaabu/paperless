@@ -2,13 +2,16 @@
 
 namespace Javaabu\Paperless;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use Javaabu\Paperless\Domains\Services\Service;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Javaabu\Paperless\Domains\Services\Service;
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
@@ -26,7 +29,12 @@ class PaperlessServiceProvider extends ServiceProvider
 
         Relation::enforceMorphMap([
             'service' => Service::class,
+            'application_type' => ApplicationType::class,
         ]);
+
+        // Register package policies
+//        Gate::policy(Service::class, Domains\Services\ServicePolicy::class);
+//        Gate::policy(ApplicationType::class, Domains\ApplicationTypes\ApplicationTypePolicy::class);
     }
 
     public function register(): void

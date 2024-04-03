@@ -1,10 +1,9 @@
 <?php
 
-namespace Javaabu\Paperless\Policies;
+namespace Javaabu\Paperless\Domains\Services;
 
 use Javaabu\Auth\UserContract;
 use Javaabu\Activitylog\Models\Activity;
-use Javaabu\Paperless\Domains\Services\Service;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ServicePolicy

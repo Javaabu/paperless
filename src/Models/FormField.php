@@ -2,13 +2,14 @@
 
 namespace Javaabu\Paperless\Models;
 
-use App\Helpers\Enums\Languages;
 use App\Helpers\Enums\FormFieldTypes;
+use App\Helpers\Enums\Languages;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FormField extends Model
 {
