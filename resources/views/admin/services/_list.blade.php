@@ -1,18 +1,38 @@
 @foreach($services as $service)
-    @component('admin.components.table-row', [
-            'model' => 'services',
-            'model_id' => $service->id,
-            'no_checkbox' => ! empty($no_checkbox),
-        ])
 
-    @slot('columns')
-        <td data-col="{{ __('Name') }}">
-            {!! $service->admin_link !!}
-            <x-admin.inline-actions :model="$service" />
-        </td>
-        <td data-col="{{ __('Code') }}">{{ $service->code }}</td>
-        <td data-col="{{ __('Fee') }}">{{ format_currency($service->fee) }}</td>
-    @endslot
+    <x-forms::table.row :model="$service" :no-checkbox="! empty($no_checkbox)">
 
-    @endcomponent
+        <x-forms::table.cell :label="__('Name')">
+            {{ $service->name }}
+            <div class="table-actions actions">
+                <a class="actions__item"><span>{{ __('ID: :id', ['id' => $service->id]) }}</span></a>
+
+                @can('view', $service)
+                    <a class="actions__item zmdi zmdi-eye" href="{{ route('admin.services.show', $service) }}"
+                       title="View">
+                        <span>{{ __('View') }}</span>
+                    </a>
+                @endcan
+
+                @can('update', $service)
+                    <a class="actions__item zmdi zmdi-edit" href="{{ route('admin.services.edit', $service) }}"
+                       title="Edit">
+                        <span>{{ __('Edit') }}</span>
+                    </a>
+                @endcan
+
+                @can('delete', $service)
+                    <a class="actions__item delete-link zmdi zmdi-delete" href="#"
+                       data-request-url="{{ route('admin.services.destroy', $service) }}"
+                       data-redirect-url="{{ Request::fullUrl() }}" title="Delete">
+                        <span>{{ __('Delete') }}</span>
+                    </a>
+                @endcan
+            </div>
+        </x-forms::table.cell>
+
+        <x-forms::table.cell name="code"/>
+        <x-forms::table.cell name="fee"/>
+
+    </x-forms::table.row>
 @endforeach

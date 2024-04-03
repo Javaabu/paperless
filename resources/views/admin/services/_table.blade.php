@@ -1,37 +1,35 @@
-@component('admin.components.table', [
-        'model' => 'services',
-        'no_bulk' => ! empty($no_bulk),
-        'no_checkbox' => ! empty($no_checkbox),
-        'no_pagination' => ! empty($no_pagination),
-    ])
+<x-forms::table
+    model="services"
+    :no-bulk="! empty($no_bulk)"
+    :no-checkbox="! empty($no_checkbox)"
+    :no-pagination="! empty($no_pagination)"
+>
 
-    @slot('bulk_form_open')
-        {!! Form::open(['route' => 'admin.services.bulk', 'method' => 'PUT', 'class' => 'delete-form']) !!}
-    @endslot
+    @if(empty($no_bulk))
+        <x-slot:bulk-form :action="route('admin.services.bulk')">
+            @include('paperless::admin.services._bulk')
+        </x-slot:bulk-form>
+    @endif
 
-    @slot('bulk_form')
-        @include('admin.services._bulk')
-    @endslot
+    <x-slot:headers>
+        <x-forms::table.heading :label="__('Name')" sortable="name" />
+        <x-forms::table.heading :label="__('Code')" sortable="code" />
+        <x-forms::table.heading :label="__('Fee')" />
+    </x-slot:headers>
 
-    @slot('titles')
-        <th data-sort-field="name" class="{{ add_sort_class('name') }}">{{ __('Name') }}</th>
-        <th>{{ __('Code') }}</th>
-        <th>{{ __('Fee') }}</th>
-    @endslot
-
-    @slot('rows')
+    <x-slot:rows>
         @if($services->isEmpty())
-            <tr>
-                <td colspan="{{ ! empty($no_checkbox) ? 1 : 2 }}">{{ __('No matching services found.') }}</td>
-            </tr>
+            <x-forms::table.empty-row columns="10" :no-checkbox="! empty($no_checkbox)">
+                {{ __('No matching services found.') }}
+            </x-forms::table.empty-row>
         @else
-            @include('admin.services._list')
+            @include('paperless::admin.services._list')
         @endif
-    @endslot
+    </x-slot:rows>
 
     @if(empty($no_pagination))
-        @slot('pagination')
-            {{  $services->links('admin.partials.pagination') }}
-        @endslot
+        <x-slot:pagination>
+            {{ $services->links('forms::material-admin-26.pagination') }}
+        </x-slot:pagination>
     @endif
-@endcomponent
+</x-forms::table>

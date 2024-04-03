@@ -46,6 +46,8 @@ class Service extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        // TODO: Implement getActivitylogOptions() method.
+        return LogOptions::defaults()
+            ->logExcept($this->hidden)
+            ->logOnlyDirty();
     }
 }

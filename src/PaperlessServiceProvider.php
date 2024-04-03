@@ -2,11 +2,13 @@
 
 namespace Javaabu\Paperless;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Javaabu\Paperless\Domains\Services\Service;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,10 @@ class PaperlessServiceProvider extends ServiceProvider
         $this->registerModelBindings();
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'paperless');
+
+        Relation::enforceMorphMap([
+            'service' => Service::class,
+        ]);
     }
 
     public function register(): void

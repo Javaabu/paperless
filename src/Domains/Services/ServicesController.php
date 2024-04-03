@@ -4,9 +4,9 @@ namespace Javaabu\Paperless\Domains\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Javaabu\Paperless\Controllers\Service;
+use Javaabu\Paperless\Domains\Services\Service;
 use Illuminate\Auth\Access\AuthorizationException;
-use Javaabu\Paperless\Controllers\ServicesRequest;
+use Javaabu\Paperless\Domains\Services\ServicesRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ServicesController extends Controller

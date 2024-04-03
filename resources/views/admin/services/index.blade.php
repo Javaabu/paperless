@@ -11,9 +11,14 @@
 @section('content')
     @if($services->isNotEmpty() || config('paperless.models.service')::exists())
         <div class="card">
-            {!! Form::open(['route' => if_route('admin.services.trash') ? 'admin.services.trash' : 'admin.services.index', 'id' => 'filter', 'method' => 'GET']) !!}
-            @include('paperless::admin.services._filter')
-            {!! Form::close() !!}
+            <x-forms::form
+                :action="route('admin.services.index')"
+                :model="request()->query()"
+                id="filter"
+                method="GET"
+            >
+                @include('paperless::admin.services._filter')
+            </x-forms::form>
 
             @include('paperless::admin.services._table', [
                 'no_bulk' => $trashed,
