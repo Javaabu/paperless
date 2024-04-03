@@ -2,7 +2,11 @@
 
     <x-forms::text name="name" maxlength="255" :required="true" :inline="true" />
     <x-forms::text name="code" maxlength="255" :required="true" :inline="true" />
-    <x-forms::number name="fee" :min="0"  :required="true" :inline="true" />
+    <x-forms::number name="fee" :min="0"  :required="true" :inline="true">
+        <x-slot name="prepend">
+            <span class="input-group-text">MVR</span>
+        </x-slot>
+    </x-forms::number>
 
     <x-forms::button-group :inline="true">
         <x-forms::submit color="success" class="btn--icon-text btn--raised">

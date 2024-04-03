@@ -1,9 +1,10 @@
-@extends('admin.services.services')
+@extends('paperless::admin.services.services')
 
 @section('page-title', __('Edit Service'))
 
 @section('content')
-    {!! Form::model($service, ['method' => 'PATCH', 'route' => ['admin.services.update', $service]]) !!}
-    @include('admin.services._form')
-    {!! Form::close() !!}
+
+    <x-forms::form method="PATCH" :model="$service" :action="route('admin.services.update', $service)">
+    @include('paperless::admin.services._form')
+    </x-forms::form>
 @endsection

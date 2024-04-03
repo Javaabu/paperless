@@ -3,7 +3,7 @@
     <x-forms::table.row :model="$service" :no-checkbox="! empty($no_checkbox)">
 
         <x-forms::table.cell :label="__('Name')">
-            {{ $service->name }}
+            {!! $service->admin_link !!}
             <div class="table-actions actions">
                 <a class="actions__item"><span>{{ __('ID: :id', ['id' => $service->id]) }}</span></a>
 
@@ -32,7 +32,9 @@
         </x-forms::table.cell>
 
         <x-forms::table.cell name="code"/>
-        <x-forms::table.cell name="fee"/>
+        <x-forms::table.cell name="fee">
+            {{ format_currency($service->fee) }}
+        </x-forms::table.cell>
 
     </x-forms::table.row>
 @endforeach

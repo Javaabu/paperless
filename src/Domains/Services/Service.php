@@ -2,16 +2,19 @@
 
 namespace Javaabu\Paperless\Domains\Services;
 
+use Javaabu\Helpers\AdminModel\AdminModel;
+use Javaabu\Helpers\AdminModel\IsAdminModel;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class Service extends Model
+class Service extends Model implements AdminModel
 {
     use LogsActivity;
     use SoftDeletes;
+    use IsAdminModel;
 
     protected static array $logAttributes = ['*'];
     protected static bool $logOnlyDirty = true;

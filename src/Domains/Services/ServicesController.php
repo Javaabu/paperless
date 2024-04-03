@@ -2,8 +2,10 @@
 
 namespace Javaabu\Paperless\Domains\Services;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Javaabu\Helpers\Http\Controllers\Controller;
 use Javaabu\Paperless\Domains\Services\Service;
 use Illuminate\Auth\Access\AuthorizationException;
 use Javaabu\Paperless\Domains\Services\ServicesRequest;
@@ -11,7 +13,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ServicesController extends Controller
 {
-    use AuthorizesRequests;
 
     public function getModelClass(): string
     {
@@ -69,17 +70,17 @@ class ServicesController extends Controller
         return to_route('admin.services.edit', $service);
     }
 
-    public function show(Service $service)
+    public function show(Service $service): RedirectResponse
     {
         return to_route('admin.services.edit', $service);
     }
 
-    public function edit(Service $service)
+    public function edit(Service $service): View
     {
-        return view('admin.services.edit', compact('service'));
+        return view('paperless::admin.services.edit', compact('service'));
     }
 
-    public function update(ServicesRequest $request, Service $service)
+    public function update(ServicesRequest $request, Service $service): RedirectResponse
     {
         $service->fill($request->all());
         $service->save();
