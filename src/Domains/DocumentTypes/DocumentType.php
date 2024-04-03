@@ -1,15 +1,14 @@
 <?php
 
-namespace Javaabu\Paperless\Models;
+namespace Javaabu\Paperless\Domains\DocumentTypes;
 
-use App\Helpers\AdminModel\HasUrl;
-use App\Helpers\AdminModel\AdminModel;
 use Illuminate\Database\Eloquent\Model;
-use App\Helpers\AdminModel\IsAdminModel;
-use Spatie\Activitylog\Traits\LogsActivity;
+use Javaabu\Helpers\AdminModel\AdminModel;
+use Javaabu\Activitylog\Traits\LogsActivity;
+use Javaabu\Helpers\AdminModel\IsAdminModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class DocumentType extends Model implements AdminModel, HasUrl
+class DocumentType extends Model implements AdminModel
 {
     use IsAdminModel;
     use LogsActivity;
@@ -36,7 +35,7 @@ class DocumentType extends Model implements AdminModel, HasUrl
 
     public function url(string $action = 'show'): string
     {
-        return match($action) {
+        return match ($action) {
             'index' => route('admin.document-types.index'),
             'create' => route('admin.document-types.create'),
             default => route("admin.document-types.$action", $this),
