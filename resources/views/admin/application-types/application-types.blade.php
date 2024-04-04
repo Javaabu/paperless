@@ -14,7 +14,7 @@
     @section('page-subheading', $application_type->name)
 
     @section('content')
-        @include('admin.application-types._tabs')
+        @include('paperless::admin.application-types._tabs')
 
         @yield('inner-content')
     @endsection

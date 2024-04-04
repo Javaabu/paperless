@@ -7,9 +7,14 @@
 @section('content')
     @if($application_types->isNotEmpty() || config('paperless.models.application_type')::exists())
         <div class="card">
-            {!! Form::open(['route' => 'admin.application-types.index', 'id' => 'filter', 'method' => 'GET']) !!}
+            <x-forms::form
+                :action="route('admin.application-types.index')"
+                :model="request()->query()"
+                id="filter"
+                method="GET"
+            >
             @include('paperless::admin.application-types._filter')
-            {!! Form::close() !!}
+            </x-forms::form>
 
             @include('paperless::admin.application-types._table')
         </div>
