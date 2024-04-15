@@ -33,7 +33,7 @@ class Application extends Model implements HasMedia, Trackable
     protected array $searchable = [];
 
     protected $attributes = [
-        'status' => ApplicationStatuses::Draft,
+        'status' => ApplicationStatuses::DRAFT,
     ];
 
     protected $casts = [

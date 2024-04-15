@@ -41,15 +41,19 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         'alert_duration',
     ];
 
-    protected $casts = [
-        'description' => 'array',
-    ];
-
     protected array $searchable = [
         'name',
         'code',
         'description',
     ];
+
+    public function casts(): array
+    {
+        return [
+            'application_category' => config('paperless.application_type_category_enum'),
+            'description' => 'array',
+        ];
+    }
 
     public function applications(): HasMany
     {
