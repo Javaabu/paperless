@@ -2,13 +2,9 @@
 
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Stats\StatsRepository;
-use App\Models\ApplicationType;
 use App\Stats\Exports\StatsExport;
 use Illuminate\Contracts\View\View;
-use App\Exports\ApplicationTypesExport;
 use App\Helpers\Media\AllowedMimeTypes;
 use Javaabu\Helpers\Traits\HasOrderbys;
 use App\Stats\Http\Requests\StatsRequest;
@@ -30,7 +26,7 @@ class ApplicationTypesController extends Controller
 
     public function __construct()
     {
-//        $this->authorizeResource($this->getModelClass());
+        //        $this->authorizeResource($this->getModelClass());
     }
 
     protected static function initOrderbys(): void
@@ -70,7 +66,7 @@ class ApplicationTypesController extends Controller
 
     public function edit(ApplicationType $application_type)
     {
-        return view('admin.application-types.edit', compact('application_type'));
+        return view('paperless::admin.application-types.edit', compact('application_type'));
     }
 
     public function update(ApplicationTypesRequest $request, ApplicationType $application_type)

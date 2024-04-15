@@ -12,7 +12,7 @@
     "require": {
         "php": "^8.3",
         "illuminate/support": "^9.0 || ^10.0 || ^11.0",
-        "javaabu/helpers": "^1.28",
+        "javaabu/helpers": "^1.30",
         "spatie/laravel-medialibrary": "^11.4",
         "javaabu/status-events": "^1.0@dev",
         "javaabu/auth": "^1.1",
