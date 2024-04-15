@@ -17,7 +17,6 @@ return new class () extends Migration {
             $table->string('code')->unique();
             $table->text('description')->nullable();
             $table->integer('eta_duration');
-            $table->integer('alert_duration');
             $table->string('application_category')->index();
             $table->timestamps();
         });
