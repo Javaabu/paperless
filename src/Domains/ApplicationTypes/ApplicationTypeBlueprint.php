@@ -117,7 +117,6 @@ abstract class ApplicationTypeBlueprint
     public function seedApplicationType(): ApplicationType
     {
         $eta_duration = property_exists($this, 'eta_duration') ? $this->eta_duration : 5;
-        $alert_duration = property_exists($this, 'alert_duration') ? $this->alert_duration : 3;
 
         return ApplicationType::updateOrCreate([
             'code' => $this->code,
@@ -125,7 +124,6 @@ abstract class ApplicationTypeBlueprint
             'name'                 => $this->getName(),
             'description'          => $this->getDescription(),
             'eta_duration'         => $eta_duration,
-            'alert_duration'       => $alert_duration,
             'application_category' => $this->getCategory(),
         ]);
     }

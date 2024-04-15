@@ -3,13 +3,9 @@
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
 use Illuminate\Http\Request;
-use App\Stats\Exports\StatsExport;
 use Illuminate\Contracts\View\View;
-use App\Helpers\Media\AllowedMimeTypes;
+use Illuminate\Http\RedirectResponse;
 use Javaabu\Helpers\Traits\HasOrderbys;
-use App\Stats\Http\Requests\StatsRequest;
-use App\Http\Requests\ApplicationTypesRequest;
-use App\Stats\Formatters\CombinedStatsFormatter;
 use Javaabu\Helpers\Http\Controllers\Controller;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
@@ -59,17 +55,17 @@ class ApplicationTypesController extends Controller
         return view('paperless::admin.application-types.index', compact('application_types', 'title', 'per_page'));
     }
 
-    public function show(ApplicationType $application_type)
+    public function show(ApplicationType $application_type): RedirectResponse
     {
         return to_route('admin.application-types.edit', $application_type);
     }
 
-    public function edit(ApplicationType $application_type)
+    public function edit(ApplicationType $application_type): View
     {
         return view('paperless::admin.application-types.edit', compact('application_type'));
     }
 
-    public function update(ApplicationTypesRequest $request, ApplicationType $application_type)
+    public function update(ApplicationTypesRequest $request, ApplicationType $application_type): RedirectResponse
     {
         $application_type->fill($request->validated());
         $application_type->save();
