@@ -16,6 +16,7 @@ class ApplicationRoutes
         self::applicationTypeRoutes();
         self::documentTypeRoutes();
         self::applicationTypeServices();
+        self::applicationTypeDocuments();
     }
 
     public static function serviceRoutes(): void
@@ -48,6 +49,14 @@ class ApplicationRoutes
     {
         Route::match(['PUT', 'PATCH'], 'application-types/{application_type}/services/bulk', [ApplicationTypeServicesController::class, 'bulk'])->name('application-types.services.bulk');
         Route::resource('application-types.services', ApplicationTypeServicesController::class)
+             ->scoped()
+             ->except(['create', 'edit', 'update']);
+    }
+
+    public static function applicationTypeDocuments(): void
+    {
+        Route::match(['PUT', 'PATCH'], 'application-types/{application_type}/document-types/bulk', [ApplicationTypeDocumentTypesController::class, 'bulk'])->name('application-types.document-types.bulk');
+        Route::resource('application-types.document-types', ApplicationTypeDocumentTypesController::class)
              ->scoped()
              ->except(['create', 'edit', 'update']);
     }

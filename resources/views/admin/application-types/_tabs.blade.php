@@ -16,13 +16,13 @@
             'url' =>  $application_type->id ? route('admin.application-types.services.index', $application_type) : '#',
             'active' => if_route('admin.application-types.services.index'),
         ],
-//        [
-//            'title' => __('Document Types'),
-//            'admin_icon' => 'fa fa-duotone fa-folder-open',
-//            'public_icon' => 'users',
-//            'url' =>  $application_type->id ? route('admin.application-types.document-types.index', $application_type) : '#',
-//            'active' => if_route('admin.application-types.document-types.index'),
-//        ],
+        [
+            'title' => __('Document Types'),
+            'admin_icon' => 'fa fa-duotone fa-folder-open',
+            'public_icon' => 'users',
+            'url' =>  $application_type->id ? route('admin.application-types.document-types.index', $application_type) : '#',
+            'active' => if_route('admin.application-types.document-types.index'),
+        ],
 //        [
 //            'title' => __('Assigned Users'),
 //            'admin_icon' => 'fa fa-duotone fa-user-tie',
