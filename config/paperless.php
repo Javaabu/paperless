@@ -11,6 +11,7 @@ return [
 
     'field_types' => [
         \Javaabu\Paperless\FieldTypes\Types\TextInput::class,
+        \Javaabu\Paperless\FieldTypes\Types\EmailInput::class,
     ],
 
     'views_layout' => 'layouts.admin',
