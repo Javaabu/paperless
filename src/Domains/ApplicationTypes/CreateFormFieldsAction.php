@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
-
 use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FieldGroup;
 use Javaabu\Paperless\Models\FormSection;
@@ -46,6 +45,7 @@ class CreateFormFieldsAction
                 $field_order = 1;
 
                 foreach ($fields as $field) {
+                    $field_type = $field['type'] ? (new $field['type']())->getSlug() : null;
                     FormField::updateOrCreate([
                         'slug'                => $field['slug'],
                         'form_section_id'     => $form_section->id,
@@ -56,7 +56,7 @@ class CreateFormFieldsAction
                         'name'                        => $field['name'],
                         'language'                    => $field['language'] ?? 'en',
                         'placeholder'                 => data_get($field, 'placeholder', null),
-                        'type'                        => $field['type'],
+                        'type'                        => $field_type,
                         'is_required'                 => $field['required'],
                         'additional_validation_rules' => data_get($field, 'additional_validation_rules', []),
                         'options'                     => json_encode(data_get($field, 'options', [])),
