@@ -3,8 +3,8 @@
 namespace Javaabu\Paperless\FieldTypes;
 
 use Javaabu\Paperless\Models\FormField;
-use App\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
+use Javaabu\Helpers\Exceptions\InvalidOperationException;
 
 class FormFieldTypes
 {

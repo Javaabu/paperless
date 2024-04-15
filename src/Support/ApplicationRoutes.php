@@ -7,6 +7,7 @@ use Javaabu\Paperless\Domains\Services\ServicesController;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypesController;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypesController;
 use Javaabu\Paperless\Domains\Services\ApplicationType\ApplicationTypeServicesController;
+use Javaabu\Paperless\Domains\FormSections\ApplicationType\ApplicationTypeFormFieldsController;
 use Javaabu\Paperless\Domains\DocumentTypes\ApplicationType\ApplicationTypeDocumentTypesController;
 
 class ApplicationRoutes
@@ -18,6 +19,7 @@ class ApplicationRoutes
         self::documentTypeRoutes();
         self::applicationTypeServices();
         self::applicationTypeDocuments();
+        self::applicationTypeFields();
     }
 
     public static function serviceRoutes(): void
@@ -60,5 +62,12 @@ class ApplicationRoutes
         Route::resource('application-types.document-types', ApplicationTypeDocumentTypesController::class)
              ->scoped()
              ->except(['create', 'edit', 'update']);
+    }
+
+    public static function applicationTypeFields(): void
+    {
+        Route::get('application-types/{application_type}/form-fields', [
+            ApplicationTypeFormFieldsController::class, 'index',
+        ])->name('application-types.form-fields.index');
     }
 }

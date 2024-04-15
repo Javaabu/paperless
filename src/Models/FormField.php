@@ -4,7 +4,9 @@ namespace Javaabu\Paperless\Models;
 
 use Javaabu\Paperless\Enums\Languages;
 use Illuminate\Database\Eloquent\Model;
+use Javaabu\Paperless\FieldTypes\Types\FieldType;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Javaabu\Paperless\Support\Casts\FieldTypeAttribute;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
@@ -16,11 +18,16 @@ class FormField extends Model
         'language' => Languages::English,
     ];
 
-    protected $casts = [
-        'language'                    => Languages::class,
-        'additional_validation_rules' => 'array',
-        'options'                     => 'array',
-    ];
+    public function casts(): array
+    {
+        return [
+            'type'                        => FieldTypeAttribute::class,
+            'language'                    => Languages::class,
+            'additional_validation_rules' => 'array',
+            'options'                     => 'array',
+        ];
+    }
+
 
     public function formSection(): BelongsTo
     {

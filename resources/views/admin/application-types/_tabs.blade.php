@@ -23,27 +23,13 @@
             'url' =>  $application_type->id ? route('admin.application-types.document-types.index', $application_type) : '#',
             'active' => if_route('admin.application-types.document-types.index'),
         ],
-//        [
-//            'title' => __('Assigned Users'),
-//            'admin_icon' => 'fa fa-duotone fa-user-tie',
-//            'public_icon' => 'users',
-//            'url' =>  $application_type->id ? route('admin.application-types.assigned-users.index', $application_type) : '#',
-//            'active' => if_route('admin.application-types.assigned-users.index'),
-//        ],
-//        [
-//            'title' => __('Form Fields'),
-//            'admin_icon' => 'fa fa-duotone fa-pen-field',
-//            'public_icon' => 'users',
-//            'url' =>  $application_type->id ? route('admin.application-types.form-fields.index', $application_type) : '#',
-//            'active' => if_route('admin.application-types.form-fields.index'),
-//        ],
-//         [
-//            'title' => __('Stats'),
-//            'admin_icon' => 'fa fa-duotone fa-chart-simple',
-//            'public_icon' => 'fa fa-duotone fa-chart-simple',
-//            'url' =>  $application_type->id ? route('admin.application-types.stats', $application_type) : '#',
-//            'active' => if_route('admin.application-types.stats'),
-//        ],
+        [
+            'title' => __('Form Fields'),
+            'admin_icon' => 'fa fa-duotone fa-pen-field',
+            'public_icon' => 'users',
+            'url' =>  $application_type->id ? route('admin.application-types.form-fields.index', $application_type) : '#',
+            'active' => if_route('admin.application-types.form-fields.index'),
+        ],
     ];
 
 @endphp
