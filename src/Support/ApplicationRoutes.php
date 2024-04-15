@@ -7,6 +7,7 @@ use Javaabu\Paperless\Domains\Services\ServicesController;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypesController;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypesController;
 use Javaabu\Paperless\Domains\Services\ApplicationType\ApplicationTypeServicesController;
+use Javaabu\Paperless\Domains\DocumentTypes\ApplicationType\ApplicationTypeDocumentTypesController;
 
 class ApplicationRoutes
 {
