@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Javaabu\Paperless\Domains\Services\ServicesController;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypesController;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypesController;
+use Javaabu\Paperless\Domains\Services\ApplicationType\ApplicationTypeServicesController;
 
 class ApplicationRoutes
 {
@@ -14,6 +15,7 @@ class ApplicationRoutes
         self::serviceRoutes();
         self::applicationTypeRoutes();
         self::documentTypeRoutes();
+        self::applicationTypeServices();
     }
 
     public static function serviceRoutes(): void
@@ -40,5 +42,13 @@ class ApplicationRoutes
         Route::post('document-types/{id}/restore', [DocumentTypesController::class, 'restore'])->name('document-types.restore');
         Route::delete('document-types/{id}/force-delete', [DocumentTypesController::class, 'forceDelete'])->name('document-types.force-delete');
         Route::resource('document-types', DocumentTypesController::class);
+    }
+
+    public static function applicationTypeServices(): void
+    {
+        Route::match(['PUT', 'PATCH'], 'application-types/{application_type}/services/bulk', [ApplicationTypeServicesController::class, 'bulk'])->name('application-types.services.bulk');
+        Route::resource('application-types.services', ApplicationTypeServicesController::class)
+             ->scoped()
+             ->except(['create', 'edit', 'update']);
     }
 }

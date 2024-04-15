@@ -1,25 +1,19 @@
-<x-admin.form-container>
+<x-forms::card>
 
-    <x-admin.input-group for="service" :label="__('Service')" required>
-        @php
-            $services = \App\Models\Service::pluck('name', 'id');
-        @endphp
-        <x-admin.select name="service"
-                        :value="old('service')"
-                        :options="$services"
-                        required/>
-    </x-admin.input-group>
+    @php
+        $services = config('paperless.models.service')::pluck('name', 'id');
+    @endphp
+    <x-forms::select name="service" :options="$services" :required="true" :inline="true" />
+    <x-forms::checkbox name="is_applied_automatically" :label="__('Is Applied Automatically')" :inline="true" />
 
-    <x-admin.input-group for="is_applied_automatically" :label="__('Is Applied Automatically')" extra-classes="align-items-start">
-        <x-admin.checkbox class="mt-2" name="is_applied_automatically" :label="__('Yes')" value="1">
-            <small class="form-text text-muted">
-                {{ __('If selected, a payment will be automatically initiated upon verification of this type of application. If not selected, the application must undergo an external process for payment initiation.') }}
-            </small>
-        </x-admin.checkbox>
-    </x-admin.input-group>
+    <x-forms::button-group :inline="true">
+        <x-forms::submit color="success" class="btn--icon-text btn--raised">
+            <i class="zmdi zmdi-check"></i> {{ __('Save') }}
+        </x-forms::submit>
 
-    <x-slot:buttons>
-        <x-admin.form-save-buttons :cancel-url="route('admin.application-types.services.index', $application_type)"/>
-    </x-slot:buttons>
+        <x-forms::link-button color="light" class="btn--icon-text" :url="route('admin.application-types.services.index', $application_type)">
+            <i class="zmdi zmdi-close-circle"></i> {{ __('Cancel') }}
+        </x-forms::link-button>
+    </x-forms::button-group>
 
-</x-admin.form-container>
+</x-forms::card>

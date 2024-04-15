@@ -1,4 +1,4 @@
-@extends('admin.application-types.services.services')
+@extends('paperless::admin.application-types.services.services')
 
 @section('page-subheading')
     <small>{{ $title }}</small>
@@ -6,24 +6,33 @@
 
 @section('inner-content')
 
-    {!! Form::open(['url' => route('admin.application-types.services.store', $application_type)]) !!}
-    @include('admin.application-types.services._form')
-    {!! Form::close() !!}
+    <x-forms::form :action="route('admin.application-types.services.store', $application_type)">
+        @include('paperless::admin.application-types.services._form')
+    </x-forms::form>
+
 
     @if($services->isNotEmpty() || $application_type->documentTypes()->exists())
         <div class="card mt-4">
-            {!! Form::open(['url' => route('admin.application-types.services.index', $application_type), 'id' => 'filter', 'method' => 'GET']) !!}
-            @include('admin.application-types.services._filter')
-            {!! Form::close() !!}
+            <x-forms::form
+                :action="route('admin.application-types.services.index', $application_type)"
+                :model="request()->query()"
+                id="filter"
+                method="GET"
+            >
+            @include('paperless::admin.application-types.services._filter')
+            </x-forms::form>
 
-            @include('admin.application-types.services._table')
+            @include('paperless::admin.application-types.services._table')
         </div>
     @else
-        @include('admin.components.no-items', [
-            'icon' => 'zmdi zmdi-file',
-            'model_type' => __('services'),
-            'can_create' => false,
-        ])
+        <div class="no-items">
+            <div class="card-body">
+                <i class="zmdi zmdi-file main-icon mb-4"></i>
+                <p class="lead mb-4">
+                    {{ __('No services applied.') }}
+                </p>
+            </div>
+        </div>
     @endif
 
 @endsection

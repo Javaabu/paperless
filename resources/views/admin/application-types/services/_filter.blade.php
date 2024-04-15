@@ -1,19 +1,13 @@
-@component('admin.components.filter')
+<x-forms::filter>
     <div class="row">
         <div class="col-md-3">
-            <x-admin.input-group for="search" :label="__('Search')" stacked>
-                <x-admin.input-text name="search" :placeholder="__('Search...')" :value="request()->input('search', old('search'))" />
-            </x-admin.input-group>
+            <x-forms::text name="search" :label="__('Search')" :placeholder="__('Search..')" :show-errors="false" :inline="false" />
         </div>
         <div class="col-md-3">
-            @include('admin.components.per-page')
+            <x-forms::per-page />
         </div>
         <div class="col-md-3">
-            @component('admin.components.filter-submit', [
-                'filter_url' => route('admin.application-types.services.index', $application_type),
-                'export' => true,
-            ])
-            @endcomponent
+            <x-forms::filter-submit :cancel-url="route('admin.application-types.services.index', $application_type)" :export="false" />
         </div>
     </div>
-@endcomponent
+</x-forms::filter>

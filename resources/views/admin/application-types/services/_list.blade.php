@@ -1,28 +1,21 @@
 @foreach($services as $service)
-    @component('admin.components.table-row', [
-            'model' => 'services',
-            'model_id' => $service->pivot->id,
-            'no_checkbox' => ! empty($no_checkbox),
-        ])
+    <x-forms::table.row :model="$service" :no-checkbox="! empty($no_checkbox)">
 
-        @slot('columns')
-            <td data-col="{{ __('Document Type') }}">
-                {!! $service->admin_link !!}
-                <x-admin.nested-inline-actions
-                    :actions="[
-                        'delete' => route('admin.application-types.services.destroy', [$application_type, $service]),
-                    ]"
-                    :parent-model="$application_type"
-                    :id="$service->pivot->id" />
-            </td>
-            <td data-col="{{ __('Amount') }}">
-                {{ format_currency($service->fee) }}
-            </td>
-            <td data-col="{{ __('Is Applied Automatically') }}">
-                <x-badge :color="$service->pivot->is_applied_automatically ? 'success' : 'secondary'">
-                    {{ $service->pivot->is_applied_automatically ? __('Yes') : __('No') }}
-                </x-badge>
-            </td>
-        @endslot
-     @endcomponent
+        <x-forms::table.cell :label="__('Name')">
+            {!! $service->admin_link !!}
+            <div class="table-actions actions">
+                <a class="actions__item"><span>{{ __('ID: :id', ['id' => $application_type->id]) }}</span></a>
+
+            </div>
+        </x-forms::table.cell>
+
+        <x-forms::table.cell name="amount">
+            {{ format_currency($service->fee) }}
+        </x-forms::table.cell>
+        <x-forms::table.cell name="is_applied_automatically">
+            <span class="badge {{ $service->pivot->is_applied_automatically ? 'badge-success' : 'badge-secondary' }}">
+                {{ $service->pivot->is_applied_automatically ? __('Yes') : __('No') }}
+            </span>
+        </x-forms::table.cell>
+    </x-forms::table.row>
 @endforeach

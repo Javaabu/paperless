@@ -1,37 +1,30 @@
-@component('admin.components.table', [
-        'model' => 'services',
-        'no_bulk' => ! empty($no_bulk),
-        'no_checkbox' => ! empty($no_checkbox),
-        'no_pagination' => ! empty($no_pagination),
-    ])
+<x-forms::table
+    model="services"
+    :no-bulk="! empty($no_bulk)"
+    :no-checkbox="! empty($no_checkbox)"
+    :no-pagination="! empty($no_pagination)"
+>
 
-    @slot('bulk_form_open')
-        {!! Form::open(['url' => route('admin.application-types.services.bulk', $application_type), 'method' => 'PUT', 'class' => 'delete-form']) !!}
-    @endslot
-
-    @slot('bulk_form')
-        @include('admin.application-types.services._bulk')
-    @endslot
-
-    @slot('titles')
+    <x-slot:headers>
         <th>{{ __('Service') }}</th>
         <th>{{ __('Amount') }}</th>
         <th>{{ __('Is Applied Automatically') }}</th>
-    @endslot
+    </x-slot:headers>
 
-    @slot('rows')
+    <x-slot:rows>
         @if($services->isEmpty())
             <tr>
-                <td colspan="{{ ! empty($no_checkbox) ? 1 : 2 }}">{{ __('No matching application types found.') }}</td>
+                <td colspan="{{ ! empty($no_checkbox) ? 1 : 2 }}">{{ __('No matching services found.') }}</td>
             </tr>
         @else
-            @include('admin.application-types.services._list')
+            @include('paperless::admin.application-types.services._list')
         @endif
-    @endslot
+    </x-slot:rows>
 
     @if(empty($no_pagination))
-        @slot('pagination')
-            {{  $services->links('admin.partials.pagination') }}
-        @endslot
+        <x-slot:pagination>
+            {{ $services->links('forms::material-admin-26.pagination') }}
+        </x-slot:pagination>
     @endif
-@endcomponent
+</x-forms::table>
+

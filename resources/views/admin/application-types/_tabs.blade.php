@@ -9,13 +9,13 @@
             'url' => $application_type->id ? route('admin.application-types.show', $application_type) : '#',
             'active' => if_route_pattern('admin.application-types.create') || if_route_pattern('admin.application-types.show') || if_route_pattern('admin.application-types.edit')
         ],
-//        [
-//            'title' => __('Services'),
-//            'admin_icon' => 'fa fa-duotone fa-credit-card',
-//            'public_icon' => 'fa fa-duotone fa-credit-card',
-//            'url' =>  $application_type->id ? route('admin.application-types.services.index', $application_type) : '#',
-//            'active' => if_route('admin.application-types.services.index'),
-//        ],
+        [
+            'title' => __('Services'),
+            'admin_icon' => 'fa fa-duotone fa-credit-card',
+            'public_icon' => 'fa fa-duotone fa-credit-card',
+            'url' =>  $application_type->id ? route('admin.application-types.services.index', $application_type) : '#',
+            'active' => if_route('admin.application-types.services.index'),
+        ],
 //        [
 //            'title' => __('Document Types'),
 //            'admin_icon' => 'fa fa-duotone fa-folder-open',
