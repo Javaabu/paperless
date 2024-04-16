@@ -1,19 +1,12 @@
-@extends('layouts.admin')
+@extends(config('paperless.views_layout'))
 
 @if(! isset($application))
     @section('title', 'Applications')
     @section('page-title', __('Applications'))
 @endif
 
-@section('top-search')
-    @include('admin.partials.search-model', [
-        'search_route' => 'admin.applications.index',
-        'search_placeholder' => __('Search for applications...'),
-    ])
-@endsection
-
 @section('model-actions')
-    @include('admin.applications._actions')
+    @include('paperless::admin.applications._actions')
 @endsection
 
 @php
@@ -39,7 +32,7 @@
     @endif
 
     @section('content')
-        @include('admin.applications._tabs')
+        @include('paperless::admin.applications._tabs')
 
         @yield('inner-content', '')
     @endsection
@@ -50,7 +43,7 @@
     @section('page-subheading', $application->name)
 
     @section('content')
-        @include('admin.applications.show._show-tabs')
+        @include('paperless::admin.applications.show._show-tabs')
 
         @yield('inner-content')
     @endsection
