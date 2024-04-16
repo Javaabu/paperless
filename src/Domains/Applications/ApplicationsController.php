@@ -172,7 +172,7 @@ class ApplicationsController extends Controller
     {
         $application_type = $application->applicationType;
         $applicant = $application->applicant;
-        return view('admin.applications.edit', compact('application', 'application_type', 'applicant'));
+        return view('paperless::admin.applications.edit', compact('application', 'application_type', 'applicant'));
     }
 
     public function update(ApplicationsUpdateRequest $request, Application $application)
