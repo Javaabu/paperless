@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\Domains\Applications;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Helpers\Traits\HasOrderbys;
 use Illuminate\Support\Facades\Validator;
@@ -88,7 +89,6 @@ class ApplicationsController extends Controller
         $applications = $applications
             ->with([
                 'applicationType',
-                'assignedTo',
                 'generated',
                 'applicant',
             ])
@@ -310,7 +310,7 @@ class ApplicationsController extends Controller
         return $this->redirect($request, to_route('admin.applications.index'));
     }
 
-    public function documents(Application $application, Request $request)
+    public function documents(Application $application, Request $request): View
     {
         $this->authorize('update', $application);
 
@@ -318,7 +318,7 @@ class ApplicationsController extends Controller
         $documents = $application->getMedia('documents');
         //        dd($documents);
 
-        return view('admin.applications.documents', compact(
+        return view('paperless::admin.applications.documents', compact(
             'application',
             'documents',
             'required_documents',

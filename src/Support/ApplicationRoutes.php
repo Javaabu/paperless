@@ -22,6 +22,7 @@ class ApplicationRoutes
     public static function routes(): void
     {
         self::applicationCreateAndUpdateRoutes();
+        self::applicationViewRoutes();
         self::serviceRoutes();
         self::applicationTypeRoutes();
         self::documentTypeRoutes();

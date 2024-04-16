@@ -192,7 +192,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     {
         $application_type_classes = config('paperless.application_types');
         foreach ($application_type_classes as $application_type_class) {
-            if ((new $application_type_class())->getCode() == $this->code->value) {
+            if ((new $application_type_class())->getCode() == $this->code) {
                 return $application_type_class;
             }
         }

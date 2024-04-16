@@ -1,45 +1,38 @@
-@component('admin.components.table', [
-        'model' => 'applications',
-        'no_bulk' => ! empty($no_bulk),
-        'no_checkbox' => ! empty($no_checkbox),
-        'no_pagination' => ! empty($no_pagination),
-    ])
+<x-forms::table
+    model="applications"
+    :no-bulk="! empty($no_bulk)"
+    :no-checkbox="! empty($no_checkbox)"
+    :no-pagination="! empty($no_pagination)"
+>
 
-    @slot('bulk_form_open')
-        {!! Form::open(['route' => 'admin.applications.bulk', 'method' => 'PUT', 'class' => 'delete-form']) !!}
-    @endslot
+    @if(empty($no_bulk))
+        <x-slot:bulk-form :action="route('admin.applications.bulk')">
+            @include('paperless::admin.applications._bulk')
+        </x-slot:bulk-form>
+    @endif
 
-    @slot('bulk_form')
-        @include('admin.applications._bulk')
-    @endslot
+    <x-slot:headers>
+        <x-forms::table.heading :label="__('Reference')" />
+        <x-forms::table.heading :label="__('Application Type')" />
+        <x-forms::table.heading :label="__('Applicant')" />
+        <x-forms::table.heading :label="__('Generated')" />
+        <x-forms::table.heading :label="__('Submitted Date')" />
+        <x-forms::table.heading :label="__('Status')" />
+    </x-slot:headers>
 
-    @slot('titles')
-        <th>{{ __('Reference') }}</th>
-        <th>{{ __('Application Type') }}</th>
-        <th>{{ __('Applicant') }}</th>
-        @canany(\App\Models\ApplicationType::getAllAssignPermissionList())
-            <th>{{ __('Assigned To') }}</th>
-        @endcanany
-        <th>{{ __('Generated') }}</th>
-        <th>{{ __('Submitted Date') }}</th>
-        <th>{{ __('Progress Status') }}</th>
-        <th>{{ __('Payment Status') }}</th>
-        <th>{{ __('Status') }}</th>
-    @endslot
-
-    @slot('rows')
+    <x-slot:rows>
         @if($applications->isEmpty())
-            <tr>
-                <td colspan="{{ ! empty($no_checkbox) ? 1 : 2 }}">{{ __('No matching applications found.') }}</td>
-            </tr>
+            <x-forms::table.empty-row columns="10" :no-checkbox="! empty($no_checkbox)">
+                {{ __('No matching applications found.') }}
+            </x-forms::table.empty-row>
         @else
-            @include('admin.applications._list')
+            @include('paperless::admin.applications._list')
         @endif
-    @endslot
+    </x-slot:rows>
 
     @if(empty($no_pagination))
-        @slot('pagination')
-            {{  $applications->links('admin.partials.pagination') }}
-        @endslot
+        <x-slot:pagination>
+            {{ $applications->links('forms::material-admin-26.pagination') }}
+        </x-slot:pagination>
     @endif
-@endcomponent
+</x-forms::table>

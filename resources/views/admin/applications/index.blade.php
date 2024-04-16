@@ -15,9 +15,15 @@
 
     @if($applications->isNotEmpty() || $application_class::exists())
         <div class="card">
-            {!! Form::open(['route' => if_route('admin.applications.trash') ? 'admin.applications.trash' : 'admin.applications.index', 'id' => 'filter', 'method' => 'GET']) !!}
-            @include('paperless::admin.applications._filter')
-            {!! Form::close() !!}
+            @php  $route = if_route('admin.applications.trash') ? route('admin.applications.trash') : route('admin.applications.index'); @endphp
+            <x-forms::form
+                :action="$route"
+                :model="request()->query()"
+                id="filter"
+                method="GET"
+            >
+                @include('paperless::admin.applications._filter')
+            </x-forms::form>
 
             @include('paperless::admin.applications._table', [
                 'no_bulk' => $trashed,

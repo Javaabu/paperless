@@ -6,4 +6,4 @@
     }
 ?>
 
-@include('admin.components.bulk', ['actions' => $actions, 'model' => 'applications'])
+<x-forms::bulk-actions :actions="$actions" model="applications" />

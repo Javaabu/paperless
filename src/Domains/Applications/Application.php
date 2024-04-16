@@ -6,10 +6,15 @@ use Javaabu\Auth\User;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Collection;
 use Javaabu\Paperless\Models\Payment;
+use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\Countries;
 use Javaabu\Paperless\Models\FormInput;
-use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\PublicUser;
+
+use Javaabu\Helpers\AdminModel\AdminModel;
+use Javaabu\Helpers\AdminModel\IsAdminModel;
+use function Javaabu\Paperless\Models\dnr;
+
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Javaabu\Paperless\Models\IndividualData;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,13 +31,13 @@ use Javaabu\Paperless\Models\FirstOrCreateIndividualAction;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
-use function Javaabu\Paperless\Models\dnr;
 
-class Application extends Model implements HasMedia, Trackable
+class Application extends Model implements HasMedia, Trackable, AdminModel
 {
     use HasStatusEvents;
     use InteractsWithMedia;
     use SoftDeletes;
+    use IsAdminModel;
 
     protected string $reference_number_format = 'APP-:year-:no';
 
@@ -104,7 +109,7 @@ class Application extends Model implements HasMedia, Trackable
         return $this->morphTo();
     }
 
-    public function scopeSearch($query, $search)
+    public function scopeSearch($query, $search): \Illuminate\Database\Eloquent\Builder
     {
         return $query->where('name', 'like', '%' . $search . '%');
     }
@@ -123,10 +128,7 @@ class Application extends Model implements HasMedia, Trackable
     public function scopePending($query): void
     {
         $query->whereIn('status', [
-            ApplicationStatuses::PendingVerification,
-            ApplicationStatuses::Processing,
-            ApplicationStatuses::PendingPayment,
-            ApplicationStatuses::PendingApproval,
+            ApplicationStatuses::Pending,
         ]);
     }
 
@@ -134,11 +136,7 @@ class Application extends Model implements HasMedia, Trackable
     {
         $query->whereIn('status', [
             ApplicationStatuses::Draft,
-            ApplicationStatuses::PendingVerification,
-            ApplicationStatuses::Incomplete,
-            ApplicationStatuses::Processing,
-            ApplicationStatuses::PendingPayment,
-            ApplicationStatuses::PendingApproval,
+            ApplicationStatuses::Pending,
         ]);
     }
 
@@ -146,7 +144,7 @@ class Application extends Model implements HasMedia, Trackable
     {
         $query->whereIn('status', [
             ApplicationStatuses::Rejected,
-            ApplicationStatuses::Complete,
+            ApplicationStatuses::Approved,
         ]);
     }
 
@@ -166,6 +164,10 @@ class Application extends Model implements HasMedia, Trackable
         });
     }
 
+    public function getAdminLinkNameAttribute(): string
+    {
+        return $this->formatted_id;
+    }
 
     public function registerMediaCollections(): void
     {
@@ -387,4 +389,8 @@ class Application extends Model implements HasMedia, Trackable
                     ->first()?->value;
     }
 
+    public function getAdminUrlAttribute(): string
+    {
+        return route('admin.applications.show', $this);
+    }
 }
