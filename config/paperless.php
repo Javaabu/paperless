@@ -43,4 +43,8 @@ return [
         'field_group'      => \Javaabu\Paperless\Models\FieldGroup::class,
         'service'          => \Javaabu\Paperless\Domains\Services\Service::class,
     ],
+
+    'enums' => [
+        'application_status' => \Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses::class,
+    ]
 ];

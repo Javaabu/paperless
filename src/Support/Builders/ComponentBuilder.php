@@ -25,7 +25,7 @@ abstract class ComponentBuilder
     public function saveInputs(Application $application, FormField $form_field, array | null $form_inputs = []): void
     {
         $form_input_value = $form_inputs[$form_field->slug] ?? null;
-        $array_value = in_array($form_field->type, [FormFieldTypes::MultiSelect, FormFieldTypes::LicenseCategories]);
+        $array_value = in_array($form_field->type->getSlug(), ['select']);
 
         $form_input = $application->formInputs()->where('form_field_id', $form_field->id)->first();
         if (! $form_input) {

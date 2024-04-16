@@ -2,24 +2,14 @@
 
 namespace Javaabu\Paperless\Domains\Applications;
 
-use App\Models\Application;
-use App\Models\FormSection;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\ApplicationType;
-use App\Exports\ApplicationsExport;
-use App\Helpers\Enums\EntityTypeEnums;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Helpers\Traits\HasOrderbys;
-use App\Jobs\ApplicationStaffAssignedJob;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\ApplicationsRequest;
-use App\Application\Enums\ApplicationStatuses;
-use App\Http\Requests\ApplicationsUpdateRequest;
 use Javaabu\Helpers\Http\Controllers\Controller;
 use Illuminate\Auth\Access\AuthorizationException;
 use Javaabu\Paperless\Domains\EntityTypes\EntityType;
-use App\Http\Requests\ApplicationAdminSectionsUpdateRequest;
 
 class ApplicationsController extends Controller
 {
@@ -153,7 +143,7 @@ class ApplicationsController extends Controller
 
     public function store(ApplicationsRequest $request)
     {
-        $application_class = config('paperless.application_model');
+        $application_class = config('paperless.models.application');
 
         $application = new $application_class();
         $application->applicant()->associate($request->getApplicant());
@@ -168,9 +158,10 @@ class ApplicationsController extends Controller
 
         $application->updateFormInputs($input_data_array);
 
+        $status_enum = config('paperless.enums.application_status');
         $application->createStatusEvent(
-            ApplicationStatuses::Draft->value,
-            ApplicationStatuses::Draft->getRemarks()
+            $status_enum::Draft->value,
+            $status_enum::Draft->getRemarks()
         );
 
         $this->flashSuccessMessage();

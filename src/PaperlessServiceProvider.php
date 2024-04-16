@@ -6,10 +6,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use Javaabu\StatusEvents\Models\StatusEvent;
 use Javaabu\Paperless\Domains\Services\Service;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Javaabu\Paperless\Domains\EntityTypes\EntityType;
 use Javaabu\Paperless\Domains\Services\ServicePolicy;
+use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
 use Javaabu\Paperless\Domains\Applications\ApplicationPolicy;
@@ -42,6 +44,8 @@ class PaperlessServiceProvider extends ServiceProvider
             'application_type' => ApplicationType::class,
             'document_type'    => DocumentType::class,
             'entity_type'      => EntityType::class,
+            'application'      => Application::class,
+            'status_event'     => StatusEvent::class,
         ]);
     }
 

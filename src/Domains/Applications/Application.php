@@ -15,8 +15,6 @@ use Javaabu\Paperless\Models\IndividualData;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Javaabu\Paperless\Models\AllowedMimeTypes;
 use Javaabu\StatusEvents\Interfaces\Trackable;
-use Javaabu\Paperless\Models\ApplicationStatus;
-use Javaabu\Paperless\Enums\ApplicationStatuses;
 use Javaabu\StatusEvents\Traits\HasStatusEvents;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Javaabu\Paperless\Support\Components\Section;
@@ -27,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Javaabu\Paperless\Models\FirstOrCreateIndividualAction;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
+use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
 use function Javaabu\Paperless\Models\dnr;
 
 class Application extends Model implements HasMedia, Trackable
@@ -42,7 +41,7 @@ class Application extends Model implements HasMedia, Trackable
     protected array $searchable = [];
 
     protected $attributes = [
-        'status' => ApplicationStatuses::DRAFT,
+        'status' => ApplicationStatuses::Draft,
     ];
 
     protected $casts = [

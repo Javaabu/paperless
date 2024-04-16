@@ -3,9 +3,9 @@
 namespace Javaabu\Paperless\Domains\Applications;
 
 use Javaabu\Auth\User;
-use Javaabu\Paperless\Models\Application;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
+use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
 
 class ApplicationPolicy
 {
@@ -33,15 +33,8 @@ class ApplicationPolicy
 
     public function update(User $user, Application $application): bool
     {
-        if (! in_array($application->status, [
-            ApplicationStatuses::Draft,
-            ApplicationStatuses::Incomplete,
-        ])) {
+        if ($application->status != ApplicationStatuses::Draft) {
             return false;
-        }
-
-        if ($user instanceof PublicUser) {
-            return $application->canBeAccessedByPublicUser($user);
         }
 
         /* @var \App\Models\User $user */
@@ -54,10 +47,6 @@ class ApplicationPolicy
 
     public function delete(User $user, Application $application): bool
     {
-        if ($user instanceof PublicUser) {
-            return $application->canBeAccessedByPublicUser($user) && $application->status == ApplicationStatuses::Draft;
-        }
-
         /* @var \App\Models\User $user */
         if ($user->can($application->applicationType?->getDeleteAnyPermissionAttribute())) {
             return true;

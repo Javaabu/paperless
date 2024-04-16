@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Support\Builders;
 
-use App\Helpers\Enums\FormFieldTypes;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Support\Components\TextInput;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
