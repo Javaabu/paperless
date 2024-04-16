@@ -33,7 +33,7 @@ return [
      */
     'models'            => [
         'user'             => \App\Models\User::class,
-        'application'      => \Javaabu\Paperless\Models\Application::class,
+        'application'      => \Javaabu\Paperless\Domains\Applications\Application::class,
         'application_type' => \Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType::class,
         'document_type'    => \Javaabu\Paperless\Domains\DocumentTypes\DocumentType::class,
         'entity_type'      => \Javaabu\Paperless\Domains\EntityTypes\EntityType::class,

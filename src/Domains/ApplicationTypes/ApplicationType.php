@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FieldGroup;
 use Javaabu\Paperless\Models\Individual;
-use Javaabu\Paperless\Models\Application;
 use Javaabu\Paperless\Models\FormSection;
 use Javaabu\Helpers\AdminModel\AdminModel;
 use App\Application\Enums\ApplicationTypes;
@@ -24,10 +23,13 @@ use Spatie\MediaLibrary\MediaCollections\File;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Javaabu\Paperless\Domains\EntityTypes\EntityType;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Javaabu\Paperless\Domains\Applications\Application;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Javaabu\Paperless\Domains\ApplicationTypes\Traits\HasApplicationSpecificPermissions;
 
 class ApplicationType extends Model implements AdminModel, HasMedia
 {
+    use HasApplicationSpecificPermissions;
     use InteractsWithMedia;
     use IsAdminModel;
     use LogsActivity;
@@ -115,7 +117,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         $query->whereHas('entityTypes', fn ($q) => $q->where('entity_types.id', $entity_type_id));
     }
 
-    public function scopeUserVisible($query, ?\App\Helpers\User\User $user = null): void
+    public function scopeUserVisible($query, ?\Javaabu\Auth\User $user = null): void
     {
         $user = $user ?? auth()->user();
         $view_any_codes = self::getViewAnyCodes($user);

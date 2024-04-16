@@ -2,10 +2,10 @@
 
 namespace Javaabu\Paperless\Support\Builders;
 
+use App\Helpers\Enums\FormFieldTypes;
 use App\Models\FormField;
 use App\Models\FormInput;
-use App\Helpers\Enums\FormFieldTypes;
-use Javaabu\Paperless\Models\Application;
+use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Interfaces\Applicant;
 
 abstract class ComponentBuilder

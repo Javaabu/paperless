@@ -2,10 +2,10 @@
 
 namespace Javaabu\Paperless\StatusActions;
 
-use Javaabu\Auth\User;
-use Illuminate\Support\Carbon;
-use Javaabu\Paperless\Models\Application;
 use App\Exceptions\InvalidOperationException;
+use Illuminate\Support\Carbon;
+use Javaabu\Auth\User;
+use Javaabu\Paperless\Domains\Applications\Application;
 
 abstract class ApplicationStatusAction
 {

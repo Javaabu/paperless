@@ -8,7 +8,6 @@ use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
 class ApplicationTypeFormFieldsController
 {
-    use AuthorizesRequests;
 
     public function index(ApplicationType $application_type, Request $request)
     {

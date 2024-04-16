@@ -1,24 +1,33 @@
 <?php
 
-namespace Javaabu\Paperless\Models;
+namespace Javaabu\Paperless\Domains\Applications;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
 use Javaabu\Auth\User;
-use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
-use Javaabu\Paperless\Enums\ApplicationStatuses;
-use Javaabu\Paperless\Support\Components\Section;
-use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
-use Javaabu\StatusEvents\Interfaces\Trackable;
-use Javaabu\StatusEvents\Traits\HasStatusEvents;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Collection;
+use Javaabu\Paperless\Models\Payment;
+use Javaabu\Paperless\Models\Countries;
+use Javaabu\Paperless\Models\FormInput;
+use Illuminate\Database\Eloquent\Model;
+use Javaabu\Paperless\Models\PublicUser;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Javaabu\Paperless\Models\IndividualData;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Javaabu\Paperless\Models\AllowedMimeTypes;
+use Javaabu\StatusEvents\Interfaces\Trackable;
+use Javaabu\Paperless\Models\ApplicationStatus;
+use Javaabu\Paperless\Enums\ApplicationStatuses;
+use Javaabu\StatusEvents\Traits\HasStatusEvents;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Javaabu\Paperless\Support\Components\Section;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Javaabu\Paperless\Models\FirstOrCreateIndividualAction;
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
+use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
+use function Javaabu\Paperless\Models\dnr;
 
 class Application extends Model implements HasMedia, Trackable
 {
@@ -101,13 +110,9 @@ class Application extends Model implements HasMedia, Trackable
         return $query->where('name', 'like', '%' . $search . '%');
     }
 
-    public function scopeUserVisible($query, ?\App\Helpers\User\User $user = null): void
+    public function scopeUserVisible($query, ?\Javaabu\Auth\User $user = null): void
     {
         $user = $user ?? auth()->user();
-        if ($user instanceof PublicUser) {
-            $query->where('public_user_id', $user->id);
-            return;
-        }
 
         $query
             ->whereHas('applicationType', function ($query) use ($user) {
