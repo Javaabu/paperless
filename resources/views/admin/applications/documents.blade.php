@@ -1,8 +1,8 @@
 @extends('paperless::admin.applications.applications')
 
 @section('inner-content')
-{{--   @include('admin.applications.documents._documents')--}}
-{{--   @include('admin.applications.documents._additional-documents')--}}
+   @include('paperless::admin.applications.documents._documents')
+{{--   @include('paperless::admin.applications.documents._additional-documents')--}}
 
 {{--    <x-admin.application-form-buttons :application="$application">--}}
 {{--        <x-admin.link-button type="success" :url="route('admin.applications.review', $application)">--}}

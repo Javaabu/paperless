@@ -6,6 +6,7 @@ use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FormInput;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Interfaces\Applicant;
+use Javaabu\Paperless\Support\InfoLists\Components\TextEntry;
 
 abstract class ComponentBuilder
 {
@@ -36,5 +37,13 @@ abstract class ComponentBuilder
 
         $form_input->value = $array_value ? json_encode($form_input_value) : $form_input_value;
         $form_input->save();
+    }
+
+    public function renderInfoList(FormField $form_field, $value = null): string
+    {
+        return TextEntry::make($form_field->name)
+                        ->markAsRequired($form_field->is_required)
+                        ->value($value)
+                        ->toHtml();
     }
 }

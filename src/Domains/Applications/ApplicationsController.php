@@ -168,7 +168,7 @@ class ApplicationsController extends Controller
         return to_route('admin.applications.documents', $application);
     }
 
-    public function edit(Application $application)
+    public function edit(Application $application): View
     {
         $application_type = $application->applicationType;
         $applicant = $application->applicant;
@@ -325,11 +325,11 @@ class ApplicationsController extends Controller
         ));
     }
 
-    public function review(Application $application, Request $request)
+    public function review(Application $application, Request $request): View
     {
         $this->authorize('update', $application);
 
-        return view('admin.applications.review', compact('application'));
+        return view('paperless::admin.applications.review', compact('application'));
     }
 
     public function statusUpdate(Application $application, Request $request)

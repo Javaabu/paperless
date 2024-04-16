@@ -21,14 +21,13 @@
         >
             <div class="row mb-0 flex-grow-1">
                 <div class="col-md-6">
-                    <x-admin.input-group for="file_name" :label="__('File Name')" stacked>
-                        <x-admin.input-text name="file_name"/>
-                    </x-admin.input-group>
+                    <x-forms::text name="file_name" label="File Name" />
                 </div>
                 <div class="col-md-6">
-                    <x-admin.input-group for="file" :label="__('File to Upload')" stacked>
-                        <x-admin.file-input name="file"/>
-                    </x-admin.input-group>
+{{--                    <x-forms:: name="file" label="File Name" />--}}
+{{--                    <x-admin.input-group for="file" :label="__('File to Upload')" stacked>--}}
+{{--                        <x-admin.file-input name="file"/>--}}
+{{--                    </x-admin.input-group>--}}
                 </div>
             </div>
             <div class="ml-4 d-flex align-items-end">
@@ -43,13 +42,13 @@
         <hr>
         <div class="additional-files-wrapper">
             @forelse($additional_documents as $additional_document)
-                <x-admin.input-group :label="$additional_document->name" data-ajax-upload-wrapper>
-                    <x-admin.ajax-additional-file-upload
-                        model-type="{{ $application->getMorphClass() }}"
-                        model-id="{{ $application->id }}"
-                        target-wrapper="data-ajax-upload-wrapper"
-                        :document="$additional_document" />
-                </x-admin.input-group>
+{{--                <x-admin.input-group :label="$additional_document->name" data-ajax-upload-wrapper>--}}
+{{--                    <x-admin.ajax-additional-file-upload--}}
+{{--                        model-type="{{ $application->getMorphClass() }}"--}}
+{{--                        model-id="{{ $application->id }}"--}}
+{{--                        target-wrapper="data-ajax-upload-wrapper"--}}
+{{--                        :document="$additional_document" />--}}
+{{--                </x-admin.input-group>--}}
             @empty
             <div id="no-additional-documents">
                 {{ __('No additional documents uploaded.') }}
@@ -79,18 +78,18 @@
 
                 let fileWrapper = $('.additional-files-wrapper');
                 let progressWrapper = `
-                    <x-admin.input-group label="Uploading" data-additional-file-upload-progress>
-                        <x-fileupload-progress display="true"/>
-                    </x-admin.input-group>
+<!--                    <x-admin.input-group label="Uploading" data-additional-file-upload-progress>-->
+<!--                        <x-fileupload-progress display="true"/>-->
+<!--                    </x-admin.input-group>-->
                 `;
 
                 let uploadedElement = `
-                    <x-admin.input-group label="Temporary Name" data-additional-file-uploaded data-ajax-upload-wrapper>
-                        <x-admin.ajax-additional-file-upload
-                                                model-type="{{ $application->getMorphClass() }}"
-                                                model-id="{{ $application->id }}"
-                                                target-wrapper="data-ajax-upload-wrapper" />
-                    </x-admin.input-group>
+                    {{--<x-admin.input-group label="Temporary Name" data-additional-file-uploaded data-ajax-upload-wrapper>--}}
+                    {{--    <x-admin.ajax-additional-file-upload--}}
+                    {{--                            model-type="{{ $application->getMorphClass() }}"--}}
+                    {{--                            model-id="{{ $application->id }}"--}}
+                    {{--                            target-wrapper="data-ajax-upload-wrapper" />--}}
+                    {{--</x-admin.input-group>--}}
                 `;
 
                 if (!file) {

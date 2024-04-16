@@ -152,26 +152,7 @@ class FormField extends Model
             return '';
         }
 
-        if ($this->type->value == FormFieldTypes::PreviousLicenseCategories->value) {
-            $form_input = json_decode($form_input);
-        }
-
-        return match ($this->type->value) {
-            FormFieldTypes::LicenseCategory->value  => LicenseCategory::find($form_input)?->formatted_name,
-            FormFieldTypes::PreviousLicenseCategories->value  => PreviousLicenseCategory::whereIn('id', $form_input)->get()?->pluck('code')->join(', '),
-            FormFieldTypes::Certificate->value        => Certificate::find($form_input)?->formatted_name,
-            FormFieldTypes::Individual->value,
-            FormFieldTypes::AcademyInstructor->value,
-            FormFieldTypes::ExistingIndividual->value => Individual::find($form_input)?->formatted_name,
-            FormFieldTypes::Institution->value        => Institution::find($form_input)?->name_with_island,
-            FormFieldTypes::Academy->value            => Entity::find($form_input)->formatted_name,
-            FormFieldTypes::Instructor->value         => AcademyInstructor::find($form_input)?->instructor?->formatted_name,
-            FormFieldTypes::AcademyCourse->value,
-            FormFieldTypes::Course->value             => Course::find($form_input)->name,
-            FormFieldTypes::License->value            => License::find($form_input)->formatted_name,
-            FormFieldTypes::Country->value            => Country::find($form_input)->name,
-            FormFieldTypes::Tonnage->value            => TonnageCategory::find($form_input)->formatted_name,
-            FormFieldTypes::Checkbox->value           => $form_input == '1' ? 'Yes' : 'No',
+        return match ($this->type->getSlug()) {
             default                                   => $form_input,
         };
     }
