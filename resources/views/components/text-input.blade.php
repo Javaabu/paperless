@@ -32,7 +32,7 @@
         'value' => $field_value,
     ];
 
-    $extra_attributes = (new \App\Helpers\FormBuilder\HtmlBuilder())->attributes($attribs);
+    $extra_attributes = (new \Javaabu\Paperless\Support\HtmlBuilder())->attributes($attribs);
     $input_attributes = new \Illuminate\Support\HtmlString($extra_attributes);
     $error_name = str_replace(['[', ']'], ['.', ''], $name);
 @endphp

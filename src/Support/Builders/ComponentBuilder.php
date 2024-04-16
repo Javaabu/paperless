@@ -2,9 +2,8 @@
 
 namespace Javaabu\Paperless\Support\Builders;
 
-use App\Helpers\Enums\FormFieldTypes;
-use App\Models\FormField;
-use App\Models\FormInput;
+use Javaabu\Paperless\Models\FormField;
+use Javaabu\Paperless\Models\FormInput;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Interfaces\Applicant;
 

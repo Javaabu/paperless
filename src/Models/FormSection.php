@@ -2,6 +2,7 @@
 
 namespace Javaabu\Paperless\Models;
 
+use Javaabu\Paperless\Interfaces\Applicant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,7 +40,7 @@ class FormSection extends Model
         });
     }
 
-    public function render(Entity|Individual $entity, Collection | null $form_inputs = null, bool $with_card = true): string
+    public function render(Applicant $entity, Collection | null $form_inputs = null, bool $with_card = true): string
     {
         $fields_html = '';
         $this->loadMissing('formFields', 'fieldGroups');
@@ -68,7 +69,7 @@ class FormSection extends Model
         return $form_section . $field_group_html;
     }
 
-    public function renderInfoList(Entity|Individual $entity, Collection | null $form_inputs = null, bool $with_card = true): string
+    public function renderInfoList(Applicant $entity, Collection | null $form_inputs = null, bool $with_card = true): string
     {
         $fields_html = '';
 

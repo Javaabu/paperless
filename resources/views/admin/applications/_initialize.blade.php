@@ -58,17 +58,14 @@
     {{--    </x-admin.input-group>--}}
 
 
-    <x-slot:buttons>
-        <div class="button-group inline-btn-group">
-            <button type="submit" class="btn btn-success btn--icon-text btn--raised">
-                {{ __('Continue') }}<i class="ml-2 zmdi zmdi-arrow-right"></i>
-            </button>
-            <a class="btn btn-dark btn--icon-text"
-               href="{{ route('admin.applications.index') }}"
-            >
-                <i class="zmdi zmdi-close"></i> {{__('Cancel') }}
-            </a>
-        </div>
-    </x-slot:buttons>
+    <x-forms::button-group :inline="true">
+        <x-forms::submit color="success" class="btn--icon-text btn--raised">
+            {{ __('Continue') }}<i class="ml-2 zmdi zmdi-arrow-right"></i>
+        </x-forms::submit>
+
+        <x-forms::link-button color="light" class="btn--icon-text" :url="route('admin.applications.index')">
+            <i class="zmdi zmdi-close-circle"></i> {{ __('Cancel') }}
+        </x-forms::link-button>
+    </x-forms::button-group>
 
 </x-forms::card>

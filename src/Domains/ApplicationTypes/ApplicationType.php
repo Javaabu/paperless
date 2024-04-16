@@ -17,6 +17,7 @@ use Javaabu\Helpers\AdminModel\AdminModel;
 use App\Application\Enums\ApplicationTypes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Helpers\AdminModel\IsAdminModel;
 use App\Helpers\Enums\ApplicationTypeCategory;
 use Spatie\MediaLibrary\MediaCollections\File;
@@ -161,7 +162,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         };
     }
 
-    public function render(Entity|Individual $entity, Collection | null $form_inputs = null, bool $with_admin_sections = false): string
+    public function render(Applicant $entity, Collection | null $form_inputs = null, bool $with_admin_sections = false): string
     {
         $form_sections = $this->formSections;
         if (! $with_admin_sections) {

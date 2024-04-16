@@ -2,17 +2,16 @@
 
 namespace Javaabu\Paperless\Support\Builders;
 
-use App\Helpers\Enums\FormFieldTypes;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Support\Components\TextInput;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Javaabu\Paperless\Support\Components\RepeatingGroup;
 
-class TextInputBuilder extends ComponentBuilder implements IsComponentBuilder
+class EmailInputBuilder extends ComponentBuilder implements IsComponentBuilder
 {
     public string $value = 'text_input';
 
-    public function render(?string $input = null, int | null $instance = null)
+    public function render(?string $input = null, int|null $instance = null)
     {
         return TextInput::make($this->form_field->slug)
                         ->repeatingGroup(function () {
@@ -28,6 +27,7 @@ class TextInputBuilder extends ComponentBuilder implements IsComponentBuilder
                         ->dhivehi($this->form_field->language->isDhivehi())
                         ->markAsRequired($this->form_field->is_required)
                         ->state($input)
+                        ->type('email')
                         ->toHtml();
     }
 

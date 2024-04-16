@@ -2,6 +2,8 @@
 
 namespace Javaabu\Paperless\FieldTypes\Types;
 
+use Javaabu\Paperless\Models\FormField;
+use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
 
 abstract class FieldType
@@ -24,6 +26,11 @@ abstract class FieldType
     public function getBuilder(): string
     {
         return $this->builder;
+    }
+
+    public function getBuilderInstance(FormField $form_field): IsComponentBuilder
+    {
+        return new ($this->getBuilder())($form_field);
     }
 
     public function getRenderParameters(): array

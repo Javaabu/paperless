@@ -114,42 +114,41 @@ class ApplicationsController extends Controller
     {
         $application_class = $this->getModelClass();
 
-        if ($request->hasAny([
+        if (! $request->hasAny([
             'application_type',
-            'entity_type',
-            'entity_id',
+            'applicant_type',
+            'applicant',
         ])) {
-            $applicant_rule = $request->input('applicant_type') == EntityTypeEnums::Individual->getEntityTypeId() ? 'exists:individuals,id' : 'exists:entities,id';
-            $rules = [
-                'applicant_type'   => ['required', 'exists:entity_types,id'],
-                'applicant'        => ['required', $applicant_rule],
-                'application_type' => [
-                    'required',
-                    'exists:application_types,id',
-                    'exists:entity_type_application_type,application_type_id,entity_type_id,' . $request->input('applicant_type')],
-            ];
-
-            $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                return view('admin.applications.initiate', ['application' => new Application()])->withErrors($validator);
-            }
-
-            $application_type = ApplicationType::find($request->input('application_type'));
-            $applicant_model_class = EntityTypeEnums::getModelClassFromTypeId($request->input('applicant_type'));
-            $applicant = $applicant_model_class::find($request->input('applicant'));
-
-            return view('paperless::admin.applications.create', [
-                'application'      => new $application_class(),
-                'applicant'        => $applicant,
-                'application_type' => $application_type,
+            return view('paperless::admin.applications.initiate', [
+                'application' => new $application_class(),
+                'initialize'  => true,
             ]);
         }
 
+        $rules = [
+            'applicant_type'   => ['required', 'exists:entity_types,id'],
+            'applicant'        => ['required', 'exists:users,id'],
+            'application_type' => [
+                'required',
+                'exists:application_types,id',
+                'exists:entity_type_application_type,application_type_id,entity_type_id,' . $request->input('applicant_type')],
+        ];
 
-        return view('paperless::admin.applications.initiate', [
-            'application' => new $application_class(),
-            'initialize'  => true,
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return view('paperless::admin.applications.initiate', ['application' => new $application_class()])->withErrors($validator);
+        }
+
+        $application_type = config('paperless.models.application_type')::find($request->input('application_type'));
+        $applicant_model_class = config('paperless.models.user');
+        $applicant = $applicant_model_class::find($request->input('applicant'));
+
+        return view('paperless::admin.applications.create', [
+            'application'      => new $application_class(),
+            'applicant'        => $applicant,
+            'application_type' => $application_type,
         ]);
+
     }
 
     public function store(ApplicationsRequest $request)

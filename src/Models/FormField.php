@@ -117,7 +117,7 @@ class FormField extends Model
         return $this->getBuilder()->getDefaultValidationRules($applicant, $request_data);
     }
 
-    public function render($entity, array | string $form_input = null, int | null $instance = null): string
+    public function render(Applicant $entity, array | string $form_input = null, int | null $instance = null): string
     {
         $parameters = $this->type->getRenderParameters($this, $entity, $instance);
         $form_input = $this->getRenderedFieldValue($form_input);
@@ -128,17 +128,13 @@ class FormField extends Model
 
     public function getBuilder(): IsComponentBuilder
     {
-        return FormFieldTypes::getBuilder($this);
+        return $this->type->getBuilderInstance($this);
     }
 
 
     public function getRenderedFieldValue($form_input): mixed
     {
-        return match ($this->type->value) {
-            'academy'    => Entity::find($form_input),
-            'existing_individual',
-            'instructor' => Individual::find($form_input),
-            'country'    => Country::find($form_input),
+        return match ($this->type->getSlug()) {
             default      => $form_input,
         };
     }
