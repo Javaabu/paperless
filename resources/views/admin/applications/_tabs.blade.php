@@ -29,5 +29,5 @@
 
 @endphp
 
-@component('admin.components.link-tabs', compact('tabs'))
+@component('paperless::components.link-tabs', compact('tabs'))
 @endcomponent

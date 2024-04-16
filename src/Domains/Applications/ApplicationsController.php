@@ -2,15 +2,11 @@
 
 namespace Javaabu\Paperless\Domains\Applications;
 
-use App\Models\Entity;
 use App\Models\Application;
 use App\Models\FormSection;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\DataObjects\CountData;
 use App\Models\ApplicationType;
-use App\Models\TonnageEndorsement;
-use Illuminate\Support\Collection;
 use App\Exports\ApplicationsExport;
 use App\Helpers\Enums\EntityTypeEnums;
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +18,6 @@ use App\Application\Enums\ApplicationStatuses;
 use App\Http\Requests\ApplicationsUpdateRequest;
 use Javaabu\Helpers\Http\Controllers\Controller;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Javaabu\Paperless\Domains\EntityTypes\EntityType;
 use App\Http\Requests\ApplicationAdminSectionsUpdateRequest;
 
@@ -30,9 +25,14 @@ class ApplicationsController extends Controller
 {
     use HasOrderbys;
 
+    public function getModelClass(): string
+    {
+        return config('paperless.models.application');
+    }
+
     public function __construct()
     {
-//        $this->authorizeResource(config('paperless.application_model'));
+        //        $this->authorizeResource(config('paperless.application_model'));
     }
 
     protected static function initOrderbys()
@@ -51,7 +51,7 @@ class ApplicationsController extends Controller
         $order = $this->getOrder($request, 'created_at', $orderby);
         $per_page = $this->getPerPage($request);
 
-        $applications = config('paperless.models.application')::orderBy($orderby, $order)->userVisible();
+        $applications = $this->getModelClass()::orderBy($orderby, $order)->userVisible();
 
         if ($search = $request->input('search')) {
             $applications->search($search);
@@ -112,6 +112,8 @@ class ApplicationsController extends Controller
 
     public function create(Request $request)
     {
+        $application_class = $this->getModelClass();
+
         if ($request->hasAny([
             'application_type',
             'entity_type',
@@ -136,15 +138,15 @@ class ApplicationsController extends Controller
             $applicant_model_class = EntityTypeEnums::getModelClassFromTypeId($request->input('applicant_type'));
             $applicant = $applicant_model_class::find($request->input('applicant'));
 
-            return view('admin.applications.create', [
-                'application'      => new Application(),
+            return view('paperless::admin.applications.create', [
+                'application'      => new $application_class(),
                 'applicant'        => $applicant,
                 'application_type' => $application_type,
             ]);
         }
 
-        $application_class = config('paperless.application_model');
-        return view('admin.applications.initiate', [
+
+        return view('paperless::admin.applications.initiate', [
             'application' => new $application_class(),
             'initialize'  => true,
         ]);

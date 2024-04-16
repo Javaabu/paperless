@@ -10,9 +10,15 @@ use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypesController;
 use Javaabu\Paperless\Domains\Services\ApplicationType\ApplicationTypeServicesController;
 use Javaabu\Paperless\Domains\FormSections\ApplicationType\ApplicationTypeFormFieldsController;
 use Javaabu\Paperless\Domains\DocumentTypes\ApplicationType\ApplicationTypeDocumentTypesController;
+use Javaabu\Paperless\Domains\ApplicationTypes\Api\ApplicationTypesController as ApiApplicationTypesController;
 
 class ApplicationRoutes
 {
+    public static function apiRoutes(): void
+    {
+        Route::resource('application-types', ApiApplicationTypesController::class)->only(['index', 'show']);
+    }
+
     public static function routes(): void
     {
         self::applicationCreateAndUpdateRoutes();

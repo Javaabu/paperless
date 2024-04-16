@@ -8,10 +8,11 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Javaabu\Paperless\Domains\Services\Service;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Javaabu\Paperless\Domains\Services\ServicePolicy;
 use Javaabu\Paperless\Domains\EntityTypes\EntityType;
+use Javaabu\Paperless\Domains\Services\ServicePolicy;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
+use Javaabu\Paperless\Domains\Applications\ApplicationPolicy;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy;
@@ -40,7 +41,7 @@ class PaperlessServiceProvider extends ServiceProvider
             'service'          => Service::class,
             'application_type' => ApplicationType::class,
             'document_type'    => DocumentType::class,
-            'entity_type'    => EntityType::class,
+            'entity_type'      => EntityType::class,
         ]);
     }
 
@@ -152,7 +153,7 @@ class PaperlessServiceProvider extends ServiceProvider
         $filesystem = $this->app->make(Filesystem::class);
 
         return Collection::make([$this->app->databasePath() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR])
-                         ->flatMap(fn($path) => $filesystem->glob($path . '*_' . $migrationFileName))
+                         ->flatMap(fn ($path) => $filesystem->glob($path . '*_' . $migrationFileName))
                          ->push($this->app->databasePath() . "/migrations/{$timestamp}_{$migrationFileName}")
                          ->first();
     }
@@ -160,6 +161,7 @@ class PaperlessServiceProvider extends ServiceProvider
     protected function registerPolicies(): void
     {
         $policies = [
+            config('paperless.models.application')      => ApplicationPolicy::class,
             config('paperless.models.application_type') => ApplicationTypePolicy::class,
             config('paperless.models.service')          => ServicePolicy::class,
             config('paperless.models.document_type')    => DocumentTypePolicy::class,

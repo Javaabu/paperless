@@ -10,4 +10,9 @@ class Paperless
     {
         ApplicationRoutes::routes();
     }
+
+    public static function apiRoutes(): void
+    {
+        ApplicationRoutes::apiRoutes();
+    }
 }
