@@ -5,6 +5,10 @@
 @section('inner-content')
 
     <x-forms::form :action="route('admin.applications.store')">
+        <x-forms::text :show-label="false" name="applicant_type_id" value="{{ request()->input('applicant_type') }}" :hidden="true" :required="true" />
+        <x-forms::text :show-label="false" name="applicant_id" value="{{ $applicant->id }}" :hidden="true" :required="true" />
+        <x-forms::text :show-label="false" name="application_type_id" value="{{ $application_type->id }}" :hidden="true" :required="true" />
+
         @include('paperless::admin.applications._form')
 
         <x-forms::button-group :inline="true">
