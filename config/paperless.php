@@ -30,6 +30,10 @@ return [
     'public_user'       => '',
     'public_user_table' => 'public_users',
 
+    'relations' => [
+        'services' => true,
+    ],
+
 
     /**
      * The model classes that are used in this application. You can extend the
