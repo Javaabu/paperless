@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\Domains\Applications;
 
 use Javaabu\Auth\User;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\ModelStates\HasStates;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\FormInput;
@@ -32,6 +33,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     use InteractsWithMedia;
     use IsAdminModel;
     use SoftDeletes;
+    use HasStates;
 
     protected string $reference_number_format = 'APP-:year-:no';
 
