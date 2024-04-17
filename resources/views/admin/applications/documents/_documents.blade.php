@@ -10,6 +10,13 @@
                 @php
                     $document = $documents->where('document_type_id', $required_document->id)->first();
                 @endphp
+                <x-paperless::input-group :label="$required_document->name"
+                                          :required="$required_document->pivot->is_required">
+                    <x-paperless::ajax-file-upload :model="$application"
+                                                  :document="$document"
+                                                  :document-type="$required_document"
+                                                  :name="'documents[' . $required_document->id . ']'"/>
+                </x-paperless::input-group>
 {{--                <x-admin.input-group :label="$required_document->name"--}}
 {{--                                     :required="$required_document->pivot->is_required">--}}
 {{--                    <x-admin.ajax-file-upload :model="$application"--}}

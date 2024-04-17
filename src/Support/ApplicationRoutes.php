@@ -3,9 +3,11 @@
 namespace Javaabu\Paperless\Support;
 
 use Illuminate\Support\Facades\Route;
+use Javaabu\Paperless\Models\FormSection;
 use Javaabu\Paperless\Domains\Services\ServicesController;
 use Javaabu\Paperless\Domains\Applications\ApplicationsController;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypesController;
+use Javaabu\Paperless\Domains\Applications\ApplicationViewsController;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypesController;
 use Javaabu\Paperless\Domains\Services\ApplicationType\ApplicationTypeServicesController;
 use Javaabu\Paperless\Domains\FormSections\ApplicationType\ApplicationTypeFormFieldsController;
@@ -33,7 +35,7 @@ class ApplicationRoutes
 
     public static function applicationCreateAndUpdateRoutes(): void
     {
-        Route::get('/template/field-groups/{field_group:slug}/download', [TemplateController::class, 'download'])->name('template.download');
+//        Route::get('/template/field-groups/{field_group:slug}/download', [TemplateController::class, 'download'])->name('template.download');
         Route::match(['PUT', 'PATCH'], 'applications', [ApplicationsController::class, 'bulk'])->name('applications.bulk');
         Route::match(['PUT', 'PATCH'], 'applications/{application}/status-update', [ApplicationsController::class, 'statusUpdate'])->name('applications.status-update');
         Route::match(['PUT', 'PATCH'], 'applications/{application}/sections/{admin_section}/update', [ApplicationsController::class, 'adminSectionUpdate'])->name('applications.admin-section-update');

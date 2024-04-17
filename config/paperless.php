@@ -5,6 +5,10 @@ return [
 
     'application_model' => \App\Models\Application::class,
 
+    'routes' => [
+        'document_store' => 'api.documents.store'
+    ],
+
     'entity_type_enum' => null,
 
     'language_enum' => Javaabu\Paperless\Enums\Languages::class,

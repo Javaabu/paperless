@@ -5,20 +5,11 @@ namespace Javaabu\Paperless\Domains\Applications;
 use Javaabu\Auth\User;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Collection;
-use Javaabu\Paperless\Models\Payment;
 use Illuminate\Database\Eloquent\Model;
-use Javaabu\Paperless\Models\Countries;
 use Javaabu\Paperless\Models\FormInput;
-use Javaabu\Paperless\Models\PublicUser;
-
-use Javaabu\Helpers\AdminModel\AdminModel;
-use Javaabu\Helpers\AdminModel\IsAdminModel;
-use function Javaabu\Paperless\Models\dnr;
-
+use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Javaabu\Paperless\Models\IndividualData;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Javaabu\Paperless\Models\AllowedMimeTypes;
 use Javaabu\StatusEvents\Interfaces\Trackable;
 use Javaabu\StatusEvents\Traits\HasStatusEvents;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -27,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Javaabu\Paperless\Models\FirstOrCreateIndividualAction;
+use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
@@ -36,8 +27,8 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
 {
     use HasStatusEvents;
     use InteractsWithMedia;
-    use SoftDeletes;
     use IsAdminModel;
+    use SoftDeletes;
 
     protected string $reference_number_format = 'APP-:year-:no';
 
