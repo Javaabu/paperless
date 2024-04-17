@@ -2,10 +2,10 @@
 
 namespace Javaabu\Paperless\Domains\Applications;
 
-use Javaabu\Auth\User;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Requests\BaseApplicationsRequest;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
 class ApplicationsRequest extends BaseApplicationsRequest
 {
@@ -47,5 +47,11 @@ class ApplicationsRequest extends BaseApplicationsRequest
     public function getApplicantType(): string
     {
         return 'user';
+    }
+
+    public function getApplicationType(): ?ApplicationType
+    {
+        $application_type_id = $this->input('application_type_id');
+        return ApplicationType::find($application_type_id);
     }
 }

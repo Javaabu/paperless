@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\Domains\Applications;
 
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Requests\BaseApplicationsRequest;
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
 class ApplicationsUpdateRequest extends BaseApplicationsRequest
 {
@@ -26,5 +27,11 @@ class ApplicationsUpdateRequest extends BaseApplicationsRequest
     {
         $application = $this->route('application') ?: $this->route('public_application');
         return $application->applicant_type;
+    }
+
+    public function getApplicationType(): ?ApplicationType
+    {
+        $application = $this->route('application');
+        return $application->applicationType;
     }
 }

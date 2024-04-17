@@ -16,6 +16,7 @@ abstract class BaseApplicationsRequest extends FormRequest
     abstract public function getApplicantType(): string;
 
     abstract public function getApplicant(): Applicant;
+    abstract public function getApplicationType(): ?ApplicationType;
 
     public function getDynamicFieldRules(?array $request_data = []): array
     {
@@ -29,7 +30,9 @@ abstract class BaseApplicationsRequest extends FormRequest
             return $rules;
         }
 
+
         $application_type->formSections->load('fieldGroups', 'formFields');
+
         foreach ($application_type->formSections as $section) {
             $fields = $section->formFields->filter(fn ($field) => ! $field->field_group_id);
             // $grouped_fields = $section->formFields->filter(fn ($field) => $field->field_group_id)->groupBy('field_group_id');
@@ -42,11 +45,5 @@ abstract class BaseApplicationsRequest extends FormRequest
         }
 
         return $rules;
-    }
-
-    public function getApplicationType(): ?ApplicationType
-    {
-        $application_type_id = $this->input('application_type_id');
-        return ApplicationType::find($application_type_id);
     }
 }

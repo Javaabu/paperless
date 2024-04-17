@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Helpers\Traits\HasOrderbys;
 use Illuminate\Support\Facades\Validator;
+use Javaabu\Paperless\Models\FormSection;
 use Javaabu\Helpers\Http\Controllers\Controller;
 use Illuminate\Auth\Access\AuthorizationException;
 use Javaabu\Paperless\Domains\EntityTypes\EntityType;
@@ -178,7 +179,6 @@ class ApplicationsController extends Controller
 
     public function update(ApplicationsUpdateRequest $request, Application $application): RedirectResponse
     {
-        dd($request->validated());
         $application->updateFormInputs($request->validated());
         $this->flashSuccessMessage();
         return to_route('admin.applications.documents', $application);
