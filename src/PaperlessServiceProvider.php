@@ -22,6 +22,7 @@ use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
 use Javaabu\Paperless\Console\Commands\CreateNewApplicationTypeCommand;
 use Javaabu\Paperless\Console\Commands\CreateSampleApplicationTypeCommand;
 use Javaabu\Paperless\Console\Commands\CreateApplicationTypeCategoryCommand;
+use Javaabu\Paperless\Console\Commands\ApplicationTypesPermissionsSeedCommand;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
@@ -93,7 +94,7 @@ class PaperlessServiceProvider extends ServiceProvider
 
         // Commands accessible only from the terminal go here.
         $this->commands([
-            //
+            ApplicationTypesPermissionsSeedCommand::class,
         ]);
     }
 
