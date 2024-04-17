@@ -5,5 +5,5 @@ sidebar_position: 1.1
 
 This package requires the following:
 
-- Laravel 9.0 or higher
-- PHP 8.1 or higher
+- PHP 8.3 or higher
+- Laravel 11.0 or higher

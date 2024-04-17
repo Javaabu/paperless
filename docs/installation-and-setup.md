@@ -3,6 +3,8 @@ title: Installation & Setup
 sidebar_position: 1.2
 ---
 
+## Introduction
+
 You can install the package via composer:
 
 ```bash
