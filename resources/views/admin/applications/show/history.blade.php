@@ -1,9 +1,9 @@
-@extends('admin.applications.applications')
+@extends('paperless::admin.applications.applications')
 
 @section('inner-content')
 
     <div class="card">
-        @include('admin.status-events.history', ['model' => $application])
+        @include('paperless::admin.status-events.history', ['model' => $application])
     </div>
 
 @endsection

@@ -16,7 +16,7 @@
             </div>
             <a class="inline-block" target="_blank" href="{{ $getDownloadLink() }}">
                 <span class="upload-file-size">{{ $getSize() }}</span>
-                <i class="pl-2 fa-regular fa-arrow-down-to-line" style="cursor:pointer;"></i>
+                <i class="pl-2 zmdi zmdi-download" style="cursor:pointer;"></i>
             </a>
         </div>
     @else

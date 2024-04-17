@@ -6,7 +6,7 @@ return [
     'application_model' => \App\Models\Application::class,
 
     'routes' => [
-        'document_store' => 'api.documents.store'
+        'document_store' => 'api.documents.store',
     ],
 
     'entity_type_enum' => null,
@@ -50,9 +50,14 @@ return [
         'form_section'     => \Javaabu\Paperless\Models\FormSection::class,
         'field_group'      => \Javaabu\Paperless\Models\FieldGroup::class,
         'service'          => \Javaabu\Paperless\Domains\Services\Service::class,
+        'payment'          => '',
     ],
 
     'enums' => [
         'application_status' => \Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses::class,
+    ],
+
+    'relations' => [
+        'services' => false,
     ]
 ];

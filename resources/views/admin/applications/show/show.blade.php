@@ -6,6 +6,9 @@
 
     @include('paperless::admin.applications.show.cards._admin-section')
     @include('paperless::admin.applications.show.cards._actions')
-    @include('paperless::admin.applications.show.cards._payments')
+
+    @if (config('paperless.relations.services'))
+        @include('paperless::admin.applications.show.cards._payments')
+    @endif
 
 @endsection
