@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
+use Javaabu\Paperless\StatusActions\ApplicationStatusAction;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
@@ -333,7 +334,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     }
 
 
-    public function statusAction(): ApplicationStatus
+    public function statusAction(): ApplicationStatusAction
     {
         $action_class = $this->status->getStatusAction();
         return new $action_class($this);

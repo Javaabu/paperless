@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\StatusActions;
 
-use App\Exceptions\InvalidOperationException;
 use Illuminate\Support\Carbon;
 use Javaabu\Auth\User;
 use Javaabu\Paperless\Domains\Applications\Application;

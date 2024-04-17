@@ -98,15 +98,9 @@ class ApplicationPolicy
     {
         if (! in_array($application->status, [
             ApplicationStatuses::Draft,
-            ApplicationStatuses::Incomplete,
-            ApplicationStatuses::PendingVerification,
-            ApplicationStatuses::PendingPayment,
+            ApplicationStatuses::Pending,
         ])) {
             return false;
-        }
-
-        if ($user instanceof PublicUser) {
-            return $application->canBeAccessedByPublicUser($user);
         }
 
         /* @var \App\Models\User $user */
@@ -120,11 +114,7 @@ class ApplicationPolicy
     // markAsRejected
     public function markAsRejected(User $user, Application $application): bool
     {
-        if ($application->status != ApplicationStatuses::PendingVerification) {
-            return false;
-        }
-
-        if ($user instanceof PublicUser) {
+        if ($application->status != ApplicationStatuses::Pending) {
             return false;
         }
 
@@ -142,24 +132,10 @@ class ApplicationPolicy
         return $user->can('markAsRejected', $application);
     }
 
-    // resubmit
-    public function resubmit(User $user, Application $application): bool
-    {
-        if ($application->status != ApplicationStatuses::Incomplete) {
-            return false;
-        }
-
-        return $user->can('update', $application);
-    }
-
     // markAsVerified
     public function markAsVerified(User $user, Application $application): bool
     {
-        if ($application->status != ApplicationStatuses::PendingVerification) {
-            return false;
-        }
-
-        if ($user instanceof PublicUser) {
+        if ($application->status != ApplicationStatuses::Pending) {
             return false;
         }
 
@@ -175,13 +151,9 @@ class ApplicationPolicy
     public function undoVerification(User $user, Application $application): bool
     {
         if (! in_array($application->status, [
-            ApplicationStatuses::PendingApproval,
+            ApplicationStatuses::Pending,
             ApplicationStatuses::Rejected,
         ])) {
-            return false;
-        }
-
-        if ($user instanceof PublicUser) {
             return false;
         }
 
@@ -197,13 +169,8 @@ class ApplicationPolicy
     public function extendEta(User $user, Application $application): bool
     {
         if (! in_array($application->status, [
-            ApplicationStatuses::PendingVerification,
-            ApplicationStatuses::Processing,
+            ApplicationStatuses::Pending,
         ])) {
-            return false;
-        }
-
-        if ($user instanceof PublicUser) {
             return false;
         }
 
@@ -215,34 +182,10 @@ class ApplicationPolicy
         return $user->can($application->applicationType?->getExtendEtaPermissionAttribute()) && $application->canBeAccessedBy($user);
     }
 
-    // markAsPaid
-    public function markAsPaid(User $user, Application $application): bool
-    {
-        if ($application->status != ApplicationStatuses::PendingPayment) {
-            return false;
-        }
-
-        if ($user instanceof PublicUser) {
-            return false;
-            //            return $application->canBeAccessedByPublicUser($user);
-        }
-
-        /* @var \App\Models\User $user */
-        if ($user->can($application->applicationType?->getPayAnyPermissionAttribute())) {
-            return true;
-        }
-
-        return $user->can($application->applicationType?->getPayPermissionAttribute()) && $application->canBeAccessedBy($user);
-    }
-
     // markAsApproved
     public function markAsApproved(User $user, Application $application): bool
     {
-        if ($application->status != ApplicationStatuses::PendingApproval) {
-            return false;
-        }
-
-        if ($user instanceof PublicUser) {
+        if ($application->status != ApplicationStatuses::Pending) {
             return false;
         }
 
@@ -253,27 +196,5 @@ class ApplicationPolicy
 
         return $user->can($application->applicationType?->getApprovePermissionAttribute()) && $application->canBeAccessedBy($user);
     }
-
-    public function assignUser(User $user, Application $application): bool
-    {
-        if (in_array($application->status, [
-            ApplicationStatuses::Rejected,
-            ApplicationStatuses::Complete,
-        ])) {
-            return false;
-        }
-
-        if ($user instanceof PublicUser) {
-            return false;
-        }
-
-        /* @var \App\Models\User $user */
-        if ($user->can($application->applicationType?->getAssignUserAnyPermissionAttribute())) {
-            return true;
-        }
-
-        return $user->can($application->applicationType?->getAssignUserPermissionAttribute()) && $application->canBeAccessedBy($user);
-    }
-
 
 }

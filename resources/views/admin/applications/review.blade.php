@@ -38,8 +38,11 @@
             <x-forms::link-button color="dark" class="btn--icon-text btn--raised" :url="route('admin.applications.documents', $application)">
                 <i class="zmdi zmdi-arrow-left"></i> {{ __('Previous') }}
             </x-forms::link-button>
-            <x-forms::form method="PATCH" :model="$application" :action="route('admin.applications.update', $application)">
-                <x-forms::submit color="success" class="btn--icon-text btn--raised">
+            <x-forms::form method="PATCH" :model="$application" :action="route('admin.applications.status-update', $application)">
+                <x-forms::submit color="success"
+                                 name="action"
+                                 value="submit"
+                                 class="btn--icon-text btn--raised">
                     <i class="zmdi zmdi-check"></i> {{ __('Confirm & Submit') }}
                 </x-forms::submit>
             </x-forms::form>

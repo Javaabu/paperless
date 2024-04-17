@@ -2,8 +2,11 @@
 
 namespace Javaabu\Paperless\Domains\Applications\Enums;
 
+use Javaabu\Auth\User;
 use Javaabu\Paperless\Enums\IsEnum;
 use Javaabu\Paperless\Enums\NativeEnumsTrait;
+use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\StatusActions\DraftApplicationStatus;
 
 enum ApplicationStatuses: string implements IsEnum
 {
@@ -40,22 +43,22 @@ enum ApplicationStatuses: string implements IsEnum
     public static function statusActions(): array
     {
         return [
-            self::Draft->value               => DraftApplicationStatus::class,
-            self::Pending->value => PendingVerificationApplicationStatus::class,
-            self::Approved->value            => CompleteApplicationStatus::class,
-            self::Rejected->value            => RejectedApplicationStatus::class,
-            self::Cancelled->value           => CancelledApplicationStatus::class,
+            self::Draft->value     => DraftApplicationStatus::class,
+            self::Pending->value   => PendingVerificationApplicationStatus::class,
+            self::Approved->value  => CompleteApplicationStatus::class,
+            self::Rejected->value  => RejectedApplicationStatus::class,
+            self::Cancelled->value => CancelledApplicationStatus::class,
         ];
     }
 
     public static function statusRemarks(): array
     {
         return [
-            self::Draft->value               => __("Your application is currently in draft."),
-            self::Pending->value => __("Your application is pending verification."),
-            self::Rejected->value            => __("Your application has been rejected."),
-            self::Approved->value            => __("Your application is complete."),
-            self::Cancelled->value           => __("Your application has been cancelled."),
+            self::Draft->value     => __("Your application is currently in draft."),
+            self::Pending->value   => __("Your application is pending verification."),
+            self::Rejected->value  => __("Your application has been rejected."),
+            self::Approved->value  => __("Your application is complete."),
+            self::Cancelled->value => __("Your application has been cancelled."),
         ];
     }
 
@@ -109,7 +112,7 @@ enum ApplicationStatuses: string implements IsEnum
     public function isLocked(): bool
     {
         return in_array($this->value, [
-            self::Complete->value,
+            self::Approved->value,
             self::Cancelled->value,
             self::Rejected->value,
         ]);

@@ -5,6 +5,7 @@ namespace Javaabu\Paperless\Domains\Applications;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Helpers\Traits\HasOrderbys;
 use Illuminate\Support\Facades\Validator;
@@ -175,8 +176,9 @@ class ApplicationsController extends Controller
         return view('paperless::admin.applications.edit', compact('application', 'application_type', 'applicant'));
     }
 
-    public function update(ApplicationsUpdateRequest $request, Application $application)
+    public function update(ApplicationsUpdateRequest $request, Application $application): RedirectResponse
     {
+        dd($request->validated());
         $application->updateFormInputs($request->validated());
         $this->flashSuccessMessage();
         return to_route('admin.applications.documents', $application);
@@ -332,10 +334,9 @@ class ApplicationsController extends Controller
         return view('paperless::admin.applications.review', compact('application'));
     }
 
-    public function statusUpdate(Application $application, Request $request)
+    public function statusUpdate(Application $application, Request $request): RedirectResponse
     {
-
-        $allowed_actions = ApplicationStatuses::getAllowedActions(request()->user(), $application);
+        $allowed_actions = config('paperless.enums.application_status')::getAllowedActions(request()->user(), $application);
         $request->validate([
             'action'  => [
                 'required',
