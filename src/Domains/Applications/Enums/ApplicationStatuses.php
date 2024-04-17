@@ -7,6 +7,7 @@ use Javaabu\Paperless\Enums\IsEnum;
 use Javaabu\Paperless\Enums\NativeEnumsTrait;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\StatusActions\DraftApplicationStatus;
+use Javaabu\Paperless\StatusActions\PendingApplicationStatus;
 
 enum ApplicationStatuses: string implements IsEnum
 {
@@ -44,7 +45,7 @@ enum ApplicationStatuses: string implements IsEnum
     {
         return [
             self::Draft->value     => DraftApplicationStatus::class,
-            self::Pending->value   => PendingVerificationApplicationStatus::class,
+            self::Pending->value   => PendingApplicationStatus::class,
             self::Approved->value  => CompleteApplicationStatus::class,
             self::Rejected->value  => RejectedApplicationStatus::class,
             self::Cancelled->value => CancelledApplicationStatus::class,
@@ -68,25 +69,13 @@ enum ApplicationStatuses: string implements IsEnum
             'submit'           => 'secondary',
             'markAsCancelled'  => 'dark',
             'markAsRejected'   => 'danger',
-            'markAsIncomplete' => 'warning',
-            'resubmit'         => 'secondary',
-            'markAsVerified'   => 'primary',
-            'undoVerification' => 'secondary',
-            'extendEta'        => 'dark',
-            'markAsPaid'       => 'success',
-            'markAsProcessed'  => 'success',
             'markAsApproved'   => 'success',
-            'assignUser'       => 'dark',
         ];
     }
 
     public static function manualActions(): array
     {
         return [
-            'extendEta',
-            'markAsPaid',
-            'markAsProcessed',
-            'assignUser',
         ];
     }
 

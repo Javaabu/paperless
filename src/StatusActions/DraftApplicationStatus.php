@@ -5,11 +5,14 @@ namespace Javaabu\Paperless\StatusActions;
 use Javaabu\Auth\User;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
+use Javaabu\Paperless\StatusActions\Traits\HasCancelAction;
 use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredFields;
 use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredDocuments;
 
 class DraftApplicationStatus extends ApplicationStatusAction
 {
+    use HasCancelAction;
+
     protected CheckPresenceOfRequiredDocuments $check_presence_of_required_documents;
     protected CheckPresenceOfRequiredFields $check_presence_of_required_fields;
 

@@ -126,62 +126,6 @@ class ApplicationPolicy
         return $user->can($application->applicationType?->getVerifyPermissionAttribute()) && $application->canBeAccessedBy($user);
     }
 
-    // markAsIncomplete
-    public function markAsIncomplete(User $user, Application $application): bool
-    {
-        return $user->can('markAsRejected', $application);
-    }
-
-    // markAsVerified
-    public function markAsVerified(User $user, Application $application): bool
-    {
-        if ($application->status != ApplicationStatuses::Pending) {
-            return false;
-        }
-
-        /* @var \App\Models\User $user */
-        if ($user->can($application->applicationType?->getVerifyAnyPermissionAttribute())) {
-            return true;
-        }
-
-        return $user->can($application->applicationType?->getVerifyPermissionAttribute()) && $application->canBeAccessedBy($user);
-    }
-
-    // undoVerification
-    public function undoVerification(User $user, Application $application): bool
-    {
-        if (! in_array($application->status, [
-            ApplicationStatuses::Pending,
-            ApplicationStatuses::Rejected,
-        ])) {
-            return false;
-        }
-
-        /* @var \App\Models\User $user */
-        if ($user->can($application->applicationType?->getVerifyAnyPermissionAttribute())) {
-            return true;
-        }
-
-        return $user->can($application->applicationType?->getVerifyPermissionAttribute()) && $application->canBeAccessedBy($user);
-    }
-
-    // extendDeadline
-    public function extendEta(User $user, Application $application): bool
-    {
-        if (! in_array($application->status, [
-            ApplicationStatuses::Pending,
-        ])) {
-            return false;
-        }
-
-        /* @var \App\Models\User $user */
-        if ($user->can($application->applicationType?->getExtendEtaAnyPermissionAttribute())) {
-            return true;
-        }
-
-        return $user->can($application->applicationType?->getExtendEtaPermissionAttribute()) && $application->canBeAccessedBy($user);
-    }
-
     // markAsApproved
     public function markAsApproved(User $user, Application $application): bool
     {
@@ -189,7 +133,6 @@ class ApplicationPolicy
             return false;
         }
 
-        /* @var \App\Models\User $user */
         if ($user->can($application->applicationType?->getApproveAnyPermissionAttribute())) {
             return true;
         }
