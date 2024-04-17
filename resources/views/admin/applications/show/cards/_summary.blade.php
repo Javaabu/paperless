@@ -2,55 +2,58 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <x-admin.info :label="__('Requested Service')">{!! $application->applicationType?->admin_link !!}</x-admin.info>
-                <x-admin.info :label="__('Application Reference Number')">{{ $application->formatted_id }}</x-admin.info>
-                <x-admin.info :label="__('Applicant')">
-                    @if ($application->applicant_type == \App\Helpers\Enums\EntityTypeEnums::Individual->value)
-                        <x-badge>{{ App\Helpers\Enums\EntityTypeEnums::Individual->getlabel() }}</x-badge>
-                    @else
-                        <x-badge>{{ $application->applicant?->entityType?->name }}</x-badge>
-                    @endif
+                <x-forms::text-entry :label="__('Requested Service')" :inline="true">
+                    {!! $application->applicationType?->admin_link !!}
+                </x-forms::text-entry>
+                <x-forms::text-entry :label="__('Application Reference Number')" :inline="true">
+                    {{ $application->formatted_id }}
+                </x-forms::text-entry>
+                <x-forms::text-entry :label="__('Applicant')" :inline="true">
                     <span class="mr-2">{!! $application->applicant?->admin_link !!}</span>
-                </x-admin.info>
-                <x-admin.info :label="__('Application Submission')">
+                </x-forms::text-entry>
+                <x-forms::text-entry :label="__('Application Submission')" :inline="true">
                     @if ($application->public_user_id)
-                        <x-badge color="light">{!! $application->publicUser?->admin_link !!}</x-badge>
+                        <x-paperless::badge color="light">{!! $application->publicUser?->admin_link !!}</x-paperless::badge>
                     @else
-                        <x-badge color="secondary">{{ __('Over The Counter') }}</x-badge>
+                        <x-paperless::badge color="secondary">{{ __('Over The Counter') }}</x-paperless::badge>
                     @endif
-                    <span class="ml-2"> - {{ format_datetime($application->submitted_at) ?? '⸺' }}</span>
-                </x-admin.info>
-                <x-admin.info :label="__('Process Application Before')">{{ format_datetime($application->eta_at) ?? '⸺' }}</x-admin.info>
-                <x-admin.info :label="__('Supervisor Alert On')">{{ format_datetime($application->alert_at) ?? '⸺' }}</x-admin.info>
-                <x-admin.info :label="__('Urgency')">
-                    @if ($application->eta_at)
-                        <x-badge :color="$application->urgency_color">{{ $application->urgency_label }}</x-badge>
-                    @else
-                        ⸺
-                    @endif
-                </x-admin.info>
+                    <span class="ml-2"> - {{ $application->submitted_at?->format('d M Y H:i') ?? '⸺' }}</span>
+                </x-forms::text-entry>
+                <x-forms::text-entry :label="__('Process Application Before')" :inline="true">
+                    {{ $application->eta_at?->format('d M Y H:i') ?? '⸺' }}
+                </x-forms::text-entry>
+
             </div>
             <div class="col-md-6">
-                <x-admin.info :label="__('Assigned Staff')">{!! $application->assignedTo?->admin_link ?? '⸺' !!}</x-admin.info>
 
-                @if ($application->verified_at)
-                <x-admin.info :label="__('Verification')">{!! $application->verifiedBy?->admin_link !!} - {{ format_datetime($application->verified_at) }}</x-admin.info>
-                @endif
+                <x-forms::text-entry :label="__('Verification')" :inline="true">
+                    {!! $application->verifiedBy?->admin_link !!} - {{ $application->verified_at?->format('d M Y H:i') ?? '⸺' }}
+                </x-forms::text-entry>
 
-                @if ($application->approved_at)
-                    <x-admin.info :label="__('Approval')">{!! $application->approvedBy?->admin_link !!} - {{ format_datetime($application->approved_at) }}</x-admin.info>
-                @endif
+                <x-forms::text-entry :label="__('Approval')" :inline="true">
+                    {!! $application->approvedBy?->admin_link !!} - {{ $application->approved_at?->format('d M Y H:i') ?? '⸺' }}
+                </x-forms::text-entry>
 
-                <x-admin.info :label="__('Latest Remarks')">{{ $application->latest_remarks ?? '⸺' }}</x-admin.info>
+                <x-forms::text-entry :label="__('Latest Remarks')" :inline="true">
+                    {{ $application->latest_remarks ?? '⸺' }}
+                </x-forms::text-entry>
+
                 @if ($application->related_type)
-                    <x-admin.info :label="$application->related_type_label">{!! $application->related?->admin_link !!}</x-admin.info>
+                    <x-forms::text-entry :label="$application->related_type_label" :inline="true">
+                        {!! $application->related?->admin_link !!}
+                    </x-forms::text-entry>
                 @endif
+
                 @if ($application->generated_type)
-                    <x-admin.info :label="$application->generated_type_label">{!! $application->generated?->admin_link !!}</x-admin.info>
+                    <x-forms::text-entry :label="$application->generated_type_label" :inline="true">
+                        {!! $application->generated?->admin_link !!}
+                    </x-forms::text-entry>
                 @endif
-                <x-admin.info :label="__('Status')">
-                    <x-badge :color="$application->status->getColor()">{{ $application->status->getLabel() }}</x-badge>
-                </x-admin.info>
+
+                <x-forms::text-entry :label="__('Status')" :inline="true">
+                    <x-paperless::badge :color="$application->status->getColor()">{{ $application->status->getLabel() }}</x-paperless::badge>
+                </x-forms::text-entry>
+
             </div>
         </div>
 

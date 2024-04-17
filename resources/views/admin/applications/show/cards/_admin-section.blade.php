@@ -10,14 +10,14 @@
     @endphp
 
     @if (! $application->status->isLocked())
-        @include('admin.applications.show.cards._form-section', [
+        @include('paperless::admin.applications.show.cards._form-section', [
             'section' => $section,
             'section_form_inputs' => $section_form_inputs
         ])
     @endif
 
     @if ($application->status->isLocked())
-        @include('admin.applications.show.cards._form-section-view', [
+        @include('paperless::admin.applications.show.cards._form-section-view', [
             'section' => $section,
             'section_form_inputs' => $section_form_inputs
         ])

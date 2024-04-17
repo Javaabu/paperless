@@ -22,10 +22,12 @@ use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
 use Javaabu\Paperless\StatusActions\ApplicationStatusAction;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
+use Javaabu\Paperless\Domains\Applications\Traits\HasStatusActions;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
 
 class Application extends Model implements HasMedia, Trackable, AdminModel
 {
+    use HasStatusActions;
     use HasStatusEvents;
     use InteractsWithMedia;
     use IsAdminModel;
@@ -78,12 +80,12 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
 
     public function verifiedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'verified_by_id');
+        return $this->belongsTo(config('paperless.models.user'), 'verified_by_id');
     }
 
     public function approvedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'approved_by_id');
+        return $this->belongsTo(config('paperless.models.user'), 'approved_by_id');
     }
 
     public function payments(): MorphMany

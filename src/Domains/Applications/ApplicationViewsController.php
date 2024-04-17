@@ -2,14 +2,15 @@
 
 namespace Javaabu\Paperless\Domains\Applications;
 
-use App\Models\Application;
-use App\Http\Controllers\Controller;
+
+use Illuminate\Contracts\View\View;
+use Javaabu\Helpers\Http\Controllers\Controller;
 
 class ApplicationViewsController extends Controller
 {
-    public function show(Application $application)
+    public function show(Application $application): View
     {
-        return view('admin.applications.show.show', compact('application'));
+        return view('paperless::admin.applications.show.show', compact('application'));
     }
 
     public function details(Application $application)

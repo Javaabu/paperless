@@ -3,11 +3,8 @@
 namespace Javaabu\Paperless\StatusActions;
 
 use Javaabu\Auth\User;
-use App\Jobs\ApplicationSubmittedJob;
-use App\Application\Enums\ApplicationStatuses;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
-use App\Actions\Applications\GetUserToAssignApplicationProcessingAction;
 use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredFields;
 use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredDocuments;
 
