@@ -13,18 +13,18 @@ class ApplicationViewsController extends Controller
         return view('paperless::admin.applications.show.show', compact('application'));
     }
 
-    public function details(Application $application)
+    public function details(Application $application): View
     {
-        return view('admin.applications.show.details', compact('application'));
+        return view('paperless::admin.applications.show.details', compact('application'));
     }
 
-    public function viewDocuments(Application $application)
+    public function viewDocuments(Application $application): View
     {
-        return view('admin.applications.show.view-documents', compact('application'));
+        return view('paperless::admin.applications.show.view-documents', compact('application'));
     }
 
-    public function history(Application $application)
+    public function history(Application $application): View
     {
-        return view('admin.applications.show.history', compact('application'));
+        return view('paperless::admin.applications.show.history', compact('application'));
     }
 }

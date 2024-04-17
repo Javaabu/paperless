@@ -1,4 +1,4 @@
-@extends('admin.applications.applications')
+@extends('paperless::admin.applications.applications')
 
 @section('inner-content')
 

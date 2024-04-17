@@ -3,7 +3,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ __("Payments") }}</h3>
         </div>
-        <x-admin.payment-information :payments="$application->getAllPayments()" />
+        <x-paperless::payment-information :payments="$application->getAllPayments()" />
     </div>
 @endif
 

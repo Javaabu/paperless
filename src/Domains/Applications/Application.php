@@ -90,7 +90,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
 
     public function payments(): MorphMany
     {
-        return $this->morphMany(Payment::class, 'payable');
+        return $this->morphMany(config('paperless.models.payment'), 'payable');
     }
 
     public function generated(): MorphTo
@@ -386,5 +386,10 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     public function getAdminUrlAttribute(): string
     {
         return route('admin.applications.show', $this);
+    }
+
+    public function getAllPayments(): Collection
+    {
+        return $this->payments->merge($this->getApplicationTypeSpecificPayments());
     }
 }
