@@ -41,7 +41,7 @@
             <x-forms::form method="PATCH" :model="$application" :action="route('admin.applications.status-update', $application)">
                 <x-forms::submit color="success"
                                  name="action"
-                                 value="submit"
+                                 value="{{ config('paperless.application_status_on_submit') }}"
                                  class="btn--icon-text btn--raised">
                     <i class="zmdi zmdi-check"></i> {{ __('Confirm & Submit') }}
                 </x-forms::submit>

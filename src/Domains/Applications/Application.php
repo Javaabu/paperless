@@ -41,10 +41,6 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
 
     protected array $searchable = [];
 
-    protected $attributes = [
-        'status' => ApplicationStatuses::Draft,
-    ];
-
     protected $casts = [
         'eta_at'       => 'datetime',
         'alert_at'     => 'datetime',
@@ -56,7 +52,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     public function casts(): array
     {
         return [
-            'status' => ApplicationStatuses::class,
+            'status' => config('paperless.application_status'),
         ];
     }
 

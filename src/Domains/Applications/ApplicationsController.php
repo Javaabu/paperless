@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\Domains\Applications;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Spatie\ModelStates\State;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ use Javaabu\Helpers\Traits\HasOrderbys;
 use Illuminate\Support\Facades\Validator;
 use Javaabu\Paperless\Models\FormSection;
 use Javaabu\Helpers\Http\Controllers\Controller;
+use Spatie\ModelStates\Validation\ValidStateRule;
 use Illuminate\Auth\Access\AuthorizationException;
 use Javaabu\Paperless\Domains\EntityTypes\EntityType;
 
@@ -314,11 +316,10 @@ class ApplicationsController extends Controller
 
     public function documents(Application $application, Request $request): View
     {
-        $this->authorize('update', $application);
+        $this->authorize('updateDocuments', $application);
 
         $required_documents = $application->applicationType->documentTypes;
         $documents = $application->getMedia('documents');
-        //        dd($documents);
 
         return view('paperless::admin.applications.documents', compact(
             'application',
@@ -336,17 +337,18 @@ class ApplicationsController extends Controller
 
     public function statusUpdate(Application $application, Request $request): RedirectResponse
     {
-        $allowed_actions = config('paperless.enums.application_status')::getAllowedActions(request()->user(), $application);
         $request->validate([
-            'action'  => [
-                'required',
-                'in:' . implode(',', $allowed_actions),
-            ],
+            'action'  => new ValidStateRule(config('paperless.application_status')),
             'remarks' => ['nullable', 'string', 'max:255'],
         ]);
 
+        $application_status = config('paperless.application_status');
+        /* @var State $application_status */
+        $transition_to_state = $application_status::make($request->input('action'), $application);
         $remarks = $request->input('remarks');
-        $application->statusAction()->{$request->input('action')}($remarks);
+
+        $application->status->transitionTo($transition_to_state, $remarks);
+
         $this->flashSuccessMessage('Application status updated successfully');
         return to_route('admin.applications.show', $application);
     }
