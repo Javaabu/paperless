@@ -1,8 +1,6 @@
 @php
     $process_actions = config('paperless.enums.application_status')::getProcessActions();
-    $available_process_actions = collect($process_actions)->filter(function ($color, $action) use ($application) {
-        return auth()->user()->can($action, $application);
-    })->toArray();
+    $available_process_actions = $application->status->transitionableStates();
 @endphp
 
 @if ($available_process_actions)

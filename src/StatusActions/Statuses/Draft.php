@@ -1,0 +1,26 @@
+<?php
+
+namespace Javaabu\Paperless\StatusActions\Statuses;
+
+use Spatie\ModelStates\State;
+
+class Draft extends ApplicationStatus
+{
+    public static string $name = 'draft';
+
+    public function getColor(): string
+    {
+        return 'light';
+    }
+
+    public function getLabel(): string
+    {
+        return __('Draft');
+    }
+
+    public function canUpdateDocuments(): bool
+    {
+        return true;
+    }
+
+}
