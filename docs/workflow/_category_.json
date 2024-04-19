@@ -1,0 +1,11 @@
+{
+    "position": 5,
+    "label": "Workflow",
+    "collapsible": true,
+    "collapsed": false,
+    "link": {
+        "type": "generated-index",
+        "slug": "/paperless/_categories/workflow",
+        "description": "Understanding the application workflow"
+    }
+}

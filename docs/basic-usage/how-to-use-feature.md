@@ -1,6 +1,6 @@
 ---
 title: Adding Paperless To Admin Panel
-sidebar_position: 1.1
+sidebar_position: 4.1
 ---
 
 # Adding Paperless To Admin Panel

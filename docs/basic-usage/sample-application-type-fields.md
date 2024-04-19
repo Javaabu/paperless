@@ -1,6 +1,6 @@
 ---
 title: Sample Application Type Fields
-sidebar_position: 1.2
+sidebar_position: 4.2
 ---
 
 ```php

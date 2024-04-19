@@ -1,6 +1,6 @@
 ---
 title: Requirements
-sidebar_position: 1.1
+sidebar_position: 2
 ---
 
 This package requires the following:

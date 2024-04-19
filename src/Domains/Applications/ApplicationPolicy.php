@@ -34,7 +34,6 @@ class ApplicationPolicy
 
     public function update(User $user, Application $application): bool
     {
-        /* @var \App\Models\User $user */
         if ($user->can($application->applicationType?->getEditAnyPermissionAttribute())) {
             return true;
         }
@@ -57,7 +56,6 @@ class ApplicationPolicy
 
     public function delete(User $user, Application $application): bool
     {
-        /* @var \App\Models\User $user */
         if ($user->can($application->applicationType?->getDeleteAnyPermissionAttribute())) {
             return true;
         }
