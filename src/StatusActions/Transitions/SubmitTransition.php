@@ -3,7 +3,7 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
-use Javaabu\Paperless\StatusActions\Statuses\Pending;
+use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredFields;
@@ -34,14 +34,14 @@ class SubmitTransition extends Transition
         $this->application->doBeforeSubmitting();
 
         $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
-        $this->application->status = new Pending($this->application);
+        $this->application->status = new PendingVerification($this->application);
         $this->application->submitted_at = now();
         $this->application->eta_at = now()->addDays($application_eta_days);
         $this->application->save();
 
         $this->application->createStatusEvent(
-            new Pending($this->application),
-            $remarks ?? (new Pending($this->application))->getRemarks()
+            new PendingVerification($this->application),
+            $remarks ?? (new PendingVerification($this->application))->getRemarks()
         );
 
         $this->application->doAfterSubmitting();

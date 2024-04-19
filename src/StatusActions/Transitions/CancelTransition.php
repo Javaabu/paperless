@@ -4,7 +4,7 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
-use Javaabu\Paperless\StatusActions\Statuses\Pending;
+use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
 use Javaabu\Paperless\Domains\Applications\Application;
@@ -24,7 +24,7 @@ class CancelTransition extends Transition
     {
         if (! in_array($this->application->status->getValue(), [
             Draft::getMorphClass(),
-            Pending::getMorphClass(),
+            PendingVerification::getMorphClass(),
         ])) {
             return false;
         }

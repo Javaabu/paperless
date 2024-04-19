@@ -3,6 +3,7 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
+use Javaabu\Paperless\StatusActions\Statuses\Draft;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
@@ -11,7 +12,7 @@ use Javaabu\Helpers\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredFields;
 use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredDocuments;
 
-class ApproveTransition extends Transition
+class UndoRejectionTransition extends Transition
 {
 
     public function __construct(
@@ -19,21 +20,19 @@ class ApproveTransition extends Transition
     ) {
     }
 
-    public function handle(): Application
-    {
-        return $this->application;
-    }
-
     public function canTransition(): bool
     {
-        if ($this->application->status->getValue() != PendingVerification::getMorphClass()) {
+        if (! in_array($this->application->status->getValue(), [
+            Draft::getMorphClass(),
+            PendingVerification::getMorphClass(),
+        ])) {
             return false;
         }
 
-        if (auth()->user()->can($this->application->applicationType?->getApproveAnyPermissionAttribute())) {
+        if (auth()->user()->can($this->application->applicationType?->getCancelAnyPermissionAttribute())) {
             return true;
         }
 
-        return auth()->user()->can($this->application->applicationType?->getApprovePermissionAttribute()) && $this->application->canBeAccessedBy(auth()->user());
+        return auth()->user()->can($this->application->applicationType?->getCancelPermissionAttribute()) && $this->application->canBeAccessedBy(auth()->user());
     }
 }
