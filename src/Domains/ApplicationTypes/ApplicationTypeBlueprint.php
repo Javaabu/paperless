@@ -2,8 +2,6 @@
 
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
-
-
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 
 abstract class ApplicationTypeBlueprint

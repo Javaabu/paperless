@@ -2,8 +2,6 @@
 
 namespace Javaabu\Paperless\StatusActions\Statuses;
 
-use Spatie\ModelStates\State;
-
 class Verified extends ApplicationStatus
 {
     public static string $name = 'verified';

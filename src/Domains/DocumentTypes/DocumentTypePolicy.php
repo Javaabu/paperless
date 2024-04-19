@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Domains\DocumentTypes;
 
-
 use Javaabu\Auth\User;
 use Javaabu\Activitylog\Models\Activity;
 use Illuminate\Auth\Access\HandlesAuthorization;

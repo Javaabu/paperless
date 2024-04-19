@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Javaabu\Paperless\Support\Casts\FieldTypeAttribute;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Support\Casts\FieldTypeAttribute;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
 class FormField extends Model
 {
-
     protected $attributes = [
         'language' => Languages::English,
     ];

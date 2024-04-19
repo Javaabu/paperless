@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Domains\Applications;
 
-
 use Illuminate\Contracts\View\View;
 use Javaabu\Helpers\Http\Controllers\Controller;
 

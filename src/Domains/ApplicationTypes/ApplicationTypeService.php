@@ -2,10 +2,10 @@
 
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
-use Javaabu\Paperless\Domains\Applications\Application;
-use Javaabu\Paperless\Models\DocumentType;
 use Spatie\MediaLibrary\HasMedia;
+use Javaabu\Paperless\Models\DocumentType;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Javaabu\Paperless\Domains\Applications\Application;
 
 abstract class ApplicationTypeService
 {

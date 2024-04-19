@@ -3,7 +3,6 @@
 namespace Javaabu\Paperless\Domains\Applications;
 
 use Javaabu\Auth\User;
-use Spatie\ModelStates\State;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\ModelStates\HasStates;
 use Illuminate\Support\Collection;
@@ -21,7 +20,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
-use Javaabu\Paperless\StatusActions\ApplicationStatusAction;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 use Javaabu\Paperless\Domains\Applications\Traits\HasStatusActions;
@@ -29,12 +27,12 @@ use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
 
 class Application extends Model implements HasMedia, Trackable, AdminModel
 {
+    use HasStates;
     use HasStatusActions;
     use HasStatusEvents;
     use InteractsWithMedia;
     use IsAdminModel;
     use SoftDeletes;
-    use HasStates;
 
     protected string $reference_number_format = 'APP-:year-:no';
 

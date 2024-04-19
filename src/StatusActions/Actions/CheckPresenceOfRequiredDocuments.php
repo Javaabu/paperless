@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\StatusActions\Actions;
 
-
 use Javaabu\Paperless\Domains\Applications\Application;
 
 class CheckPresenceOfRequiredDocuments

@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Enums;
 
-
 enum Languages: string implements IsEnum
 {
     use NativeEnumsTrait;

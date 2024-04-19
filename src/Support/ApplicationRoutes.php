@@ -35,7 +35,7 @@ class ApplicationRoutes
 
     public static function applicationCreateAndUpdateRoutes(): void
     {
-//        Route::get('/template/field-groups/{field_group:slug}/download', [TemplateController::class, 'download'])->name('template.download');
+        //        Route::get('/template/field-groups/{field_group:slug}/download', [TemplateController::class, 'download'])->name('template.download');
         Route::match(['PUT', 'PATCH'], 'applications', [ApplicationsController::class, 'bulk'])->name('applications.bulk');
         Route::match(['PUT', 'PATCH'], 'applications/{application}/status-update', [ApplicationsController::class, 'statusUpdate'])->name('applications.status-update');
         Route::match(['PUT', 'PATCH'], 'applications/{application}/sections/{admin_section}/update', [ApplicationsController::class, 'adminSectionUpdate'])->name('applications.admin-section-update');

@@ -2,8 +2,6 @@
 
 namespace Javaabu\Paperless\StatusActions\Statuses;
 
-use Spatie\ModelStates\State;
-
 class Approved extends ApplicationStatus
 {
     public static string $name = 'approved';

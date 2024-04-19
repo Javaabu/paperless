@@ -3,18 +3,12 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
-use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
-use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
-use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
 use Javaabu\Paperless\Domains\Applications\Application;
-use Javaabu\Helpers\Exceptions\InvalidOperationException;
-use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredFields;
-use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredDocuments;
+use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 
 class RejectTransition extends Transition
 {
-
     public function __construct(
         public Application $application,
     ) {

@@ -2,18 +2,14 @@
 
 namespace Javaabu\Paperless\Domains\Services;
 
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Javaabu\Helpers\Http\Controllers\Controller;
-use Javaabu\Paperless\Domains\Services\Service;
 use Illuminate\Auth\Access\AuthorizationException;
-use Javaabu\Paperless\Domains\Services\ServicesRequest;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ServicesController extends Controller
 {
-
     public function getModelClass(): string
     {
         return config('paperless.models.service');

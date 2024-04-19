@@ -4,7 +4,6 @@ namespace Javaabu\Paperless\Domains\EntityTypes;
 
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class EntityType extends Model

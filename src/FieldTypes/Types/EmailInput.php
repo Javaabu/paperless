@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\FieldTypes\Types;
 
-use Javaabu\Paperless\Support\Builders\TextInputBuilder;
 use Javaabu\Paperless\Support\Builders\EmailInputBuilder;
 
 class EmailInput extends FieldType

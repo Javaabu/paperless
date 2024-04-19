@@ -2,8 +2,6 @@
 
 namespace Javaabu\Paperless\StatusActions\Statuses;
 
-use Spatie\ModelStates\State;
-
 class Incomplete extends ApplicationStatus
 {
     public static string $name = 'incomplete';

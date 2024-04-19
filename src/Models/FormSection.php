@@ -2,14 +2,14 @@
 
 namespace Javaabu\Paperless\Models;
 
-use Javaabu\Paperless\Interfaces\Applicant;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
-use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
+use Illuminate\Database\Eloquent\Model;
+use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Support\Components\Section;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
 class FormSection extends Model
 {

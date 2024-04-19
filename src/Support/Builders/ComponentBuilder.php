@@ -4,8 +4,8 @@ namespace Javaabu\Paperless\Support\Builders;
 
 use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FormInput;
-use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Interfaces\Applicant;
+use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Support\InfoLists\Components\TextEntry;
 
 abstract class ComponentBuilder
