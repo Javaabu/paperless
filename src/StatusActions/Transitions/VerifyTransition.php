@@ -11,6 +11,7 @@ class VerifyTransition extends Transition
 {
     public function __construct(
         public Application $application,
+        public string | null $remarks = null,
     ) {
     }
 
@@ -25,7 +26,7 @@ class VerifyTransition extends Transition
 
         $this->application->createStatusEvent(
             new Verified($this->application),
-            $remarks ?? (new Verified($this->application))->getRemarks()
+            $this->remarks ?? (new Verified($this->application))->getRemarks()
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsVerified');

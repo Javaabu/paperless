@@ -20,4 +20,9 @@ class Cancelled extends ApplicationStatus
     {
         return __('Mark As Cancelled');
     }
+
+    public function getRemarks(): string
+    {
+        return __('Your application has been cancelled.');
+    }
 }

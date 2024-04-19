@@ -20,4 +20,9 @@ class Rejected extends ApplicationStatus
     {
         return __('Mark As Rejected');
     }
+
+    public function getRemarks(): string
+    {
+        return __('Your application has been rejected.');
+    }
 }

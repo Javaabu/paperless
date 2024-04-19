@@ -14,6 +14,7 @@ class CancelTransition extends Transition
 {
     public function __construct(
         public Application $application,
+        public string | null $remarks = null,
     ) {
     }
 
@@ -26,7 +27,7 @@ class CancelTransition extends Transition
 
         $this->application->createStatusEvent(
             new Cancelled($this->application),
-            $remarks ?? (new Cancelled($this->application))->getRemarks()
+            $this->remarks ?? (new Cancelled($this->application))->getRemarks()
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsCancelled');

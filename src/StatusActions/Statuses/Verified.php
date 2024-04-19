@@ -25,4 +25,9 @@ class Verified extends ApplicationStatus
     {
         return __('Mark As Verified');
     }
+
+    public function getRemarks(): string
+    {
+        return __('Your application has been verified and is pending approval.');
+    }
 }

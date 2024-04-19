@@ -35,4 +35,9 @@ class PendingVerification extends ApplicationStatus
 
         return __('Submit');
     }
+
+    public function getRemarks(): string
+    {
+        return __('Your application is pending verification.');
+    }
 }

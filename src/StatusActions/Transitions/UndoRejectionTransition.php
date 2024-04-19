@@ -11,6 +11,7 @@ class UndoRejectionTransition extends Transition
 {
     public function __construct(
         public Application $application,
+        public string | null $remarks = null,
     ) {
     }
 
@@ -27,7 +28,7 @@ class UndoRejectionTransition extends Transition
 
         $this->application->createStatusEvent(
             new PendingVerification($this->application),
-            $remarks ?? (new PendingVerification($this->application))->getRemarks()
+            $this->remarks ?? (new PendingVerification($this->application))->getRemarks()
         );
 
         $this->application->callServiceFunction('doAfterUndoRejection');

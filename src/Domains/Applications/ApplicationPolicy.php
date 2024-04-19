@@ -3,6 +3,7 @@
 namespace Javaabu\Paperless\Domains\Applications;
 
 use Javaabu\Auth\User;
+use Javaabu\Activitylog\Models\Activity;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
@@ -90,63 +91,4 @@ class ApplicationPolicy
     {
         return $user->can('update', $application);
     }
-
-    // submit
-    public function submit(User $user, Application $application): bool
-    {
-        if ($application->status != ApplicationStatuses::Draft) {
-            return false;
-        }
-
-        /* @var \App\Models\User $user */
-        return $user->can('view', $application);
-    }
-
-    // markAsCancelled
-    public function markAsCancelled(User $user, Application $application): bool
-    {
-        if (! in_array($application->status, [
-            ApplicationStatuses::Draft,
-            ApplicationStatuses::Pending,
-        ])) {
-            return false;
-        }
-
-        /* @var \App\Models\User $user */
-        if ($user->can($application->applicationType?->getCancelAnyPermissionAttribute())) {
-            return true;
-        }
-
-        return $user->can($application->applicationType?->getCancelPermissionAttribute()) && $application->canBeAccessedBy($user);
-    }
-
-    // markAsRejected
-    public function markAsRejected(User $user, Application $application): bool
-    {
-        if ($application->status != ApplicationStatuses::Pending) {
-            return false;
-        }
-
-        /* @var \App\Models\User $user */
-        if ($user->can($application->applicationType?->getVerifyAnyPermissionAttribute())) {
-            return true;
-        }
-
-        return $user->can($application->applicationType?->getVerifyPermissionAttribute()) && $application->canBeAccessedBy($user);
-    }
-
-    // markAsApproved
-    public function markAsApproved(User $user, Application $application): bool
-    {
-        if ($application->status != ApplicationStatuses::Pending) {
-            return false;
-        }
-
-        if ($user->can($application->applicationType?->getApproveAnyPermissionAttribute())) {
-            return true;
-        }
-
-        return $user->can($application->applicationType?->getApprovePermissionAttribute()) && $application->canBeAccessedBy($user);
-    }
-
 }

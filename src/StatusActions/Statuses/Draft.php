@@ -25,4 +25,9 @@ class Draft extends ApplicationStatus
     {
         return __('Save As Draft');
     }
+
+    public function getRemarks(): string
+    {
+        return __('Your application is currently in draft.');
+    }
 }

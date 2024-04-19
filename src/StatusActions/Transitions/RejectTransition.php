@@ -11,6 +11,7 @@ class RejectTransition extends Transition
 {
     public function __construct(
         public Application $application,
+        public string | null $remarks = null,
     ) {
     }
 
@@ -26,7 +27,7 @@ class RejectTransition extends Transition
 
         $this->application->createStatusEvent(
             new Rejected($this->application),
-            $remarks ?? (new Rejected($this->application))->getRemarks()
+            $this->remarks ?? (new Rejected($this->application))->getRemarks()
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsRejected');

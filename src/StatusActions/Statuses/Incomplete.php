@@ -25,4 +25,9 @@ class Incomplete extends ApplicationStatus
     {
         return __('Mark As Incomplete');
     }
+
+    public function getRemarks(): string
+    {
+        return __('Your application is incomplete.');
+    }
 }

@@ -11,6 +11,7 @@ class IncompleteTransition extends Transition
 {
     public function __construct(
         public Application $application,
+        public string | null $remarks = null,
     ) {
     }
 
@@ -26,7 +27,7 @@ class IncompleteTransition extends Transition
 
         $this->application->createStatusEvent(
             new Incomplete($this->application),
-            $remarks ?? (new Incomplete($this->application))->getRemarks()
+            $this->remarks ?? (new Incomplete($this->application))->getRemarks()
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsIncomplete');

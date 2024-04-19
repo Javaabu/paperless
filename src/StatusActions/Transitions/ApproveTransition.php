@@ -11,6 +11,7 @@ class ApproveTransition extends Transition
 {
     public function __construct(
         public Application $application,
+        public string | null $remarks = null,
     ) {
     }
 
@@ -25,7 +26,7 @@ class ApproveTransition extends Transition
 
         $this->application->createStatusEvent(
             new Approved($this->application),
-            $remarks ?? (new Approved($this->application))->getRemarks()
+            $this->remarks ?? (new Approved($this->application))->getRemarks()
         );
 
         $this->application->callServiceFunction('doAfterApproval');

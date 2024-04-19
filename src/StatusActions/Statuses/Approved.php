@@ -21,4 +21,9 @@ class Approved extends ApplicationStatus
         return __('Mark As Approved');
     }
 
+    public function getRemarks(): string
+    {
+        return __('Your application has been approved.');
+    }
+
 }
