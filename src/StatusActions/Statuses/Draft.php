@@ -23,4 +23,8 @@ class Draft extends ApplicationStatus
         return true;
     }
 
+    public function getActionLabel(): string
+    {
+        return __('Save As Draft');
+    }
 }

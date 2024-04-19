@@ -13,14 +13,17 @@
             <x-forms::text name="remarks" placeholder="{{ __('Add any specific messages you want to record with the change...') }}" />
 
             <div class="mt-4">
-                @foreach ($available_process_actions as $action => $color)
+                @foreach ($available_process_actions as $action)
+                    @php
+                        $action_class = config('paperless.application_status')::make($action, $application);
+                    @endphp
                     <x-forms::submit data-confirm="Make sure you are taking the right action!"
                                      class="btn--icon-text btn--raised"
                                      name="action"
-                                     value="{{ $action }}"
-                                     color="{{ $color }}"
+                                     value="{{ $action_class->getValue() }}"
+                                     color="{{ $action_class->getColor() }}"
                     >
-                        {{ str($action)->snake()->replace('_', ' ')->title()->__toString() }}
+                        {{ $action_class->getActionLabel() }}
                     </x-forms::submit>
                 @endforeach
             </div>

@@ -18,4 +18,8 @@ class Rejected extends ApplicationStatus
         return __('Rejected');
     }
 
+    public function getActionLabel(): string
+    {
+        return __('Mark As Rejected');
+    }
 }

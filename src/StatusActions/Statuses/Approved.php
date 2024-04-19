@@ -18,4 +18,9 @@ class Approved extends ApplicationStatus
         return __('Approved');
     }
 
+    public function getActionLabel(): string
+    {
+        return __('Mark As Approved');
+    }
+
 }

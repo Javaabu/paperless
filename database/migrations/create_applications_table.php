@@ -23,10 +23,8 @@ return new class () extends Migration {
             $table->dateTime('approved_at')->nullable();
             $table->foreignId('verified_by_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('approved_by_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('assigned_to_id')->nullable()->constrained('users')->nullOnDelete();
 
             $table->dateTime('eta_at')->nullable();
-            $table->dateTime('alert_at')->nullable();
             $table->string('status')->index();
 
             $table->nullableMorphs('related');

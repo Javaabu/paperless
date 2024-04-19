@@ -2,8 +2,6 @@
 
 namespace Javaabu\Paperless\StatusActions\Statuses;
 
-use Spatie\ModelStates\State;
-
 class Pending extends ApplicationStatus
 {
     public static string $name = 'pending';
@@ -18,4 +16,14 @@ class Pending extends ApplicationStatus
         return __('Pending');
     }
 
+    public function getActionLabel(): string
+    {
+        $application = $this->getModel();
+
+        if ($application->status->getValue() == Draft::getMorphClass()) {
+            return __('Submit');
+        }
+
+        return __('Mark As Pending');
+    }
 }

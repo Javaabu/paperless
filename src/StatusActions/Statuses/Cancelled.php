@@ -18,4 +18,8 @@ class Cancelled extends ApplicationStatus
         return __('Cancelled');
     }
 
+    public function getActionLabel(): string
+    {
+        return __('Mark As Cancelled');
+    }
 }
