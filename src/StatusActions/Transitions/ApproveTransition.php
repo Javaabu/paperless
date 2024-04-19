@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
 use App\Application\Enums\ApplicationStatuses;
+use Javaabu\Paperless\StatusActions\Statuses\Verified;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
@@ -40,7 +41,7 @@ class ApproveTransition extends Transition
 
     public function canTransition(): bool
     {
-        if ($this->application->status->getValue() != PendingVerification::getMorphClass()) {
+        if ($this->application->status->getValue() != Verified::getMorphClass()) {
             return false;
         }
 
