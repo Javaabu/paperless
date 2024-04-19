@@ -17,7 +17,7 @@ class ApproveTransition extends Transition
 
     public function handle(): Application
     {
-        $this->application->callServiceFunction('doAfterSubmitting');
+        $this->application->callServiceFunction('doBeforeApproval');
 
         $this->application->status = new Approved($this->application);
         $this->application->approvedBy()->associate(auth()->user());
