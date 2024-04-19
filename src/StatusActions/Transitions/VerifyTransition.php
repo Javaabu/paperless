@@ -3,21 +3,33 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
-use Javaabu\Paperless\StatusActions\Statuses\Draft;
-use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
-use Javaabu\Paperless\StatusActions\Statuses\Approved;
-use Javaabu\Paperless\StatusActions\Statuses\Rejected;
+use Javaabu\Paperless\StatusActions\Statuses\Verified;
 use Javaabu\Paperless\Domains\Applications\Application;
-use Javaabu\Helpers\Exceptions\InvalidOperationException;
-use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredFields;
-use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredDocuments;
+use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 
 class VerifyTransition extends Transition
 {
-
     public function __construct(
         public Application $application,
     ) {
+    }
+
+    public function handle(): Application
+    {
+        $this->application->doBeforeMarkingAsVerified();
+
+        $this->application->status = new Verified($this->application);
+        $this->application->verifiedBy()->associate(auth()->user());
+        $this->application->verified_at = now();
+        $this->application->save();
+
+        $this->application->createStatusEvent(
+            new Verified($this->application),
+            $remarks ?? (new Verified($this->application))->getRemarks()
+        );
+
+        $this->application->doAfterMarkingAsVerified();
+        return $this->application;
     }
 
     public function canTransition(): bool

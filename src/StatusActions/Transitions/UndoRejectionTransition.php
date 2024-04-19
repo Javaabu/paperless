@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
+use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
@@ -18,6 +19,26 @@ class UndoRejectionTransition extends Transition
     public function __construct(
         public Application $application,
     ) {
+    }
+
+    public function handle(): Application
+    {
+        $this->application->doBeforeUndoRejection();
+
+        $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
+        $this->application->status = new PendingVerification($this->application);
+        $this->application->verifiedBy()->dissociate();
+        $this->application->verified_at = null;
+        $this->application->eta_at = now()->addDays($application_eta_days);
+        $this->application->save();
+
+        $this->application->createStatusEvent(
+            new PendingVerification($this->application),
+            $remarks ?? (new PendingVerification($this->application))->getRemarks()
+        );
+
+        $this->application->doAfterUndoRejection();
+        return $this->application;
     }
 
     public function canTransition(): bool

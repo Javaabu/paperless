@@ -3,22 +3,33 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
-use Javaabu\Paperless\StatusActions\Statuses\Draft;
 use Javaabu\Paperless\StatusActions\Statuses\Verified;
-use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
-use Javaabu\Paperless\StatusActions\Statuses\Approved;
-use Javaabu\Paperless\StatusActions\Statuses\Rejected;
 use Javaabu\Paperless\Domains\Applications\Application;
-use Javaabu\Helpers\Exceptions\InvalidOperationException;
-use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredFields;
-use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredDocuments;
+use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 
 class UndoVerificationTransition extends Transition
 {
-
     public function __construct(
         public Application $application,
     ) {
+    }
+
+    public function handle(): Application
+    {
+        $this->application->doBeforeUndoVerification();
+
+        $this->application->status = new PendingVerification($this->application);
+        $this->application->verifiedBy()->dissociate();
+        $this->application->verified_at = null;
+        $this->application->save();
+
+        $this->application->createStatusEvent(
+            new PendingVerification($this->application),
+            $remarks ?? (new PendingVerification($this->application))->getRemarks()
+        );
+
+        $this->application->doAfterUndoVerification();
+        return $this->application;
     }
 
     public function canTransition(): bool

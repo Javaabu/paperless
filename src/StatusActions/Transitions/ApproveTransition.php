@@ -3,6 +3,7 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
+use App\Application\Enums\ApplicationStatuses;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
@@ -21,6 +22,19 @@ class ApproveTransition extends Transition
 
     public function handle(): Application
     {
+        $this->application->doBeforeApproval();
+
+        $this->application->status = new Approved($this->application);
+        $this->application->approvedBy()->associate(auth()->user());
+        $this->application->approved_at = now();
+        $this->application->save();
+
+        $this->application->createStatusEvent(
+            new Approved($this->application),
+            $remarks ?? (new Approved($this->application))->getRemarks()
+        );
+
+        $this->application->doAfterApproval();
         return $this->application;
     }
 

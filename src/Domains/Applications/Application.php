@@ -3,6 +3,7 @@
 namespace Javaabu\Paperless\Domains\Applications;
 
 use Javaabu\Auth\User;
+use Spatie\ModelStates\State;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\ModelStates\HasStates;
 use Illuminate\Support\Collection;
@@ -333,21 +334,16 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
             );
     }
 
-
-    public function statusAction(): ApplicationStatusAction
+    public function getStatusColor(string $status): string
     {
-        $action_class = $this->status->getStatusAction();
-        return new $action_class($this);
+        $action = config('paperless.application_status')::make($status, $this);
+        return $action->getColor();
     }
 
-    public function getStatusColors(): array
+    public function getStatusLabel(string $status): string
     {
-        return ApplicationStatuses::colors();
-    }
-
-    public function getStatusLabels(): array
-    {
-        return ApplicationStatuses::labels();
+        $action = config('paperless.application_status')::make($status, $this);
+        return $action->getLabel();
     }
 
     public function generatedTypeLabel(): Attribute
@@ -389,5 +385,15 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     public function getAllPayments(): Collection
     {
         return $this->payments->merge($this->getApplicationTypeSpecificPayments());
+    }
+
+    #[\Override] public function getStatusColors(): array
+    {
+        // TODO: Implement getStatusColors() method.
+    }
+
+    #[\Override] public function getStatusLabels(): array
+    {
+        // TODO: Implement getStatusLabels() method.
     }
 }

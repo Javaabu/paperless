@@ -3,6 +3,7 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
+use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
@@ -21,7 +22,21 @@ class RejectTransition extends Transition
 
     public function handle(): Application
     {
-        //
+        $this->application->doBeforeMarkingAsRejected();
+
+        $this->application->status = new Rejected($this->application);
+        $this->application->verifiedBy()->associate(auth()->user());
+        $this->application->verified_at = now();
+        $this->application->eta_at = null;
+        $this->application->save();
+
+        $this->application->createStatusEvent(
+            new Rejected($this->application),
+            $remarks ?? (new Rejected($this->application))->getRemarks()
+        );
+
+        $this->application->doAfterMarkingAsRejected();
+        return $this->application;
     }
 
     public function canTransition(): bool
