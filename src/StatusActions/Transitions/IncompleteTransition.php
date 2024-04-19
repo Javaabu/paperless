@@ -16,7 +16,7 @@ class IncompleteTransition extends Transition
 
     public function handle(): Application
     {
-        $this->application->doBeforeMarkingAsIncomplete();
+        $this->application->callServiceFunction('doBeforeMarkingAsIncomplete');
 
         $this->application->status = new Incomplete($this->application);
         $this->application->verifiedBy()->associate(auth()->user());
@@ -29,7 +29,7 @@ class IncompleteTransition extends Transition
             $remarks ?? (new Incomplete($this->application))->getRemarks()
         );
 
-        $this->application->doAfterMarkingAsIncomplete();
+        $this->application->callServiceFunction('doAfterMarkingAsIncomplete');
         return $this->application;
     }
 

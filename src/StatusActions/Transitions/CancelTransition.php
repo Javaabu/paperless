@@ -19,7 +19,7 @@ class CancelTransition extends Transition
 
     public function handle(): Application
     {
-        $this->application->doBeforeMarkingAsCancelled();
+        $this->application->callServiceFunction('doBeforeMarkingAsCancelled');
 
         $this->application->status = new Cancelled($this->application);
         $this->application->save();
@@ -29,7 +29,7 @@ class CancelTransition extends Transition
             $remarks ?? (new Cancelled($this->application))->getRemarks()
         );
 
-        $this->application->doAfterMarkingAsCancelled();
+        $this->application->callServiceFunction('doAfterMarkingAsCancelled');
         return $this->application;
     }
 

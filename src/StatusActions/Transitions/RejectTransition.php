@@ -16,7 +16,7 @@ class RejectTransition extends Transition
 
     public function handle(): Application
     {
-        $this->application->doBeforeMarkingAsRejected();
+        $this->application->callServiceFunction('doBeforeMarkingAsRejected');
 
         $this->application->status = new Rejected($this->application);
         $this->application->verifiedBy()->associate(auth()->user());
@@ -29,7 +29,7 @@ class RejectTransition extends Transition
             $remarks ?? (new Rejected($this->application))->getRemarks()
         );
 
-        $this->application->doAfterMarkingAsRejected();
+        $this->application->callServiceFunction('doAfterMarkingAsRejected');
         return $this->application;
     }
 

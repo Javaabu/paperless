@@ -5,7 +5,6 @@ namespace Javaabu\Paperless\Domains\ApplicationTypes;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Collection;
 use Spatie\Activitylog\LogOptions;
-use App\Helpers\Media\AllowedMimeTypes;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FieldGroup;
@@ -14,6 +13,7 @@ use Javaabu\Helpers\AdminModel\AdminModel;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Javaabu\Helpers\AdminModel\IsAdminModel;
 use Spatie\MediaLibrary\MediaCollections\File;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -224,5 +224,13 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         return LogOptions::defaults()
                          ->logExcept($this->hidden)
                          ->logOnly(static::$logAttributes);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function getServiceClass()
+    {
+        return ApplicationTypeService::make($this);
     }
 }

@@ -16,7 +16,7 @@ class UndoVerificationTransition extends Transition
 
     public function handle(): Application
     {
-        $this->application->doBeforeUndoVerification();
+        $this->application->callServiceFunction('doBeforeUndoVerification');
 
         $this->application->status = new PendingVerification($this->application);
         $this->application->verifiedBy()->dissociate();
@@ -28,7 +28,7 @@ class UndoVerificationTransition extends Transition
             $remarks ?? (new PendingVerification($this->application))->getRemarks()
         );
 
-        $this->application->doAfterUndoVerification();
+        $this->application->callServiceFunction('doAfterUndoVerification');
         return $this->application;
     }
 

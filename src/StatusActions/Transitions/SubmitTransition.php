@@ -32,7 +32,7 @@ class SubmitTransition extends Transition
             throw new InvalidOperationException('Cannot submit the application request. Please upload all the required documents.');
         }
 
-        $this->application->doBeforeSubmitting();
+        $this->application->callServiceFunction('doBeforeSubmitting');
 
         $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
         $this->application->status = new PendingVerification($this->application);
@@ -45,7 +45,7 @@ class SubmitTransition extends Transition
             $remarks ?? (new PendingVerification($this->application))->getRemarks()
         );
 
-        $this->application->doAfterSubmitting();
+        $this->application->callServiceFunction('doAfterSubmitting');
 
         return $this->application;
     }

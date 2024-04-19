@@ -33,7 +33,7 @@ class ResubmitTransition extends Transition
             throw new InvalidOperationException('Cannot submit the application request. Please upload all the required documents.');
         }
 
-        $this->application->doBeforeResubmitting();
+        $this->application->callServiceFunction('doBeforeResubmitting');
 
         $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
         $this->application->status = new PendingVerification($this->application);
@@ -47,7 +47,7 @@ class ResubmitTransition extends Transition
             $remarks ?? (new PendingVerification($this->application))->getRemarks()
         );
 
-        $this->application->doAfterResubmitting();
+        $this->application->callServiceFunction('doAfterResubmitting');
         return $this->application;
     }
 

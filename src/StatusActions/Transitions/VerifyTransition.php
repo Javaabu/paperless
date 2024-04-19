@@ -16,7 +16,7 @@ class VerifyTransition extends Transition
 
     public function handle(): Application
     {
-        $this->application->doBeforeMarkingAsVerified();
+        $this->application->callServiceFunction('doBeforeMarkingAsVerified');
 
         $this->application->status = new Verified($this->application);
         $this->application->verifiedBy()->associate(auth()->user());
@@ -28,7 +28,7 @@ class VerifyTransition extends Transition
             $remarks ?? (new Verified($this->application))->getRemarks()
         );
 
-        $this->application->doAfterMarkingAsVerified();
+        $this->application->callServiceFunction('doAfterMarkingAsVerified');
         return $this->application;
     }
 

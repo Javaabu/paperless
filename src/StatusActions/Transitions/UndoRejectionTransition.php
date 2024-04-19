@@ -16,7 +16,7 @@ class UndoRejectionTransition extends Transition
 
     public function handle(): Application
     {
-        $this->application->doBeforeUndoRejection();
+        $this->application->callServiceFunction('doBeforeUndoRejection');
 
         $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
         $this->application->status = new PendingVerification($this->application);
@@ -30,7 +30,7 @@ class UndoRejectionTransition extends Transition
             $remarks ?? (new PendingVerification($this->application))->getRemarks()
         );
 
-        $this->application->doAfterUndoRejection();
+        $this->application->callServiceFunction('doAfterUndoRejection');
         return $this->application;
     }
 
