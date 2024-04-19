@@ -33,11 +33,20 @@ class ApplicationPolicy
 
     public function update(User $user, Application $application): bool
     {
-        if ($application->status != ApplicationStatuses::Draft) {
+        /* @var \App\Models\User $user */
+        if ($user->can($application->applicationType?->getEditAnyPermissionAttribute())) {
+            return true;
+        }
+
+        return $user->can($application->applicationType?->getEditPermissionAttribute()) && $application->canBeAccessedBy($user);
+    }
+
+    public function updateDocuments(User $user, Application $application): bool
+    {
+        if (! $application->status->canUpdateDocuments()) {
             return false;
         }
 
-        /* @var \App\Models\User $user */
         if ($user->can($application->applicationType?->getEditAnyPermissionAttribute())) {
             return true;
         }

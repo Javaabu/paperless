@@ -7,9 +7,9 @@
         </td>
 
         <td data-col="{{ __('Status') }}">
-            @php $color = $status_event->trackable?->getStatusColors()[$status_event->status] ?? 'primary'; @endphp
+            @php $color = $status_event->trackable?->getStatusColor($status_event->status) ?? 'primary'; @endphp
             <x-paperless::badge :color="$color">
-                {{ $status_event->trackable?->getStatusLabels()[$status_event->status] ?? '' }}
+                {{ $status_event->trackable?->getStatusLabel($status_event->status) ?? '' }}
             </x-paperless::badge>
         </td>
 

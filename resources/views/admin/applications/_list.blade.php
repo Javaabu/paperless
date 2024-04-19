@@ -48,21 +48,7 @@
         </x-forms::table.cell>
 
         <x-forms::table.cell name="status">
-            <span class="badge badge-primary"
-                  @class([
-                    'badge',
-                    'badge-primary' => $application->status->getColor() == 'primary',
-                    'badge-secondary' => $application->status->getColor() == 'secondary',
-                    'badge-success' => $application->status->getColor() == 'success',
-                    'badge-danger' => $application->status->getColor() == 'danger',
-                    'badge-warning' => $application->status->getColor() == 'warning',
-                    'badge-info' => $application->status->getColor() == 'info',
-                    'badge-light' => $application->status->getColor() == 'light',
-                    'badge-dark' => $application->status->getColor() == 'dark',
-                  ])
-            >
-                {{ $application->status->getLabel() }}
-            </span>
+            <x-paperless::badge :color="$application->status->getColor()" :label="$application->status->getLabel()" />
         </x-forms::table.cell>
     </x-forms::table.row>
 @endforeach

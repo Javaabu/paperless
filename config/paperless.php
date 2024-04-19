@@ -54,5 +54,8 @@ return [
 
     'relations' => [
         'services' => false,
-    ]
+    ],
+
+    'application_status' => null,
+    'application_status_on_submit' => \Javaabu\Paperless\StatusActions\Statuses\PendingVerification::getMorphClass(),
 ];

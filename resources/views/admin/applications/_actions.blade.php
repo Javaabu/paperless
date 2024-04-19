@@ -31,20 +31,20 @@
             @endif
     @endif
 
-    @can('create', App\Models\Application::class)
+    @can('create', config('paperless.models.application'))
     <a class="actions__item zmdi zmdi-plus" href="{{ route('admin.applications.create') }}" title="Add New">
         <span>{{ __('Add New') }}</span>
     </a>
     @endcan
 
-    @can('trash', config('paperless.application_model'))
-    <a class="{{ config('paperless.application_model')::onlyTrashed()->exists() ? 'indicating' : '' }} actions__item zmdi zmdi-time-restore-setting"
+    @can('trash', config('paperless.models.application'))
+    <a class="{{ config('paperless.models.application')::onlyTrashed()->exists() ? 'indicating' : '' }} actions__item zmdi zmdi-time-restore-setting"
         href="{{ route('admin.applications.trash') }}" title="Trash">
         <span>{{ __('Trash') }}</span>
     </a>
     @endcan
 
-    @can('viewAny', config('paperless.application_model'))
+    @can('viewAny', config('paperless.models.application'))
     <a class="actions__item zmdi zmdi-view-list-alt" href="{{ route('admin.applications.index') }}" title="List All">
         <span>{{ __('View All') }}</span>
     </a>

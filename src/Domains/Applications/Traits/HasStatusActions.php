@@ -100,16 +100,6 @@ trait HasStatusActions
         $this->callServiceFunction('doAfterResubmitting');
     }
 
-    public function doBeforeExtendingEta(): void
-    {
-        $this->callServiceFunction('doBeforeExtendingEta');
-    }
-
-    public function doAfterExtendingEta(): void
-    {
-        $this->callServiceFunction('doAfterExtendingEta');
-    }
-
     public function doBeforeMarkingAsRejected(): void
     {
         $this->callServiceFunction('doBeforeMarkingAsRejected');
@@ -118,6 +108,16 @@ trait HasStatusActions
     public function doAfterMarkingAsRejected(): void
     {
         $this->callServiceFunction('doAfterMarkingAsRejected');
+    }
+
+    public function doBeforeUndoRejection(): void
+    {
+        $this->callServiceFunction('doBeforeUndoRejection');
+    }
+
+    public function doAfterUndoRejection(): void
+    {
+        $this->callServiceFunction('doAfterUndoRejection');
     }
 
     public function doBeforeUndoVerification(): void
@@ -149,10 +149,4 @@ trait HasStatusActions
     {
         $this->callServiceFunction('doAfterApproval');
     }
-
-    public function preProcess(): void
-    {
-        $this->callServiceFunction('preProcess');
-    }
-
 }
