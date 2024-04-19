@@ -3,12 +3,16 @@
 
 return [
 
-    'application_model' => \App\Models\Application::class,
-
     'routes' => [
         'document_store' => 'api.documents.store',
     ],
 
+    /*
+     * IMPORTANT:
+     * Create an enum class for the entity types, it should implement EntityTypeEnumInterface
+     * and should have the trait ActsAsEntityTypeEnum to get the default implementation
+     * of the methods.
+     * */
     'entity_type_enum' => null,
 
     'language_enum' => Javaabu\Paperless\Enums\Languages::class,

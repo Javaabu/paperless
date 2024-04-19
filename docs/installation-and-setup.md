@@ -19,8 +19,25 @@ Publishing the config file is optional:
 php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="paperless-config"
 ```
 
-This is the default content of the config file:
+Next, you need to publish the migrations:
 
-```php
-// TODO
+```bash
+php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="paperless-migrations"
 ```
+
+# Updating the config file
+
+After publishing the config file, you must update the following fields.
+```php
+
+    /*
+     * IMPORTANT:
+     * Create an enum class for the entity types, it should implement EntityTypeEnumInterface
+     * and should have the trait ActsAsEntityTypeEnum to get the default implementation
+     * of the methods.
+     * */
+    'entity_type_enum' => null,
+
+
+```
+
