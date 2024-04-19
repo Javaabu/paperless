@@ -56,8 +56,9 @@ return [
         'services' => false,
     ],
 
-    'application_status' => null,
+    'application_status' => \Javaabu\Paperless\StatusActions\Statuses\ApplicationStatus::class,
     'application_status_on_submit' => \Javaabu\Paperless\StatusActions\Statuses\PendingVerification::getMorphClass(),
+    'application_status_on_create' => \Javaabu\Paperless\StatusActions\Statuses\Draft::getMorphClass(),
     'services' => [
         'path' => app_path('/Paperless/ApplicationTypes/Services'),
         'namespace' => 'App\\Paperless\\ApplicationTypes\\Services',

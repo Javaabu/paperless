@@ -48,6 +48,16 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         'approved_at'  => 'datetime',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $status_class = config('paperless.application_status')::make(config('paperless.application_status_on_create'), $model);
+            $model->status = $status_class;
+        });
+    }
+
     public function casts(): array
     {
         return [
@@ -112,8 +122,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         $query
             ->whereHas('applicationType', function ($query) use ($user) {
                 $query->userVisible($user);
-            })
-            ->orWhere('assigned_to_id', $user->id);
+            });
     }
 
     public function scopePending($query): void

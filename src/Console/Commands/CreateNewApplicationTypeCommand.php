@@ -6,9 +6,9 @@ use Illuminate\Console\Command;
 
 class CreateNewApplicationTypeCommand extends Command
 {
-    protected $signature = 'paperless:application-type {name : The name of the application type in snake case}';
+    protected $signature = 'make:paperless-application-type {name : The name of the application type in snake case}';
 
-    protected $description = 'Create a new application type.';
+    protected $description = 'Create a new paperless application type.';
 
     public function handle(): void
     {
