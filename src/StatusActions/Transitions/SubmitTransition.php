@@ -3,6 +3,7 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
+use Javaabu\Paperless\StatusActions\Statuses\Draft;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
@@ -51,7 +52,7 @@ class SubmitTransition extends Transition
 
     public function canTransition(): bool
     {
-        if ($this->application->status->getValue() != 'draft') {
+        if ($this->application->status->getValue() != Draft::getMorphClass()) {
             return false;
         }
 

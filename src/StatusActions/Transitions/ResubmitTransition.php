@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
+use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
@@ -22,17 +23,10 @@ class ResubmitTransition extends Transition
 
     public function canTransition(): bool
     {
-        if (! in_array($this->application->status->getValue(), [
-            Draft::getMorphClass(),
-            PendingVerification::getMorphClass(),
-        ])) {
+        if ($this->application->status->getValue() != Incomplete::getMorphClass()) {
             return false;
         }
 
-        if (auth()->user()->can($this->application->applicationType?->getCancelAnyPermissionAttribute())) {
-            return true;
-        }
-
-        return auth()->user()->can($this->application->applicationType?->getCancelPermissionAttribute()) && $this->application->canBeAccessedBy(auth()->user());
+        return auth()->user()->can('update', $this->application);
     }
 }

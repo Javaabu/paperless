@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
+use Javaabu\Paperless\StatusActions\Statuses\Verified;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
@@ -22,17 +23,14 @@ class UndoVerificationTransition extends Transition
 
     public function canTransition(): bool
     {
-        if (! in_array($this->application->status->getValue(), [
-            Draft::getMorphClass(),
-            PendingVerification::getMorphClass(),
-        ])) {
+        if ($this->application->status->getValue() != Verified::getMorphClass()) {
             return false;
         }
 
-        if (auth()->user()->can($this->application->applicationType?->getCancelAnyPermissionAttribute())) {
+        if (auth()->user()->can($this->application->applicationType?->getVerifyAnyPermissionAttribute())) {
             return true;
         }
 
-        return auth()->user()->can($this->application->applicationType?->getCancelPermissionAttribute()) && $this->application->canBeAccessedBy(auth()->user());
+        return auth()->user()->can($this->application->applicationType?->getVerifyPermissionAttribute()) && $this->application->canBeAccessedBy(auth()->user());
     }
 }

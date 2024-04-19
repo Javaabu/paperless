@@ -30,10 +30,10 @@ class RejectTransition extends Transition
             return false;
         }
 
-        if (auth()->user()->can($this->application->applicationType?->getApproveAnyPermissionAttribute())) {
+        if (auth()->user()->can($this->application->applicationType?->getVerifyAnyPermissionAttribute())) {
             return true;
         }
 
-        return auth()->user()->can($this->application->applicationType?->getApprovePermissionAttribute()) && $this->application->canBeAccessedBy(auth()->user());
+        return auth()->user()->can($this->application->applicationType?->getVerifyPermissionAttribute()) && $this->application->canBeAccessedBy(auth()->user());
     }
 }

@@ -22,17 +22,14 @@ class UndoRejectionTransition extends Transition
 
     public function canTransition(): bool
     {
-        if (! in_array($this->application->status->getValue(), [
-            Draft::getMorphClass(),
-            PendingVerification::getMorphClass(),
-        ])) {
+        if ($this->application->status->getValue() != Rejected::getMorphClass()) {
             return false;
         }
 
-        if (auth()->user()->can($this->application->applicationType?->getCancelAnyPermissionAttribute())) {
+        if (auth()->user()->can($this->application->applicationType?->getVerifyAnyPermissionAttribute())) {
             return true;
         }
 
-        return auth()->user()->can($this->application->applicationType?->getCancelPermissionAttribute()) && $this->application->canBeAccessedBy(auth()->user());
+        return auth()->user()->can($this->application->applicationType?->getVerifyPermissionAttribute()) && $this->application->canBeAccessedBy(auth()->user());
     }
 }
