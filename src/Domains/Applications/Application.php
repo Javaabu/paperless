@@ -176,68 +176,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         }
 
         $field_groups = $this->applicationType->fieldGroups;
-        foreach ($field_groups as $field_group) {
-            // $field_group->getBuilder()->saveInputs($this, $field_group, $validated_data); // this is the correct flow, implement it later when you aren't dying of stress
-            $data = $validated_data[$field_group->slug] ?? [];
-            $maldives_id = Countries::getMaldivesId();
-            $students_data = collect($data);
-            $student_field = $field_group->formFields->where('slug', 'student')->first();
-            $certificate_number_field = $field_group->formFields->where('slug', 'certificate_number')->first();
-
-
-            foreach ($students_data as $key => $student_data) {
-                $individual_data = $student_data['nationality'] ?? -1;
-                if ($individual_data != $maldives_id) {
-                    $individual_data = IndividualData::fromArray([
-                        'name'           => $student_data['name'],
-                        'name_dv'        => $student_data['name_dv'],
-                        'gov_id'         => $student_data['gov_id'],
-                        'nationality_id' => $student_data['nationality'],
-                        'gender'         => $student_data['gender'],
-                    ]);
-                } else {
-                    $citizen_data = dnr()->getCitizenByIdAndName($student_data['gov_id'], $student_data['name'])->toDto();
-                    $individual_data = IndividualData::fromCitizenData($citizen_data);
-                }
-
-                $individual = (new FirstOrCreateIndividualAction())->handle($individual_data);
-
-                $form_input = $this->formInputs()
-                                   ->where('form_field_id', $student_field->id)
-                                   ->where('field_group_id', $field_group->id)
-                                   ->where('group_instance_number', $key)
-                                   ->first();
-
-                if (! $form_input) {
-                    $form_input = new FormInput();
-                    $form_input->application()->associate($this);
-                    $form_input->formField()->associate($student_field);
-                    $form_input->fieldGroup()->associate($field_group);
-                    $form_input->group_instance_number = $key;
-                }
-
-                $form_input->value = $individual->id;
-                $form_input->save();
-
-
-                $certificate_form_input = $this->formInputs()
-                                             ->where('form_field_id', $certificate_number_field->id)
-                                             ->where('field_group_id', $field_group->id)
-                                             ->where('group_instance_number', $key)
-                                             ->first();
-
-                if (! $certificate_form_input) {
-                    $certificate_form_input = new FormInput();
-                    $certificate_form_input->application()->associate($this);
-                    $certificate_form_input->formField()->associate($certificate_number_field);
-                    $certificate_form_input->fieldGroup()->associate($field_group);
-                    $certificate_form_input->group_instance_number = $key;
-                }
-
-                $certificate_form_input->value = $student_data['certificate_number'] ?? null;
-                $certificate_form_input->save();
-            }
-        }
+        // TODO: field groups
     }
 
     public function renderInfoList(): string
