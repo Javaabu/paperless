@@ -39,6 +39,22 @@ To enable document uploading, you must have an api route that accepts file uploa
     ],
 ````
 
+**Notice**
+You should add your own `Media` model that extends `SpatieMedia` model to your project. This is because the package assumes you have a relation with documentType on the `Media` model. 
+
+```php
+    public function documentType(): BelongsTo
+    {
+        return $this->belongsTo(config('paperless.models.document_type'));
+    }
+```
+Additionally, don't forget to point to your `Media` model in the `media-library.php` configuration file.
+
+```php
+    'media_model' => \App\Models\Media::class,
+```
+
+
 ## Seeding Data
 First you need to seed the entity types. You may update the EntityTypes enum created during the installation process to add/update the entity types you want to seed. Then you can run the following command to seed the entity types.
 ```bash

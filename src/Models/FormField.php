@@ -151,7 +151,7 @@ class FormField extends Model
             return '';
         }
 
-        return match ($this->type->getSlug()) {
+        return match ($this->builder->getSlug()) {
             default                                   => $form_input,
         };
     }
