@@ -5,8 +5,9 @@ namespace Javaabu\Paperless\Domains\ApplicationTypes;
 use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FieldGroup;
 use Javaabu\Paperless\Models\FormSection;
-use Javaabu\Paperless\Support\Components\Section;
+use Javaabu\Paperless\Support\ValueObjects\FieldDefinition;
 use Javaabu\Paperless\Support\ValueObjects\SectionDefinition;
+use Javaabu\Paperless\Support\ValueObjects\FieldGroupDefinition;
 
 class CreateFormFieldsAction
 {
@@ -16,58 +17,42 @@ class CreateFormFieldsAction
 
         foreach ($application_definition as $section_definition) {
             /* @var SectionDefinition $section_definition */
-            $form_section = $this->seedSection($section_definition, $section_order, $application_type);
+            $form_section = $this->seedSection($application_type, $section_definition, $section_order);
 
-//            $field_groups = data_get($form_section_data, 'groups', []);
-//            $group_order = 1;
-//
-//            foreach ($field_groups as $field_group_data) {
-//                $has_field_group = data_get($field_group_data, 'name', null);
-//                $field_group = null;
-//
-//                if (! empty($has_field_group)) {
-//                    $field_group = FieldGroup::updateOrCreate([
-//                        'slug' => $field_group_data['slug'],
-//                    ], [
-//                        'order_column'        => $group_order,
-//                        'name'                => $field_group_data['name'],
-//                        'description'         => $field_group_data['description'],
-//                        'application_type_id' => $application_type->id,
-//                        'form_section_id'     => $form_section->id,
-//                    ]);
-//                }
-//
-//                $fields = data_get($field_group_data, 'fields', []);
-//                $field_order = 1;
-//
-//                foreach ($fields as $field) {
-//                    $field_type = $field['type'] ? (new $field['type']())->getSlug() : null;
-//                    FormField::updateOrCreate([
-//                        'slug'                => $field['slug'],
-//                        'form_section_id'     => $form_section->id,
-//                        'application_type_id' => $application_type->id,
-//                        'field_group_id'      => $field_group?->id,
-//                    ], [
-//                        'order_column'                => $field['order_column'] ?? $field_order,
-//                        'name'                        => $field['name'],
-//                        'language'                    => $field['language'] ?? 'en',
-//                        'placeholder'                 => data_get($field, 'placeholder', null),
-//                        'builder'                        => $field_type,
-//                        'is_required'                 => $field['required'],
-//                    ]);
-//
-//                    $field_order++;
-//                }
-//
-//                $group_order++;
-//            }
+            $field_group_definitions = $section_definition->getFieldGroups();
+            $group_order = 1;
+            foreach ($field_group_definitions as $field_group_definition) {
+                /* @var FieldGroupDefinition $field_group_definition */
+                $field_group = $this->seedFieldGroup($application_type, $form_section, $field_group_definition, $group_order);
+
+                $field_definitions = $field_group_definition->getFields();
+                $field_order = 1;
+                foreach ($field_definitions as $field_definition) {
+                    /* @var FieldDefinition $field_definition */
+                    $this->seedField($application_type, $form_section, $field_definition, $field_group, $field_order);
+                    $field_order++;
+                }
+
+                $group_order++;
+            }
+
+            $field_definitions = $section_definition->getFields();
+            $field_order = 1;
+            foreach ($field_definitions as $field_definition) {
+                /* @var FieldDefinition $field_definition */
+                $this->seedField($application_type, $form_section, $field_definition, null, $field_order);
+                $field_order++;
+            }
 
             $section_order++;
         }
     }
 
-    public function seedSection($section_definition, $section_order, $application_type): FormSection
-    {
+    public function seedSection(
+        ApplicationType $application_type,
+        SectionDefinition $section_definition,
+        int | null $section_order = null
+    ): FormSection {
         return FormSection::updateOrCreate([
             'slug' => $section_definition->getSlug(),
         ], [
@@ -76,6 +61,45 @@ class CreateFormFieldsAction
             'description'         => $section_definition->getDescription(),
             'application_type_id' => $application_type->id,
             'is_admin_section'    => $section_definition->getIsAdminSection(),
+        ]);
+    }
+
+    public function seedFieldGroup(
+        ApplicationType $application_type,
+        FormSection $form_section,
+        FieldGroupDefinition $field_group_definition,
+        int | null $group_order = null
+    ): FieldGroup {
+        return FieldGroup::updateOrCreate([
+                    'slug' => $field_group_definition->getSlug(),
+                ], [
+                    'order_column'        => $field_group_definition->getOrderColumn() ?? $group_order,
+                    'name'                => $field_group_definition->getLabel(),
+                    'description'         => $field_group_definition->getDescription(),
+                    'application_type_id' => $application_type->id,
+                    'form_section_id'     => $form_section->id,
+                ]);
+    }
+
+    public function seedField(
+        ApplicationType $application_type,
+        FormSection $form_section,
+        FieldDefinition $field_definition,
+        FieldGroup | null $field_group = null,
+        int | null $field_order = null
+    ): void {
+        FormField::updateOrCreate([
+            'slug'                => $field_definition->getSlug(),
+            'form_section_id'     => $form_section->id,
+            'application_type_id' => $application_type->id,
+            'field_group_id'      => $field_group?->id,
+        ], [
+            'order_column'                => $field_definition->getOrderColumn() ?? $field_order,
+            'name'                        => $field_definition->getLabel(),
+            'language'                    => $field_definition->getLanguage(),
+            'placeholder'                 => $field_definition->getPlaceholder(),
+            'builder'                     => $field_definition->getBuilder(),
+            'is_required'                 => $field_definition->getIsRequired(),
         ]);
     }
 }

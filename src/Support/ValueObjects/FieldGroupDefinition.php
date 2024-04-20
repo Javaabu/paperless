@@ -2,13 +2,12 @@
 
 namespace Javaabu\Paperless\Support\ValueObjects;
 
-class SectionDefinition
+class FieldGroupDefinition
 {
     private string | null $label = null;
     private string | null $description = null;
     private array | null $fields = [];
-    private array | null $field_groups = [];
-    private bool $is_admin_section = false;
+    private int | null $order_column = null;
 
     public function __construct(
         private readonly ?string $slug,
@@ -32,22 +31,16 @@ class SectionDefinition
         return $this;
     }
 
-    public function fieldGroups(array $field_groups): self
-    {
-        $this->field_groups = $field_groups;
-        return $this;
-    }
-
     public function label(string $label): self
     {
         $this->label = $label;
         return $this;
     }
 
-    public function isAdminSection(): bool
+    public function orderColumn(int $order_column): self
     {
-        $this->is_admin_section = true;
-        return $this->is_admin_section;
+        $this->order_column = $order_column;
+        return $this;
     }
 
     public function getSlug(): string
@@ -70,13 +63,8 @@ class SectionDefinition
         return $this->fields;
     }
 
-    public function getFieldGroups(): array
+    public function getOrderColumn(): int | null
     {
-        return $this->field_groups;
-    }
-
-    public function getIsAdminSection(): bool
-    {
-        return $this->is_admin_section;
+        return $this->order_column;
     }
 }

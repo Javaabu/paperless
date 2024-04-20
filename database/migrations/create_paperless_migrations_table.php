@@ -109,14 +109,8 @@ class CreatePaperlessMigrationsTable extends Migration
             $table->string('slug');
             $table->string('language');
             $table->boolean('is_required')->index()->default(false);
-            $table->string('type')->index(); // FormFieldTypes: Repeating Group, Text, Textarea, Select, Radio, Checkbox, Multiselect, Date
-            $table->json('options')->nullable();
-            $table->boolean('allow_custom_options')->default(false);
-            $table->string('unit')->nullable();
-            $table->bigInteger('min')->nullable();
-            $table->bigInteger('max')->nullable();
+            $table->string('builder')->index(); // FormFieldTypes: Repeating Group, Text, Textarea, Select, Radio, Checkbox, Multiselect, Date
             $table->unsignedInteger('order_column')->default(0);
-            $table->text('additional_validation_rules')->nullable();
             $table->timestamps();
 
             $table->unique(['application_type_id', 'field_group_id', 'slug'], 'unique_form_field');

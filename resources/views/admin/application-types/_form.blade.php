@@ -4,7 +4,7 @@
     @endphp
     <x-forms::text name="name" maxlength="255" :disabled="true" :inline="true" />
     <x-forms::text name="code" maxlength="255" :disabled="true" :inline="true" />
-    <x-forms::text name="application_category" maxlength="255" :disabled="true" :inline="true" />
+    <x-forms::text name="category" :default="$application_type->application_category->getLabel()" maxlength="255" :disabled="true" :inline="true" />
     <x-forms::select name="entity_types" :options="$entity_types" :disabled="true" :multiple="true" :inline="true" />
     <x-forms::text name="eta_duration" maxlength="255" :required="true" :inline="true" />
     <x-forms::textarea name="description" maxlength="255" :required="false" :inline="true" />

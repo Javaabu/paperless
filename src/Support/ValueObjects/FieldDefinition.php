@@ -29,7 +29,7 @@ class FieldDefinition
         return $this;
     }
 
-    public function orderColumn(string $order_column): self
+    public function orderColumn(null | int $order_column = null): self
     {
         $this->order_column = $order_column;
         return $this;
@@ -69,7 +69,7 @@ class FieldDefinition
         return $this->label;
     }
 
-    public function getOrderColumn(): string
+    public function getOrderColumn(): int | null
     {
         return $this->order_column;
     }
@@ -79,7 +79,7 @@ class FieldDefinition
         return $this->language;
     }
 
-    public function getPlaceholder(): string
+    public function getPlaceholder(): string | null
     {
         return $this->placeholder;
     }
