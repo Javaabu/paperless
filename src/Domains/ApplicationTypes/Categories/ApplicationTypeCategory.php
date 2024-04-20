@@ -1,13 +1,13 @@
 <?php
 
-namespace Javaabu\Paperless\Support;
+namespace Javaabu\Paperless\Domains\ApplicationTypes\Categories;
 
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
 
 abstract class ApplicationTypeCategory
 {
-    abstract public function getApplicationTypeCategorySlug(): string;
-    abstract public function getApplicationTypeCategoryLabel(): string;
+    abstract public function getSlug(): string;
+    abstract public function getLabel(): string;
 
     public static function make(string $category_slug)
     {

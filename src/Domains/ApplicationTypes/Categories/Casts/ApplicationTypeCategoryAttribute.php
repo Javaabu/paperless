@@ -1,11 +1,10 @@
 <?php
 
-namespace Javaabu\Paperless\Support\Casts;
+namespace Javaabu\Paperless\Domains\ApplicationTypes\Categories\Casts;
 
 use Illuminate\Database\Eloquent\Model;
-use Javaabu\Paperless\FieldTypes\Types\FieldType;
-use Javaabu\Paperless\Support\ApplicationTypeCategory;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Javaabu\Paperless\Domains\ApplicationTypes\Categories\ApplicationTypeCategory;
 
 class ApplicationTypeCategoryAttribute implements CastsAttributes
 {

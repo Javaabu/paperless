@@ -7,7 +7,7 @@ use Javaabu\Paperless\Console\Commands\Actions\ReplacePlaceholders;
 
 class CreateApplicationTypeCategoryCommand extends Command
 {
-    protected $signature = 'paperless:application-type-category {name}';
+    protected $signature = 'paperless:category {name}';
 
     protected $description = 'Creates a new application type category.';
 

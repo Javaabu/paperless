@@ -37,10 +37,10 @@ Then you need to seed the model permissions
 php artisan db:seed --class=PaperlessModelPermissionsSeeder
 ```
 
-
 **Optional**: You will need to give your user the seeded permissions to access the package models. Normally you would need to run the following command to seed the permissions for the user.
 ```bash
 php artisan db:seed --class=RolesSeeder
 ```
+
 
 

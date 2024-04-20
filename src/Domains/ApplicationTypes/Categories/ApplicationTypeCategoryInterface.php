@@ -4,6 +4,6 @@ namespace Javaabu\Paperless\Domains\ApplicationTypes\Categories;
 
 interface ApplicationTypeCategoryInterface
 {
-    public function getApplicationTypeCategorySlug(): string;
-    public function getApplicationTypeCategoryLabel(): string;
+    public function getSlug(): string;
+    public function getLabel(): string;
 }

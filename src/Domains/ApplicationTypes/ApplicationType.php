@@ -10,10 +10,10 @@ use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FieldGroup;
 use Javaabu\Paperless\Models\FormSection;
 use Javaabu\Helpers\AdminModel\AdminModel;
+use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Javaabu\Helpers\AdminModel\IsAdminModel;
 use Spatie\MediaLibrary\MediaCollections\File;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,8 +21,8 @@ use Javaabu\Paperless\Domains\EntityTypes\EntityType;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Javaabu\Paperless\Support\Casts\ApplicationTypeCategoryAttribute;
 use Javaabu\Paperless\Domains\ApplicationTypes\Traits\HasApplicationSpecificPermissions;
+use Javaabu\Paperless\Domains\ApplicationTypes\Categories\Casts\ApplicationTypeCategoryAttribute;
 
 class ApplicationType extends Model implements AdminModel, HasMedia
 {
