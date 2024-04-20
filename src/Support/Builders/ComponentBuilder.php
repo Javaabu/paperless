@@ -4,8 +4,10 @@ namespace Javaabu\Paperless\Support\Builders;
 
 use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FormInput;
+use Javaabu\Forms\Views\Components\Form;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Helpers\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\Support\InfoLists\Components\TextEntry;
 
 abstract class ComponentBuilder
@@ -45,5 +47,27 @@ abstract class ComponentBuilder
                         ->markAsRequired($form_field->is_required)
                         ->value($value)
                         ->toHtml();
+    }
+
+    public static function getValue(): string
+    {
+        return static::$value;
+    }
+
+    public function getSlug(): string
+    {
+        return static::$value;
+    }
+
+    public static function make(string $builder, FormField $form_field)
+    {
+        $field_types = config('paperless.field_builders');
+        foreach($field_types as $field_type) {
+            if ($field_type::getValue() === $builder) {
+                return new $field_type($form_field);
+            }
+        }
+
+        throw new InvalidOperationException("Field type not found: {$builder}");
     }
 }

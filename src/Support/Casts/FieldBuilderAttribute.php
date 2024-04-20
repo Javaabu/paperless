@@ -3,10 +3,12 @@
 namespace Javaabu\Paperless\Support\Casts;
 
 use Illuminate\Database\Eloquent\Model;
+use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\FieldTypes\Types\FieldType;
+use Javaabu\Paperless\Support\Builders\ComponentBuilder;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
-class FieldTypeAttribute implements CastsAttributes
+class FieldBuilderAttribute implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -15,7 +17,8 @@ class FieldTypeAttribute implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return FieldType::make($value);
+        /* @var FormField $model */
+        return ComponentBuilder::make($value, $model);
     }
 
     /**
@@ -25,7 +28,7 @@ class FieldTypeAttribute implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        if ($value instanceof FieldType) {
+        if ($value instanceof ComponentBuilder) {
             return $value->getSlug();
         }
 

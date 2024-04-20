@@ -43,6 +43,11 @@ return [
         \Javaabu\Paperless\FieldTypes\Types\EmailInput::class,
     ],
 
+    'field_builders' => [
+        \Javaabu\Paperless\Support\Builders\TextInputBuilder::class,
+        \Javaabu\Paperless\Support\Builders\EmailInputBuilder::class,
+    ],
+
     'views_layout' => 'layouts.admin',
     'views'        => '',
 

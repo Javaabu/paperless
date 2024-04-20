@@ -9,7 +9,7 @@
             <div>{{ $form_field->name }} {{ $form_field->is_required ? '*' : '' }}</div>
             <div class="text-muted">{{ $form_field->placeholder }}</div>
             <div style="font-size: 0.9rem;" class="text-muted">{{ $form_field->slug }}</div>
-            @if ($form_field->type->getSlug() == 'select')
+            @if ($form_field->builder->getSlug() == 'select')
                 <div>
                     <div>{{ __("Options") }}</div>
                     <ul>

@@ -86,7 +86,7 @@ class FieldDefinition
 
     public function getBuilder(): string
     {
-        return $this->builder;
+        return $this->builder::getValue();
     }
 
     public function getIsRequired(): string

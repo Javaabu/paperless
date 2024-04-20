@@ -8,7 +8,7 @@ use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Javaabu\Paperless\Domains\Applications\Application;
-use Javaabu\Paperless\Support\Casts\FieldTypeAttribute;
+use Javaabu\Paperless\Support\Casts\FieldBuilderAttribute;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
 class FormField extends Model
@@ -20,7 +20,7 @@ class FormField extends Model
     public function casts(): array
     {
         return [
-            'type'                        => FieldTypeAttribute::class,
+            'builder'                     => FieldBuilderAttribute::class,
             'language'                    => Languages::class,
             'additional_validation_rules' => 'array',
             'options'                     => 'array',
