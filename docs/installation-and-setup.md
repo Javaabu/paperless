@@ -11,33 +11,19 @@ You can install the package via composer:
 composer require javaabu/paperless
 ```
 
-# Publishing the config file
-
-Publishing the config file is optional:
-
-```bash
-php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="paperless-config"
-```
-
-Next, you need to publish the migrations:
+## Package Installation
+To install the package, you can run the following command:
 
 ```bash
-php artisan vendor:publish --provider="Javaabu\Paperless\PaperlessServiceProvider" --tag="paperless-migrations"
+php artisan paperless:install
 ```
 
-# Updating the config file
+This command will:
+1. Publish the package configuration file.
+2. Publish the package migrations.
+3. Install seeders.
+4. Add routes to your `routes/admin.php` file.
+5. Add api routes to your `routes/api.php` file.
+6. Add menu items to your `app/Menus/AdminSidebar.php` file.
 
-After publishing the config file, you must update the following fields.
-```php
-
-    /*
-     * IMPORTANT:
-     * Create an enum class for the entity types, it should implement EntityTypeEnumInterface
-     * and should have the trait ActsAsEntityTypeEnum to get the default implementation
-     * of the methods.
-     * */
-    'entity_type_enum' => null,
-
-
-```
 
