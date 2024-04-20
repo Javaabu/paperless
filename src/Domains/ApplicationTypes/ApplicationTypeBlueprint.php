@@ -4,7 +4,7 @@ namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 
-abstract class ApplicationTypeBlueprint
+abstract class ApplicationTypeBlueprint implements IsAnApplicationType
 {
     public int $eta_duration = 5;
 
@@ -50,8 +50,11 @@ abstract class ApplicationTypeBlueprint
         $application_type->documentTypes()->detach();
         $this->seedRequiredDocuments($application_type);
         $this->seedOptionalDocuments($application_type);
+
         $this->seedServices($application_type);
+
         $this->seedEntityTypes($application_type);
+
         $this->seedFormFields($application_type);
     }
 
@@ -117,13 +120,14 @@ abstract class ApplicationTypeBlueprint
     {
         $eta_duration = property_exists($this, 'eta_duration') ? $this->eta_duration : 5;
 
+        $application_category = (new ($this->getCategory()))->getSlug();
         return ApplicationType::updateOrCreate([
             'code' => $this->code,
         ], [
             'name'                 => $this->getName(),
             'description'          => $this->getDescription(),
             'eta_duration'         => $eta_duration,
-            'application_category' => $this->getCategory(),
+            'application_category' => $application_category,
         ]);
     }
 

@@ -6,6 +6,7 @@ class ReplacePlaceholders
 {
     public function handle(string $content, string $name): string
     {
+        $name = str($name)->slug('_')->singular()->lower()->toString();
         return str_replace(
             [
                 '{{ MainClassName }}',

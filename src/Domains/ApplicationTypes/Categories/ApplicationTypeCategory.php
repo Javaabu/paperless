@@ -13,7 +13,7 @@ abstract class ApplicationTypeCategory
     {
         $application_type_categories = static::getAllApplicationCategories();
         foreach($application_type_categories as $application_type_category) {
-            if ((new $application_type_category())->getApplicationTypeCategorySlug() === $category_slug) {
+            if ((new $application_type_category())->getSlug() === $category_slug) {
                 return new $application_type_category();
             }
         }

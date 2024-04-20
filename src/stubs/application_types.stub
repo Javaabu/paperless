@@ -6,9 +6,10 @@ use Illuminate\Support\Collection;
 use App\Paperless\Enums\EntityTypes;
 use App\Paperless\Categories\{{ ApplicationTypeCategory }};
 use App\Paperless\FieldDefinitions\{{ FieldDefinitionClassName }};
+use Javaabu\Paperless\Domains\ApplicationTypes\IsAnApplicationType;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypeBlueprint;
 
-class {{ MainClassName }} extends ApplicationTypeBlueprint
+class {{ MainClassName }} extends ApplicationTypeBlueprint implements IsAnApplicationType
 {
     public string $code = 'at_{{ application_type_slug }}';
 

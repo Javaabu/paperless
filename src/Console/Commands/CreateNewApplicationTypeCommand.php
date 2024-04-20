@@ -39,7 +39,7 @@ class CreateNewApplicationTypeCommand extends Command
             required: true,
         );
 
-        $slug = str($slug)->slug()->toString();
+        $slug = str($slug)->slug('_')->toString();
         $name = str($slug)->replace('_', ' ')->singular()->lower()->toString();
 
         (new Actions\CreateApplicationTypeMainClass())->handle($name, $category, $entity_types);

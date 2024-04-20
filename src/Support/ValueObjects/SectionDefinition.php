@@ -7,6 +7,7 @@ class SectionDefinition
     private string | null $label = null;
     private string | null $description = null;
     private array | null $fields = null;
+    private bool $is_admin_section = false;
 
     public function __construct(
         private readonly ?string $slug,
@@ -36,6 +37,12 @@ class SectionDefinition
         return $this;
     }
 
+    public function isAdminSection(): bool
+    {
+        $this->is_admin_section = true;
+        return $this->is_admin_section;
+    }
+
     public function getSlug(): string
     {
         return $this->slug;
@@ -54,5 +61,10 @@ class SectionDefinition
     public function getFields(): array
     {
         return $this->fields;
+    }
+
+    public function getIsAdminSection(): bool
+    {
+        return $this->is_admin_section;
     }
 }

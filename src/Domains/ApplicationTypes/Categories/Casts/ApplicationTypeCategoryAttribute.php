@@ -26,7 +26,7 @@ class ApplicationTypeCategoryAttribute implements CastsAttributes
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if ($value instanceof ApplicationTypeCategory) {
-            return $value->getApplicationTypeCategorySlug();
+            return $value->getSlug();
         }
 
         return $value;
