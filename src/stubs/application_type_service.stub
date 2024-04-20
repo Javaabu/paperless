@@ -1,14 +1,20 @@
 <?php
 
-namespace App\Paperless\ApplicationTypes\Services;
+namespace App\Paperless\Services;
 
-use Javaabu\Paperless\Models\Application;
+use App\Paperless\ApplicationTypes\{{ MainClassName }};
+use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypeService;
 
 class {{ ServiceClassName }} extends ApplicationTypeService
 {
     public function doAfterApproval(Application $application): void
     {
-        // TODO: Implement doAfterApproval() method.
+        //...
+    }
+
+    public static function getApplicationTypeClass(): string
+    {
+        return {{ MainClassName }}::class;
     }
 }

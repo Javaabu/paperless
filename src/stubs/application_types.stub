@@ -3,38 +3,18 @@
 namespace App\Paperless\ApplicationTypes;
 
 use Illuminate\Support\Collection;
-use App\Paperless\ApplicationTypes\Services\{{ ServiceClassName }};
-use App\Paperless\ApplicationTypes\FieldDefinitions\{{ FieldDefinitionClassName }};
+use App\Paperless\Enums\EntityTypes;
+use App\Paperless\Categories\{{ ApplicationTypeCategory }};
+use App\Paperless\FieldDefinitions\{{ FieldDefinitionClassName }};
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypeBlueprint;
 
 class {{ MainClassName }} extends ApplicationTypeBlueprint
 {
     public string $code = 'at_{{ application_type_slug }}';
 
-    public string $service = {{ ServiceClassName }}::class;
-
     public function getName(): string
     {
         return __('{{ application_type_title }}');
-    }
-
-    public function getCategory(): string
-    {
-        // TODO: return the category here
-    }
-
-    public function getAutomaticallyAppliedServices(): array
-    {
-        return [
-           // TODO: Add service (fee) slugs here
-        ];
-    }
-
-    public function getRequiredDocumentTypes(): array
-    {
-        return [
-           // TODO: Add required document type slugs here
-        ];
     }
 
     public function getRequiredFormFields(): array
@@ -42,10 +22,23 @@ class {{ MainClassName }} extends ApplicationTypeBlueprint
         return {{ FieldDefinitionClassName }}::getFields();
     }
 
+    public function getCategory(): string
+    {
+        return {{ ApplicationTypeCategory }}::class;
+    }
+
     public function getEntityTypes(): array
     {
-        return [
-            // TODO: Add entity types that are allowed to apply for this application type here
-        ];
+        return [{{ EntityTypes }}];
+    }
+
+    public function getAutomaticallyAppliedServices(): array
+    {
+        return [];
+    }
+
+    public function getRequiredDocumentTypes(): array
+    {
+        return [];
     }
 }
