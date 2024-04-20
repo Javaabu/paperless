@@ -17,6 +17,11 @@ abstract class ComponentBuilder
     ) {
     }
 
+    public function getRenderParameters($field, $entity, int|null $instance = null): array
+    {
+        return [];
+    }
+
     public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = []): array
     {
         $is_required = $this->form_field->is_required ? 'required' : 'nullable';
@@ -28,7 +33,7 @@ abstract class ComponentBuilder
     public function saveInputs(Application $application, FormField $form_field, array | null $form_inputs = []): void
     {
         $form_input_value = $form_inputs[$form_field->slug] ?? null;
-        $array_value = in_array($form_field->type->getSlug(), ['select']);
+        $array_value = static::getValue() == 'select';
 
         $form_input = $application->formInputs()->where('form_field_id', $form_field->id)->first();
         if (! $form_input) {

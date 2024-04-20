@@ -118,7 +118,7 @@ class FormField extends Model
 
     public function render(Applicant $entity, array | string $form_input = null, int | null $instance = null): string
     {
-        $parameters = $this->type->getRenderParameters($this, $entity, $instance);
+        $parameters = $this->builder->getRenderParameters($this, $entity, $instance);
         $form_input = $this->getRenderedFieldValue($form_input);
 
         return $this->getBuilder()?->render($form_input, ...$parameters);
@@ -127,13 +127,13 @@ class FormField extends Model
 
     public function getBuilder(): IsComponentBuilder
     {
-        return $this->type->getBuilderInstance($this);
+        return $this->builder;
     }
 
 
     public function getRenderedFieldValue($form_input): mixed
     {
-        return match ($this->type->getSlug()) {
+        return match ($this->builder->getSlug()) {
             default      => $form_input,
         };
     }
