@@ -31,3 +31,16 @@ The command will create the following files:
 ### Adding Fields To The Application Type
 Open up the field definition class created for the application type in the `app/Paperless/FieldDefinitions` directory.
 
+The class will have a static `getFields` method that returns an array of field definitions.
+You may use the following value objects to define the fields
+1. `Javaabu\Paperless\Support\ValueObjects\SectionDefinition`
+2. `Javaabu\Paperless\Support\ValueObjects\FieldGroupDefinition`
+3. `Javaabu\Paperless\Support\ValueObjects\FieldDefinition`
+
+Note that `FieldDefinition` objects can be nested within `SectionDefinition` and `FieldGroupDefinition` objects to create a nested structure of fields. and `FieldGroupDefinition` objects can be nested within `SectionDefinition` objects to create a nested structure of field groups.
+
+After defining the fields, you can run the following command seed the application type with the fields:
+```bash
+php artisan db:seed --class=ApplicationTypesSeeder
+```
+
