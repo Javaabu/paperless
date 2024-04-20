@@ -39,8 +39,8 @@ You may use the following value objects to define the fields
 
 Note that `FieldDefinition` objects can be nested within `SectionDefinition` and `FieldGroupDefinition` objects to create a nested structure of fields. and `FieldGroupDefinition` objects can be nested within `SectionDefinition` objects to create a nested structure of field groups.
 
-After defining the fields, you can run the following command seed the application type with the fields:
+After defining the fields, you can run the following commands to seed the application type with the fields and to seed the necessary permissions.
 ```bash
 php artisan db:seed --class=ApplicationTypesSeeder
+php artisan db:seed --class=ApplicationTypesPermissionsSeeder
 ```
-
