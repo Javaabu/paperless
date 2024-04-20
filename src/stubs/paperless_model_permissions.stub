@@ -1,0 +1,45 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+
+class PaperlessModelPermissionsSeeder extends Seeder
+{
+    protected $data = [
+
+        'document_types' => [
+            'edit_document_types'   => 'Edit document types',
+            'delete_document_types' => 'Delete document types',
+            'view_document_types'   => 'View document types',
+            'force_delete_document_types' => 'Force Delte Document Types'
+        ],
+
+        'services' => [
+            'edit_services'   => 'Edit services',
+            'delete_services' => 'Delete services',
+            'view_services'   => 'View services',
+        ],
+
+        'application_types' => [
+            'edit_application_types'   => 'Edit application types',
+            'delete_application_types' => 'Delete application types',
+            'view_application_types'   => 'View application types',
+        ],
+    ];
+
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        foreach ($this->data as $model => $permissions) {
+            foreach ($permissions as $name => $desc) {
+                $permission = Permission::firstOrCreate(['name' => $name, 'guard_name' => 'web_admin']);
+                $permission->update(['description' => $desc, 'model' => $model]);
+                $permission->save();
+            }
+        }
+    }
+}

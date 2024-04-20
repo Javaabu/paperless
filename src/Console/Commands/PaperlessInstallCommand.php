@@ -18,6 +18,7 @@ class PaperlessInstallCommand extends Command
         $this->publishConfigFile();
         $this->publishMigrationFile();
         $this->installSeeders();
+        $this->installEntityEnumTypes();
 
         $this->installAdminRoutes();
         $this->installApiRoutes();
@@ -100,6 +101,15 @@ class PaperlessInstallCommand extends Command
         $this->call('vendor:publish', [
             '--provider' => 'Javaabu\Paperless\PaperlessServiceProvider',
             '--tag'      => 'paperless-seeders'
+        ]);
+    }
+
+    private function installEntityEnumTypes(): void
+    {
+        // copy entity_types.stub to App\Paperless\Enums directory
+        $this->call('vendor:publish', [
+            '--provider' => 'Javaabu\Paperless\PaperlessServiceProvider',
+            '--tag'      => 'paperless-enums'
         ]);
     }
 }

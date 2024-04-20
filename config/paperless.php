@@ -33,7 +33,7 @@ return [
      * and should have the trait ActsAsEntityTypeEnum to get the default implementation
      * of the methods.
      * */
-    'entity_type_enum' => null,
+    'entity_type_enum' => \App\Paperless\Enums\EntityTypes::class,
 
     'language_enum' => Javaabu\Paperless\Enums\Languages::class,
 

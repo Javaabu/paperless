@@ -1,11 +1,11 @@
 <?php
 
-namespace Javaabu\Paperless\Database\Seeders;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Javaabu\Paperless\Domains\EntityTypes\EntityType;
 
-class EntityTypeSeeder extends Seeder
+class EntityTypesSeeder extends Seeder
 {
     public function run(): void
     {

@@ -81,8 +81,15 @@ class PaperlessServiceProvider extends ServiceProvider
         ], 'paperless-views');
 
         $this->publishes([
-            __DIR__ . '/../database/seeders' => database_path('seeders/'),
+            __DIR__ . '/stubs/entity_types_seeder.stub' => database_path('seeders/EntityTypesSeeder.php'),
+            __DIR__ . '/stubs/application_types_seeder.stub' => database_path('seeders/ApplicationTypesSeeder.php'),
+            __DIR__ . '/stubs/application_types_permissions_seeder.stub' => database_path('seeders/ApplicationTypesPermissionsSeeder.php'),
+            __DIR__ . '/stubs/paperless_model_permissions.stub' => database_path('seeders/PaperlessModelPermissionsSeeder.php'),
         ], 'paperless-seeders');
+
+        $this->publishes([
+            __DIR__ . '/stubs/entity_types.stub' => app_path('Paperless/Enums/EntityTypes.php'),
+        ], 'paperless-enums');
     }
 
     protected function registerCommands(): void

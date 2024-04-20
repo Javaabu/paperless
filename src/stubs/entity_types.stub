@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Paperless\Enums;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Cache;
+use Javaabu\Paperless\Domains\EntityTypes\EntityType;
+use Javaabu\Paperless\Domains\EntityTypes\ActsAsEntityTypeEnum;
+use Javaabu\Paperless\Domains\EntityTypes\EntityTypeEnumInterface;
+
+enum EntityTypes: string implements EntityTypeEnumInterface
+{
+    use ActsAsEntityTypeEnum;
+
+    case User = 'user';
+
+    public static function labels(): array
+    {
+        return [
+            self::User->value => __("User"),
+        ];
+    }
+
+    public static function getModelClassFromEntityTypeId(int $entity_type_id): string
+    {
+        return User::class;
+    }
+}
