@@ -57,7 +57,7 @@
         </x-forms::table.cell>
 
         <x-forms::table.cell name="category">
-            {{ $application_type->application_category->getLabel()  }}
+            {{ $application_type->application_category->getApplicationTypeCategoryLabel()  }}
         </x-forms::table.cell>
 
     </x-forms::table.row>

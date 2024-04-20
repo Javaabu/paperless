@@ -3,7 +3,27 @@
 
 return [
 
+    /*
+     * Add the application type classes here
+     * */
+    'application_types' => [
+    ],
+
+    /*
+     * Add the application type category classes here, these
+     * will be used to categorize the application types
+     * */
+    'application_type_categories' => [
+    ],
+
+    /*
+     * Paperless requires some other routes defined in your project,
+     * provide any required routes here
+     * */
     'routes' => [
+        /*
+         * Add your documents store route here
+         * */
         'document_store' => 'api.documents.store',
     ],
 
@@ -17,6 +37,7 @@ return [
 
     'language_enum' => Javaabu\Paperless\Enums\Languages::class,
 
+
     'field_types' => [
         \Javaabu\Paperless\FieldTypes\Types\TextInput::class,
         \Javaabu\Paperless\FieldTypes\Types\EmailInput::class,
@@ -25,13 +46,14 @@ return [
     'views_layout' => 'layouts.admin',
     'views'        => '',
 
-    'application_types' => [
-    ],
-
     'custom-components' => [
     ],
 
     'public_user'       => '',
+
+    /*
+     * This table will be used to store the public user id in the application,
+     * */
     'public_user_table' => 'public_users',
 
     /**

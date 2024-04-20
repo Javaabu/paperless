@@ -21,6 +21,7 @@ use Javaabu\Paperless\Domains\EntityTypes\EntityType;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Javaabu\Paperless\Support\Casts\ApplicationTypeCategoryAttribute;
 use Javaabu\Paperless\Domains\ApplicationTypes\Traits\HasApplicationSpecificPermissions;
 
 class ApplicationType extends Model implements AdminModel, HasMedia
@@ -48,7 +49,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     public function casts(): array
     {
         return [
-            'application_category' => config('paperless.application_type_category_enum'),
+            'application_category' => ApplicationTypeCategoryAttribute::class,
             'description' => 'array',
         ];
     }
