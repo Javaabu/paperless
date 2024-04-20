@@ -44,3 +44,8 @@ After defining the fields, you can run the following commands to seed the applic
 php artisan db:seed --class=ApplicationTypesSeeder
 php artisan db:seed --class=ApplicationTypesPermissionsSeeder
 ```
+
+Optionally, you can seed the roles again to ensure that the new permissions are added to the roles.
+```bash
+php artisan db:seed --class=RolesSeeder
+```
