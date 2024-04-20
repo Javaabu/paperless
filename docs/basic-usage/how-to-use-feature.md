@@ -19,3 +19,11 @@ Once you have created a category, you can create an application type. To create 
 php artisan paperless:type
 ```
 The command will ask you for the following information:
+1. The name of the application type
+2. The category of the application type
+3. The entity types that can apply for the application type
+
+The command will create the following files:
+1. A super class for the application type in the `app/Paperless/ApplicationTypes` directory
+2. A class for defining the application type fields in the `app/Paperless/FieldDefinitions` directory
+3. A service class for the application type in the `app/Paperless/Services` directory
