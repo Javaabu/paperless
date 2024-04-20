@@ -59,6 +59,9 @@ class PaperlessServiceProvider extends ServiceProvider
         );
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     protected function offerPublishing(): void
     {
         if (! $this->app->runningInConsole()) {
@@ -69,12 +72,17 @@ class PaperlessServiceProvider extends ServiceProvider
             __DIR__ . '/../config/paperless.php' => config_path('paperless.php'),
         ], 'paperless-config');
 
-        // Offer publishing for all the migrations in this package
-        $this->daPaperlessMigrations();
+        $this->publishes([
+            __DIR__ . '/../database/migrations/create_paperless_migrations_table.php' => $this->getMigrationFileName('create_paperless_migrations_table.php')
+        ], 'paperless-migrations');
 
         $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/paperless'),
         ], 'paperless-views');
+
+        $this->publishes([
+            __DIR__ . '/../database/seeders' => database_path('seeders/'),
+        ], 'paperless-seeders');
     }
 
     protected function registerCommands(): void
@@ -110,36 +118,6 @@ class PaperlessServiceProvider extends ServiceProvider
         // $this->app->bind(SomeContract::class, function ($app) {
         //    return $app->make($app->config['paperless.models.something']);
         // });
-    }
-
-    /**
-     * @throws BindingResolutionException
-     */
-    protected function daPaperlessMigrations(): void
-    {
-        $migrations = [
-            'create_entity_types_table.php',
-            'create_services_table.php',
-            'create_document_types_table.php',
-            'add_document_type_to_media.php',
-            'create_application_types_table.php',
-            'create_entity_type_application_type_table.php',
-            'create_application_type_service_table.php',
-            'create_document_type_application_type_table.php',
-            'create_form_sections_table.php',
-            'create_field_groups_table.php',
-            'create_form_fields_table.php',
-            'create_applications_table.php',
-            'create_form_inputs_table.php',
-        ];
-
-        $publishing_array = [];
-
-        foreach ($migrations as $migration) {
-            $publishing_array[__DIR__ . '/../database/migrations/' . $migration] = $this->getMigrationFileName($migration);
-        }
-
-        $this->publishes($publishing_array, 'paperless-migrations');
     }
 
     /**
