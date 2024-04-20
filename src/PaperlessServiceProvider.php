@@ -18,6 +18,7 @@ use Javaabu\Paperless\Domains\Applications\ApplicationPolicy;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy;
+use Javaabu\Paperless\Console\Commands\PaperlessInstallCommand;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
 use Javaabu\Paperless\Console\Commands\CreateNewApplicationTypeCommand;
 use Javaabu\Paperless\Console\Commands\CreateSampleApplicationTypeCommand;
@@ -81,6 +82,7 @@ class PaperlessServiceProvider extends ServiceProvider
         // Commands accessible at all times go here.
         $this->commands([
             PaperlessTestCommand::class,
+            PaperlessInstallCommand::class,
             CreateNewApplicationTypeCommand::class,
             CreateSampleApplicationTypeCommand::class,
             CreateApplicationTypeCategoryCommand::class,
