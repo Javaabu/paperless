@@ -27,3 +27,7 @@ The command will create the following files:
 1. A super class for the application type in the `app/Paperless/ApplicationTypes` directory
 2. A class for defining the application type fields in the `app/Paperless/FieldDefinitions` directory
 3. A service class for the application type in the `app/Paperless/Services` directory
+
+### Adding Fields To The Application Type
+Open up the field definition class created for the application type in the `app/Paperless/FieldDefinitions` directory.
+

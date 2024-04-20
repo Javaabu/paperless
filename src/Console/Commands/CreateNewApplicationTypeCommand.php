@@ -39,10 +39,33 @@ class CreateNewApplicationTypeCommand extends Command
             required: true,
         );
 
+        $slug = str($slug)->slug()->toString();
         $name = str($slug)->replace('_', ' ')->singular()->lower()->toString();
 
         (new Actions\CreateApplicationTypeMainClass())->handle($name, $category, $entity_types);
         (new Actions\CreateApplicationTypeService())->handle($name);
         (new Actions\CreateApplicationTypeFieldDefinition())->handle($name);
+
+        $this->updateConfigFile($name);
+
+        $this->components->info("Application type created successfully.");
+    }
+
+    public function updateConfigFile(string $name): void
+    {
+        $file_name = str($name)->studly()->singular();
+
+        // Get config/paperless.php file contents
+        $config_contents = file_get_contents(base_path('config/paperless.php'));
+
+        // add the new category to the application_type_categories array
+        $config_contents = str_replace(
+            "'application_types' => [",
+            "'application_types' => [\n\t\tApp\Paperless\ApplicationTypes\\{$file_name}::class,",
+            $config_contents
+        );
+
+        // write the new contents back to the config file
+        file_put_contents(base_path('config/paperless.php'), $config_contents);
     }
 }

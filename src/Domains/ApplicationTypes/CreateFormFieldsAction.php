@@ -56,10 +56,8 @@ class CreateFormFieldsAction
                         'name'                        => $field['name'],
                         'language'                    => $field['language'] ?? 'en',
                         'placeholder'                 => data_get($field, 'placeholder', null),
-                        'type'                        => $field_type,
+                        'builder'                        => $field_type,
                         'is_required'                 => $field['required'],
-                        'additional_validation_rules' => data_get($field, 'additional_validation_rules', []),
-                        'options'                     => json_encode(data_get($field, 'options', [])),
                     ]);
 
                     $field_order++;
