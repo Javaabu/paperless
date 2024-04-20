@@ -19,14 +19,10 @@ class CreateApplicationTypeFieldDefinition
             mkdir(base_path('app/Paperless'));
         }
 
-        if (! is_dir(base_path('app/Paperless/ApplicationTypes'))) {
-            mkdir(base_path('app/Paperless/ApplicationTypes'));
+        if (! is_dir(base_path('app/Paperless/FieldDefinitions'))) {
+            mkdir(base_path('app/Paperless/FieldDefinitions'));
         }
 
-        if (! is_dir(base_path('app/Paperless/ApplicationTypes/FieldDefinitions'))) {
-            mkdir(base_path('app/Paperless/ApplicationTypes/FieldDefinitions'));
-        }
-
-        file_put_contents(base_path("app/Paperless/ApplicationTypes/FieldDefinitions/{$file_name}.php"), $stub);
+        file_put_contents(base_path("app/Paperless/FieldDefinitions/{$file_name}.php"), $stub);
     }
 }

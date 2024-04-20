@@ -19,14 +19,10 @@ class CreateApplicationTypeService
             mkdir(base_path('app/Paperless'));
         }
 
-        if (! is_dir(base_path('app/Paperless/ApplicationTypes'))) {
-            mkdir(base_path('app/Paperless/ApplicationTypes'));
+        if (! is_dir(base_path('app/Paperless/Services'))) {
+            mkdir(base_path('app/Paperless/Services'));
         }
 
-        if (! is_dir(base_path('app/Paperless/ApplicationTypes/Services'))) {
-            mkdir(base_path('app/Paperless/ApplicationTypes/Services'));
-        }
-
-        file_put_contents(base_path("app/Paperless/ApplicationTypes/Services/{$file_name}.php"), $stub);
+        file_put_contents(base_path("app/Paperless/Services/{$file_name}.php"), $stub);
     }
 }

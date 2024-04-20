@@ -99,7 +99,6 @@ class PaperlessServiceProvider extends ServiceProvider
             PaperlessTestCommand::class,
             PaperlessInstallCommand::class,
             CreateNewApplicationTypeCommand::class,
-            CreateSampleApplicationTypeCommand::class,
             CreateApplicationTypeCategoryCommand::class,
         ]);
 
@@ -108,11 +107,6 @@ class PaperlessServiceProvider extends ServiceProvider
         if (! $this->app->runningInConsole()) {
             return;
         }
-
-        // Commands accessible only from the terminal go here.
-        $this->commands([
-            ApplicationTypesPermissionsSeedCommand::class,
-        ]);
     }
 
     /**
