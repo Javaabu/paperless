@@ -10,3 +10,6 @@ To create a new category, you can use the following command:
 ```bash
 php artisan paperless:category
 ```
+The command will ask you for the slug of the category and the label. The slug is used to identify the category in the database.
+
+
