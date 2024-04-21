@@ -2,8 +2,6 @@
 
 namespace Javaabu\Paperless\FieldTypes\Types;
 
-use Javaabu\Paperless\Support\Builders\TextInputBuilder;
-
 class TextInput extends FieldType
 {
     protected string $slug = 'text_input';

@@ -2,8 +2,6 @@
 
 namespace Javaabu\Paperless\FieldTypes\Types;
 
-use Javaabu\Paperless\Support\Builders\EmailInputBuilder;
-
 class EmailInput extends FieldType
 {
     protected string $slug = 'email_input';
