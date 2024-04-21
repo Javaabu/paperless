@@ -51,6 +51,7 @@ class FieldGroup extends Model
 
         if ($old_data->isNotEmpty()) {
             $repeating_group = $this->generateRepeatingGroupHtml($old_data, $form_fields, $entity);
+
             return RepeatingGroup::make($this->name)
                                  ->id($this->slug)
                                  ->schema($repeating_group)
@@ -70,6 +71,7 @@ class FieldGroup extends Model
 
         if ($field_group_form_inputs->isNotEmpty() && $old_data->isEmpty()) {
             $repeating_group = $this->generateRepeatingGroupHtml($field_group_form_inputs, $form_fields, $entity);
+
             return RepeatingGroup::make($this->name)
                                  ->id($this->slug)
                                  ->schema($repeating_group)
@@ -95,6 +97,7 @@ class FieldGroup extends Model
             $form_field->setRelation('fieldGroup', $this);
             $fields_html .= $form_field->render($entity);
         }
+
         return $fields_html;
     }
 
@@ -114,11 +117,11 @@ class FieldGroup extends Model
 
                     if (! $individual && $form_field->slug == 'student') {
                         $form_input = [
-                            'name'        => $name,
-                            'name_dv'     => data_get($group_form_inputs, 'name_dv'),
+                            'name' => $name,
+                            'name_dv' => data_get($group_form_inputs, 'name_dv'),
                             'nationality' => data_get($group_form_inputs, 'nationality'),
-                            'gov_id'      => $gov_id,
-                            'gender'      => data_get($group_form_inputs, 'gender'),
+                            'gov_id' => $gov_id,
+                            'gender' => data_get($group_form_inputs, 'gender'),
                             'certificate_number' => data_get($group_form_inputs, 'certificate_number'),
                         ];
                     }

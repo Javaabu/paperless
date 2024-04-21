@@ -63,6 +63,7 @@ class ServicesController extends Controller
         $service->save();
 
         $this->flashSuccessMessage();
+
         return to_route('admin.services.edit', $service);
     }
 
@@ -82,6 +83,7 @@ class ServicesController extends Controller
         $service->save();
 
         $this->flashSuccessMessage();
+
         return to_route('admin.services.edit', $service);
     }
 
@@ -107,6 +109,7 @@ class ServicesController extends Controller
     public function trash(Request $request)
     {
         $this->authorize('trash', Service::class);
+
         return $this->index($request, true);
     }
 
@@ -195,10 +198,12 @@ class ServicesController extends Controller
                     ->each(function (Service $service) {
                         $service->delete();
                     });
+
                 break;
         }
 
         $this->flashSuccessMessage();
+
         return $this->redirect($request, to_route('admin.services.index'));
     }
 }

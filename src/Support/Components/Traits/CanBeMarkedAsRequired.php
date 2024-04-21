@@ -9,6 +9,7 @@ trait CanBeMarkedAsRequired
     public function markAsRequired(bool $condition = false): static
     {
         $this->isMarkedAsRequired = $condition;
+
         return $this;
     }
 

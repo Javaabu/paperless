@@ -27,6 +27,7 @@ abstract class Component
                 $pos = strpos($this->view, '::');
                 $replace_string = $view_path . ".";
                 $position = $pos + 2;
+
                 return substr_replace($this->view, $replace_string, $position, 0);
             }
 

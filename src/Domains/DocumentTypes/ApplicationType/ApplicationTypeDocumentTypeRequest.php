@@ -17,7 +17,7 @@ class ApplicationTypeDocumentTypeRequest extends FormRequest
 
         return [
             'document_type' => ['required', 'exists:document_types,id', 'unique:document_type_application_type,document_type_id,NULL,id,application_type_id,' . $application_type->id],
-            'is_required'      => ['nullable', 'boolean'],
+            'is_required' => ['nullable', 'boolean'],
         ];
     }
 }

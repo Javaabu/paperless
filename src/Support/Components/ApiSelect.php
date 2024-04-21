@@ -45,6 +45,7 @@ class ApiSelect extends Field implements Htmlable
     public function selected(string | Model | Closure | null $selected): static
     {
         $this->selected = $selected;
+
         return $this;
     }
 
@@ -56,6 +57,7 @@ class ApiSelect extends Field implements Htmlable
     public function filterBy(array | Closure | null $filter_by): static
     {
         $this->filter_by = $filter_by;
+
         return $this;
     }
 

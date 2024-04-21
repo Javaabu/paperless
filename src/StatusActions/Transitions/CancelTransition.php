@@ -31,6 +31,7 @@ class CancelTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsCancelled');
+
         return $this->application;
     }
 

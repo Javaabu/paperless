@@ -30,6 +30,7 @@ class ApproveTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterApproval');
+
         return $this->application;
     }
 

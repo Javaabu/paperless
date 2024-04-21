@@ -10,12 +10,14 @@ trait HasContainerAttributes
     public function containerId(string $id): static
     {
         $this->containerId = $id;
+
         return $this;
     }
 
     public function containerClass(string $class): static
     {
         $this->containerClass = $class;
+
         return $this;
     }
 

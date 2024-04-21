@@ -16,9 +16,9 @@ class ApplicationTypeDocumentTypesController extends Controller
     protected static function initOrderbys()
     {
         static::$orderbys = [
-            'name'       => __('Name'),
+            'name' => __('Name'),
             'created_at' => __('Created At'),
-            'id'         => __('ID'),
+            'id' => __('ID'),
         ];
     }
 
@@ -56,6 +56,7 @@ class ApplicationTypeDocumentTypesController extends Controller
         $application_type->documentTypes()->attach($document_type, ['is_required' => $is_required]);
 
         $this->flashSuccessMessage();
+
         return to_route('admin.application-types.document-types.index', $application_type);
     }
 
@@ -69,6 +70,7 @@ class ApplicationTypeDocumentTypesController extends Controller
         }
 
         $this->flashSuccessMessage();
+
         return to_route('admin.application-types.document-types.index', $application_type);
     }
 
@@ -77,8 +79,8 @@ class ApplicationTypeDocumentTypesController extends Controller
         $this->authorize('view', $application_type);
 
         $this->validate($request, [
-            'action'           => 'required|in:delete,required,not_required',
-            'document_types'   => 'required|array',
+            'action' => 'required|in:delete,required,not_required',
+            'document_types' => 'required|array',
             'document_types.*' => 'exists:document_type_application_type,id,application_type_id,' . $application_type->id,
         ]);
 
@@ -103,6 +105,7 @@ class ApplicationTypeDocumentTypesController extends Controller
                                      $document_type->pivot->is_required = true;
                                      $document_type->pivot->save();
                                  });
+
                 break;
 
             case 'not_required':
@@ -113,10 +116,12 @@ class ApplicationTypeDocumentTypesController extends Controller
                                      $document_type->pivot->is_required = false;
                                      $document_type->pivot->save();
                                  });
+
                 break;
         }
 
         $this->flashSuccessMessage();
+
         return to_route('admin.application-types.document-types.index', $application_type);
     }
 }

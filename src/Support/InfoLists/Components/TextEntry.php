@@ -31,6 +31,7 @@ class TextEntry extends Component
     public function value(string $value = null): static
     {
         $this->value = $value;
+
         return $this;
     }
 

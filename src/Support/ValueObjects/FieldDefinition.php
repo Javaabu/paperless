@@ -26,36 +26,42 @@ class FieldDefinition
     public function label(string $label): self
     {
         $this->label = $label;
+
         return $this;
     }
 
     public function orderColumn(null | int $order_column = null): self
     {
         $this->order_column = $order_column;
+
         return $this;
     }
 
     public function language(string $language): self
     {
         $this->language = $language;
+
         return $this;
     }
 
     public function placeholder(string $placeholder): self
     {
         $this->placeholder = $placeholder;
+
         return $this;
     }
 
     public function builder(string $builder): self
     {
         $this->builder = $builder;
+
         return $this;
     }
 
     public function isRequired(bool $is_required = true): self
     {
         $this->is_required = $is_required;
+
         return $this;
     }
 

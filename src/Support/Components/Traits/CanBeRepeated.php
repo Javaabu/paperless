@@ -15,18 +15,21 @@ trait CanBeRepeated
     public function repeat(bool | Closure $canBeRepeated): static
     {
         $this->canBeRepeated = $canBeRepeated;
+
         return $this;
     }
 
     public function repeatingInstance(int | Closure | null $repeatingInstance): static
     {
         $this->repeatingInstance = $repeatingInstance ?? 0;
+
         return $this;
     }
 
     public function repeatingGroup(RepeatingGroup | Closure | null $repeating_group): static
     {
         $this->repeatingGroup = $repeating_group;
+
         return $this;
     }
 

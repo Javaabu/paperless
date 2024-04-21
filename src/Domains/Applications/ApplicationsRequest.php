@@ -38,6 +38,7 @@ class ApplicationsRequest extends BaseApplicationsRequest
     {
         $applicant_id = $this->input('applicant_id');
         $applicant_type = $this->getApplicantType();
+
         return match($applicant_type) {
             'user' => config('paperless.models.user')::find($applicant_id),
             default => throw new InvalidOperationException('Invalid applicant')
@@ -52,6 +53,7 @@ class ApplicationsRequest extends BaseApplicationsRequest
     public function getApplicationType(): ?ApplicationType
     {
         $application_type_id = $this->input('application_type_id');
+
         return ApplicationType::find($application_type_id);
     }
 }

@@ -57,12 +57,14 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     public function applications(): HasMany
     {
         $application_model = config('paperless.models.application');
+
         return $this->hasMany($application_model);
     }
 
     public function documentTypes(): BelongsToMany
     {
         $document_type_model = config('paperless.models.document_type');
+
         return $this->belongsToMany($document_type_model, 'document_type_application_type')
                     ->withPivot(['id', 'is_required']);
     }
@@ -70,6 +72,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     public function services(): BelongsToMany
     {
         $service_model = config('paperless.models.service');
+
         return $this->belongsToMany($service_model, 'application_type_service')
                     ->withPivot(['id', 'is_applied_automatically']);
     }
@@ -82,6 +85,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     public function assignedUsers(): BelongsToMany
     {
         $user_model = config('paperless.models.user');
+
         return $this->belongsToMany(
             $user_model,
             'application_type_users',
@@ -120,6 +124,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         $view_any_codes = self::getViewAnyCodes($user);
         if ($view_any_codes) {
             $query->whereIn('code', $view_any_codes);
+
             return;
         }
 
@@ -199,24 +204,28 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     public function requiresPayment(): bool
     {
         $this->loadMissing('services');
+
         return $this->services->where('pivot.is_applied_automatically', true)->isNotEmpty();
     }
 
     public function getManuallyRaisedPaymentServices()
     {
         $this->loadMissing('services');
+
         return $this->services->where('pivot.is_applied_automatically', false);
     }
 
     public function getAutomaticallyRaisedPaymentServices()
     {
         $this->loadMissing('services');
+
         return $this->services->where('pivot.is_applied_automatically', true);
     }
 
     public function getFormFieldLabels(): array
     {
         $this->loadMissing('formFields');
+
         return $this->formFields->pluck('name', 'id')->toArray();
     }
 

@@ -14,9 +14,9 @@ class ApplicationTypeServicesController extends Controller
     protected static function initOrderbys()
     {
         static::$orderbys = [
-            'name'       => __('Name'),
+            'name' => __('Name'),
             'created_at' => __('Created At'),
-            'id'         => __('ID'),
+            'id' => __('ID'),
         ];
     }
 
@@ -54,6 +54,7 @@ class ApplicationTypeServicesController extends Controller
         $application_type->services()->attach($service, ['is_applied_automatically' => $is_applied_automatically]);
 
         $this->flashSuccessMessage();
+
         return to_route('admin.application-types.services.index', $application_type);
     }
 
@@ -67,6 +68,7 @@ class ApplicationTypeServicesController extends Controller
         }
 
         $this->flashSuccessMessage();
+
         return to_route('admin.application-types.services.index', $application_type);
     }
 
@@ -75,8 +77,8 @@ class ApplicationTypeServicesController extends Controller
         $this->authorize('view', $application_type);
 
         $this->validate($request, [
-            'action'           => 'required|in:delete,auto_applied,not_auto_applied',
-            'services'   => 'required|array',
+            'action' => 'required|in:delete,auto_applied,not_auto_applied',
+            'services' => 'required|array',
             'services.*' => 'exists:application_type_service,id,application_type_id,' . $application_type->id,
         ]);
 
@@ -101,6 +103,7 @@ class ApplicationTypeServicesController extends Controller
                                      $service->pivot->is_applied_automatically = true;
                                      $service->pivot->save();
                                  });
+
                 break;
 
             case 'not_auto_applied':
@@ -111,10 +114,12 @@ class ApplicationTypeServicesController extends Controller
                                      $service->pivot->is_applied_automatically = false;
                                      $service->pivot->save();
                                  });
+
                 break;
         }
 
         $this->flashSuccessMessage();
+
         return to_route('admin.application-types.services.index', $application_type);
     }
 }

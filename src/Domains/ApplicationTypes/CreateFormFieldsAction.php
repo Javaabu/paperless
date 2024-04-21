@@ -56,11 +56,11 @@ class CreateFormFieldsAction
         return FormSection::updateOrCreate([
             'slug' => $section_definition->getSlug(),
         ], [
-            'order_column'        => $section_order,
-            'name'                => $section_definition->getLabel(),
-            'description'         => $section_definition->getDescription(),
+            'order_column' => $section_order,
+            'name' => $section_definition->getLabel(),
+            'description' => $section_definition->getDescription(),
             'application_type_id' => $application_type->id,
-            'is_admin_section'    => $section_definition->getIsAdminSection(),
+            'is_admin_section' => $section_definition->getIsAdminSection(),
         ]);
     }
 
@@ -73,11 +73,11 @@ class CreateFormFieldsAction
         return FieldGroup::updateOrCreate([
                     'slug' => $field_group_definition->getSlug(),
                 ], [
-                    'order_column'        => $field_group_definition->getOrderColumn() ?? $group_order,
-                    'name'                => $field_group_definition->getLabel(),
-                    'description'         => $field_group_definition->getDescription(),
+                    'order_column' => $field_group_definition->getOrderColumn() ?? $group_order,
+                    'name' => $field_group_definition->getLabel(),
+                    'description' => $field_group_definition->getDescription(),
                     'application_type_id' => $application_type->id,
-                    'form_section_id'     => $form_section->id,
+                    'form_section_id' => $form_section->id,
                 ]);
     }
 
@@ -89,17 +89,17 @@ class CreateFormFieldsAction
         int | null $field_order = null
     ): void {
         FormField::updateOrCreate([
-            'slug'                => $field_definition->getSlug(),
-            'form_section_id'     => $form_section->id,
+            'slug' => $field_definition->getSlug(),
+            'form_section_id' => $form_section->id,
             'application_type_id' => $application_type->id,
-            'field_group_id'      => $field_group?->id,
+            'field_group_id' => $field_group?->id,
         ], [
-            'order_column'                => $field_definition->getOrderColumn() ?? $field_order,
-            'name'                        => $field_definition->getLabel(),
-            'language'                    => $field_definition->getLanguage(),
-            'placeholder'                 => $field_definition->getPlaceholder(),
-            'builder'                     => $field_definition->getBuilder(),
-            'is_required'                 => $field_definition->getIsRequired(),
+            'order_column' => $field_definition->getOrderColumn() ?? $field_order,
+            'name' => $field_definition->getLabel(),
+            'language' => $field_definition->getLanguage(),
+            'placeholder' => $field_definition->getPlaceholder(),
+            'builder' => $field_definition->getBuilder(),
+            'is_required' => $field_definition->getIsRequired(),
         ]);
     }
 }

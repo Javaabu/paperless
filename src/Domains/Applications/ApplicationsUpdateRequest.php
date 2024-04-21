@@ -20,18 +20,21 @@ class ApplicationsUpdateRequest extends BaseApplicationsRequest
     public function getApplicant(): Applicant
     {
         $application = $this->route('application') ?: $this->route('public_application');
+
         return $application->applicant;
     }
 
     public function getApplicantType(): string
     {
         $application = $this->route('application') ?: $this->route('public_application');
+
         return $application->applicant_type;
     }
 
     public function getApplicationType(): ?ApplicationType
     {
         $application = $this->route('application');
+
         return $application->applicationType;
     }
 }

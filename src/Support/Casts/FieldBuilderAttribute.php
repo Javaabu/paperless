@@ -4,7 +4,6 @@ namespace Javaabu\Paperless\Support\Casts;
 
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\FormField;
-use Javaabu\Paperless\FieldTypes\Types\FieldType;
 use Javaabu\Paperless\Support\Builders\ComponentBuilder;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 

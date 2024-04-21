@@ -4,7 +4,6 @@ namespace Javaabu\Paperless\Support\Builders;
 
 use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FormInput;
-use Javaabu\Forms\Views\Components\Form;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
@@ -25,6 +24,7 @@ abstract class ComponentBuilder
     public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = []): array
     {
         $is_required = $this->form_field->is_required ? 'required' : 'nullable';
+
         return [
             $this->form_field->slug => [$is_required],
         ];

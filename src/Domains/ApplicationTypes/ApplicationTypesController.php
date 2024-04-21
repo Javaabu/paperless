@@ -71,6 +71,7 @@ class ApplicationTypesController extends Controller
         $application_type->save();
 
         $this->flashSuccessMessage();
+
         return to_route('admin.application-types.edit', $application_type);
     }
 
@@ -91,6 +92,7 @@ class ApplicationTypesController extends Controller
         //        }
 
         $this->flashSuccessMessage();
+
         return to_route('admin.application-types.index');
     }
 
@@ -106,7 +108,7 @@ class ApplicationTypesController extends Controller
         $type = $request->hasFile('image') ? 'file' : 'url';
 
         $rules = [
-            'url'   => ['string', 'url', 'required_without:image'],
+            'url' => ['string', 'url', 'required_without:image'],
             'image' => AllowedMimeTypes::getValidationRule('image') . '|required_without:url',
         ];
 
@@ -124,10 +126,10 @@ class ApplicationTypesController extends Controller
 
         return response()->json([
             'success' => 1,
-            'file'    => [
-                'url'      => $media->getUrl('large'),
+            'file' => [
+                'url' => $media->getUrl('large'),
                 'original' => $media->getUrl(),
-                'id'       => $media->id,
+                'id' => $media->id,
             ],
         ]);
     }

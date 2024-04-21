@@ -16,7 +16,7 @@ class ServicesRequest extends FormRequest
         $rules = [
             'name' => ['string', 'max:255'],
             'code' => ['string', 'max:255'],
-            'fee'  => ['numeric', 'between:0,999999'],
+            'fee' => ['numeric', 'between:0,999999'],
         ];
 
         if ($service = $this->route('service')) {

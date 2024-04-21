@@ -49,6 +49,7 @@ class ApplicationRoutes
         Route::resource('applications', ApplicationsController::class)->except(['show']);
         Route::bind('admin_section', function ($value, $route) {
             $application_id = $route->parameter('application');
+
             return FormSection::where('id', $value)->whereHasApplication($application_id)->firstOrFail();
         });
     }

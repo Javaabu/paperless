@@ -30,6 +30,7 @@ class VerifyTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsVerified');
+
         return $this->application;
     }
 

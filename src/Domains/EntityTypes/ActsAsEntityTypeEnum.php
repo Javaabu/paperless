@@ -9,6 +9,7 @@ trait ActsAsEntityTypeEnum
     public function getEntityType(): EntityType
     {
         $key_name = $this->value . "_entity_type";
+
         return Cache::get($key_name, function () {
             return EntityType::where('slug', $this->value)->first();
         });

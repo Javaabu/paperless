@@ -23,30 +23,35 @@ class SectionDefinition
     public function description(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
     public function fields(array $fields): self
     {
         $this->fields = $fields;
+
         return $this;
     }
 
     public function fieldGroups(array $field_groups): self
     {
         $this->field_groups = $field_groups;
+
         return $this;
     }
 
     public function label(string $label): self
     {
         $this->label = $label;
+
         return $this;
     }
 
     public function isAdminSection(): bool
     {
         $this->is_admin_section = true;
+
         return $this->is_admin_section;
     }
 

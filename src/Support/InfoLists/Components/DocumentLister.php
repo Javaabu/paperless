@@ -34,18 +34,21 @@ class DocumentLister extends Component
     public function size(?string $size = null): self
     {
         $this->size = $size;
+
         return $this;
     }
 
     public function fileName(?string $file_name = null): self
     {
         $this->file_name = $file_name;
+
         return $this;
     }
 
     public function downloadLink(?string $link = null): self
     {
         $this->download_link = $link;
+
         return $this;
     }
 
@@ -67,6 +70,7 @@ class DocumentLister extends Component
     public function value(string $value = null): static
     {
         $this->value = $value;
+
         return $this;
     }
 
