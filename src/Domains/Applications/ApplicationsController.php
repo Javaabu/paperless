@@ -130,7 +130,7 @@ class ApplicationsController extends Controller
             'application_type' => [
                 'required',
                 Rule::exists('application_types', 'id'),
-                Rule::exists('application_type_entity_type', 'application_type_id')
+                Rule::exists('entity_type_application_type', 'application_type_id')
                     ->where('entity_type_id', $request->input('applicant_type')),
             ],
         ];
