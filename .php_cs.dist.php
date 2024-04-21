@@ -22,7 +22,13 @@ return (new PhpCsFixer\Config())
         'trailing_comma_in_multiline'       => true,
         'phpdoc_scalar'                     => true,
         'unary_operator_spaces'             => true,
-        'binary_operator_spaces'            => true,
+        'binary_operator_spaces'            => [
+            'default'   => 'single_space',
+            'operators' => [
+                '=' => 'align_single_space',
+                '=>' => 'align_single_space',
+            ],
+        ],
         'blank_line_before_statement'       => [
             'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
         ],
