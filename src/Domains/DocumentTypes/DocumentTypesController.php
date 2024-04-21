@@ -24,17 +24,17 @@ class DocumentTypesController extends Controller
     protected static function initOrderbys()
     {
         static::$orderbys = [
-            'name' => __('Name'),
+            'name'       => __('Name'),
             'created_at' => __('Created At'),
-            'id' => __('ID'),
+            'id'         => __('ID'),
         ];
     }
 
     public function index(Request $request, $trashed = false)
     {
-        $title = __('All Document Types');
-        $orderby = $this->getOrderBy($request, 'created_at');
-        $order = $this->getOrder($request, 'created_at', $orderby);
+        $title    = __('All Document Types');
+        $orderby  = $this->getOrderBy($request, 'created_at');
+        $order    = $this->getOrder($request, 'created_at', $orderby);
         $per_page = $this->getPerPage($request);
 
         $document_types = $this->getModelClass()::orderBy($orderby, $order);
@@ -121,7 +121,7 @@ class DocumentTypesController extends Controller
     public function forceDelete($id, Request $request)
     {
         //find the model
-        $field = with(new DocumentType())->getRouteKeyName();
+        $field         = with(new DocumentType())->getRouteKeyName();
         $document_type = DocumentType::onlyTrashed()
             ->where($field, $id)
             ->firstOrFail();
@@ -150,7 +150,7 @@ class DocumentTypesController extends Controller
     public function restore($id, Request $request)
     {
         //find the model
-        $field = with(new DocumentType())->getRouteKeyName();
+        $field         = with(new DocumentType())->getRouteKeyName();
         $document_type = DocumentType::onlyTrashed()
             ->where($field, $id)
             ->firstOrFail();
@@ -182,13 +182,13 @@ class DocumentTypesController extends Controller
         $this->authorize('viewAny', DocumentType::class);
 
         $this->validate($request, [
-            'action' => 'required|in:delete',
-            'document_types' => 'required|array',
+            'action'           => 'required|in:delete',
+            'document_types'   => 'required|array',
             'document_types.*' => 'exists:document_types,id',
         ]);
 
         $action = $request->input('action');
-        $ids = $request->input('document_types', []);
+        $ids    = $request->input('document_types', []);
 
         switch ($action) {
             case 'delete':

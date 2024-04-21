@@ -13,19 +13,19 @@ enum ApplicationStatuses: string implements IsEnum
 {
     use NativeEnumsTrait;
 
-    case Draft = 'draft';
-    case Pending = 'pending';
-    case Approved = 'approved';
-    case Rejected = 'rejected';
+    case Draft     = 'draft';
+    case Pending   = 'pending';
+    case Approved  = 'approved';
+    case Rejected  = 'rejected';
     case Cancelled = 'cancelled';
 
     public static function labels(): array
     {
         return [
-            self::Draft->value => __("Draft"),
-            self::Pending->value => __("Pending"),
-            self::Approved->value => __("Approved"),
-            self::Rejected->value => __("Rejected"),
+            self::Draft->value     => __("Draft"),
+            self::Pending->value   => __("Pending"),
+            self::Approved->value  => __("Approved"),
+            self::Rejected->value  => __("Rejected"),
             self::Cancelled->value => __("Cancelled"),
         ];
     }
@@ -33,10 +33,10 @@ enum ApplicationStatuses: string implements IsEnum
     public static function colors(): array
     {
         return [
-            self::Draft->value => "light",
-            self::Pending->value => "secondary",
-            self::Approved->value => "success",
-            self::Rejected->value => "danger",
+            self::Draft->value     => "light",
+            self::Pending->value   => "secondary",
+            self::Approved->value  => "success",
+            self::Rejected->value  => "danger",
             self::Cancelled->value => "dark",
         ];
     }
@@ -44,10 +44,10 @@ enum ApplicationStatuses: string implements IsEnum
     public static function statusActions(): array
     {
         return [
-            self::Draft->value => DraftApplicationStatus::class,
-            self::Pending->value => PendingApplicationStatus::class,
-            self::Approved->value => CompleteApplicationStatus::class,
-            self::Rejected->value => RejectedApplicationStatus::class,
+            self::Draft->value     => DraftApplicationStatus::class,
+            self::Pending->value   => PendingApplicationStatus::class,
+            self::Approved->value  => CompleteApplicationStatus::class,
+            self::Rejected->value  => RejectedApplicationStatus::class,
             self::Cancelled->value => CancelledApplicationStatus::class,
         ];
     }
@@ -55,10 +55,10 @@ enum ApplicationStatuses: string implements IsEnum
     public static function statusRemarks(): array
     {
         return [
-            self::Draft->value => __("Your application is currently in draft."),
-            self::Pending->value => __("Your application is pending verification."),
-            self::Rejected->value => __("Your application has been rejected."),
-            self::Approved->value => __("Your application is complete."),
+            self::Draft->value     => __("Your application is currently in draft."),
+            self::Pending->value   => __("Your application is pending verification."),
+            self::Rejected->value  => __("Your application has been rejected."),
+            self::Approved->value  => __("Your application is complete."),
             self::Cancelled->value => __("Your application has been cancelled."),
         ];
     }
@@ -66,10 +66,10 @@ enum ApplicationStatuses: string implements IsEnum
     public static function actions(): array
     {
         return [
-            'submit' => 'secondary',
+            'submit'          => 'secondary',
             'markAsCancelled' => 'dark',
-            'markAsRejected' => 'danger',
-            'markAsApproved' => 'success',
+            'markAsRejected'  => 'danger',
+            'markAsApproved'  => 'success',
         ];
     }
 
@@ -81,7 +81,7 @@ enum ApplicationStatuses: string implements IsEnum
 
     public static function getProcessActions(): array
     {
-        $actions = self::actions();
+        $actions        = self::actions();
         $manual_actions = self::manualActions();
 
         return array_diff_key($actions, array_flip($manual_actions));

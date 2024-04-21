@@ -14,8 +14,8 @@ class DocumentTypesRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => ['string', 'max:255'],
-            'slug' => ['string', 'max:255'],
+            'name'        => ['string', 'max:255'],
+            'slug'        => ['string', 'max:255'],
             'description' => ['nullable', 'string', 'max:65535'],
         ];
 

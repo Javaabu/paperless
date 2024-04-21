@@ -40,12 +40,12 @@ class PaperlessServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'paperless');
 
         Relation::enforceMorphMap([
-            'service' => Service::class,
+            'service'          => Service::class,
             'application_type' => ApplicationType::class,
-            'document_type' => DocumentType::class,
-            'entity_type' => EntityType::class,
-            'application' => Application::class,
-            'status_event' => StatusEvent::class,
+            'document_type'    => DocumentType::class,
+            'entity_type'      => EntityType::class,
+            'application'      => Application::class,
+            'status_event'     => StatusEvent::class,
         ]);
     }
 
@@ -79,10 +79,10 @@ class PaperlessServiceProvider extends ServiceProvider
         ], 'paperless-views');
 
         $this->publishes([
-            __DIR__ . '/stubs/entity_types_seeder.stub' => database_path('seeders/EntityTypesSeeder.php'),
-            __DIR__ . '/stubs/application_types_seeder.stub' => database_path('seeders/ApplicationTypesSeeder.php'),
+            __DIR__ . '/stubs/entity_types_seeder.stub'                  => database_path('seeders/EntityTypesSeeder.php'),
+            __DIR__ . '/stubs/application_types_seeder.stub'             => database_path('seeders/ApplicationTypesSeeder.php'),
             __DIR__ . '/stubs/application_types_permissions_seeder.stub' => database_path('seeders/ApplicationTypesPermissionsSeeder.php'),
-            __DIR__ . '/stubs/paperless_model_permissions.stub' => database_path('seeders/PaperlessModelPermissionsSeeder.php'),
+            __DIR__ . '/stubs/paperless_model_permissions.stub'          => database_path('seeders/PaperlessModelPermissionsSeeder.php'),
         ], 'paperless-seeders');
 
         $this->publishes([
@@ -145,10 +145,10 @@ class PaperlessServiceProvider extends ServiceProvider
     protected function registerPolicies(): void
     {
         $policies = [
-            config('paperless.models.application') => ApplicationPolicy::class,
+            config('paperless.models.application')      => ApplicationPolicy::class,
             config('paperless.models.application_type') => ApplicationTypePolicy::class,
-            config('paperless.models.service') => ServicePolicy::class,
-            config('paperless.models.document_type') => DocumentTypePolicy::class,
+            config('paperless.models.service')          => ServicePolicy::class,
+            config('paperless.models.document_type')    => DocumentTypePolicy::class,
         ];
 
         foreach ($policies as $key => $value) {

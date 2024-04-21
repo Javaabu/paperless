@@ -17,10 +17,10 @@ class ApiSelect extends Field implements Htmlable
     use HasOptions;
     use HasPlaceholder;
 
-    protected string $view = 'paperless::field-components.api-select';
-    protected string | Closure | null $name_field = 'name';
+    protected string $view                              = 'paperless::field-components.api-select';
+    protected string | Closure | null $name_field       = 'name';
     protected Model | Closure | string | null $selected = null;
-    protected array | Closure | null $filter_by = null;
+    protected array | Closure | null $filter_by         = null;
 
 
 

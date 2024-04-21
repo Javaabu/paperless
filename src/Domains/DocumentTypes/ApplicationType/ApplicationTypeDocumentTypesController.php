@@ -16,17 +16,17 @@ class ApplicationTypeDocumentTypesController extends Controller
     protected static function initOrderbys()
     {
         static::$orderbys = [
-            'name' => __('Name'),
+            'name'       => __('Name'),
             'created_at' => __('Created At'),
-            'id' => __('ID'),
+            'id'         => __('ID'),
         ];
     }
 
     public function index(ApplicationType $application_type, Request $request)
     {
-        $title = __('All Application Types');
-        $orderby = $this->getOrderBy($request, 'created_at');
-        $order = $this->getOrder($request, 'created_at', $orderby);
+        $title    = __('All Application Types');
+        $orderby  = $this->getOrderBy($request, 'created_at');
+        $order    = $this->getOrder($request, 'created_at', $orderby);
         $per_page = $this->getPerPage($request);
 
         $document_types = $application_type->documentTypes()->orderBy($orderby, $order);
@@ -51,7 +51,7 @@ class ApplicationTypeDocumentTypesController extends Controller
     {
         $this->authorize('update', $application_type);
         $document_type = $request->input('document_type');
-        $is_required = $request->input('is_required', false);
+        $is_required   = $request->input('is_required', false);
 
         $application_type->documentTypes()->attach($document_type, ['is_required' => $is_required]);
 
@@ -79,13 +79,13 @@ class ApplicationTypeDocumentTypesController extends Controller
         $this->authorize('view', $application_type);
 
         $this->validate($request, [
-            'action' => 'required|in:delete,required,not_required',
-            'document_types' => 'required|array',
+            'action'           => 'required|in:delete,required,not_required',
+            'document_types'   => 'required|array',
             'document_types.*' => 'exists:document_type_application_type,id,application_type_id,' . $application_type->id,
         ]);
 
         $action = $request->input('action');
-        $ids = $request->input('document_types', []);
+        $ids    = $request->input('document_types', []);
 
         switch ($action) {
             case 'delete':

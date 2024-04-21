@@ -15,7 +15,7 @@ class DocumentType extends Model implements AdminModel
     use SoftDeletes;
 
     protected static array $logAttributes = ['*'];
-    protected static bool $logOnlyDirty = true;
+    protected static bool $logOnlyDirty   = true;
 
     protected $fillable = [
         'name',
@@ -36,9 +36,9 @@ class DocumentType extends Model implements AdminModel
     public function url(string $action = 'show'): string
     {
         return match ($action) {
-            'index' => route('admin.document-types.index'),
+            'index'  => route('admin.document-types.index'),
             'create' => route('admin.document-types.create'),
-            default => route("admin.document-types.$action", $this),
+            default  => route("admin.document-types.$action", $this),
         };
     }
 }

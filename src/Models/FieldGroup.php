@@ -38,7 +38,7 @@ class FieldGroup extends Model
         $form_fields = $this->formFields->sortBy('order_column');
 
         $field_group_form_inputs = $form_inputs?->where('field_group_id', $this->id)->groupBy('group_instance_number');
-        $fields_html = $this->generateFieldsHtml($form_fields, $entity);
+        $fields_html             = $this->generateFieldsHtml($form_fields, $entity);
 
         $fields_section_html = Section::make($this->name)
                                       ->containerClass('repeater')
@@ -110,18 +110,18 @@ class FieldGroup extends Model
                 $form_input = null;
                 if (is_array($group_form_inputs)) {
                     $gov_id = data_get($group_form_inputs, 'gov_id');
-                    $name = data_get($group_form_inputs, 'name');
+                    $name   = data_get($group_form_inputs, 'name');
 
                     $individual = Individual::where('gov_id', $gov_id)->where('name', $name)->first();
                     $form_input = $individual?->id;
 
                     if (! $individual && $form_field->slug == 'student') {
                         $form_input = [
-                            'name' => $name,
-                            'name_dv' => data_get($group_form_inputs, 'name_dv'),
-                            'nationality' => data_get($group_form_inputs, 'nationality'),
-                            'gov_id' => $gov_id,
-                            'gender' => data_get($group_form_inputs, 'gender'),
+                            'name'               => $name,
+                            'name_dv'            => data_get($group_form_inputs, 'name_dv'),
+                            'nationality'        => data_get($group_form_inputs, 'nationality'),
+                            'gov_id'             => $gov_id,
+                            'gender'             => data_get($group_form_inputs, 'gender'),
                             'certificate_number' => data_get($group_form_inputs, 'certificate_number'),
                         ];
                     }

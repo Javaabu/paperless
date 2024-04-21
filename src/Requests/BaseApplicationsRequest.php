@@ -23,8 +23,8 @@ abstract class BaseApplicationsRequest extends FormRequest
         $application_type = $this->getApplicationType();
         $application_type?->loadMissing('formSections', 'formSections.formFields');
         $applicant_type = $this->getApplicantType();
-        $applicant = $this->getApplicant();
-        $rules = [];
+        $applicant      = $this->getApplicant();
+        $rules          = [];
 
         if (! $application_type) {
             return $rules;

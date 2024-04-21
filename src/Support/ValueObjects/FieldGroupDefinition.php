@@ -4,10 +4,10 @@ namespace Javaabu\Paperless\Support\ValueObjects;
 
 class FieldGroupDefinition
 {
-    private string | null $label = null;
+    private string | null $label       = null;
     private string | null $description = null;
-    private array | null $fields = [];
-    private int | null $order_column = null;
+    private array | null $fields       = [];
+    private int | null $order_column   = null;
 
     public function __construct(
         private readonly ?string $slug,

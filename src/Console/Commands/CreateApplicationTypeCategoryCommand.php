@@ -31,7 +31,7 @@ class CreateApplicationTypeCategoryCommand extends Command
 
         $stub_contents = file_get_contents(__DIR__ . '../../../stubs/application_type_category.stub');
 
-        $stub = (new ReplacePlaceholders())->handle($stub_contents, $slug);
+        $stub      = (new ReplacePlaceholders())->handle($stub_contents, $slug);
         $file_name = str($slug)->studly()->singular()->replace('_', '')->toString();
 
         if (! is_dir(base_path('app/Paperless'))) {

@@ -19,11 +19,11 @@ class UndoRejectionTransition extends Transition
     {
         $this->application->callServiceFunction('doBeforeUndoRejection');
 
-        $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
+        $application_eta_days      = $this->application?->applicationType?->eta_duration ?? 0;
         $this->application->status = new PendingVerification($this->application);
         $this->application->verifiedBy()->dissociate();
         $this->application->verified_at = null;
-        $this->application->eta_at = now()->addDays($application_eta_days);
+        $this->application->eta_at      = now()->addDays($application_eta_days);
         $this->application->save();
 
         $this->application->createStatusEvent(

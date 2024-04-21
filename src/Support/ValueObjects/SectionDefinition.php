@@ -4,11 +4,11 @@ namespace Javaabu\Paperless\Support\ValueObjects;
 
 class SectionDefinition
 {
-    private string | null $label = null;
+    private string | null $label       = null;
     private string | null $description = null;
-    private array | null $fields = [];
+    private array | null $fields       = [];
     private array | null $field_groups = [];
-    private bool $is_admin_section = false;
+    private bool $is_admin_section     = false;
 
     public function __construct(
         private readonly ?string $slug,

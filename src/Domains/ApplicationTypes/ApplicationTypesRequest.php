@@ -14,7 +14,7 @@ class ApplicationTypesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => ['nullable', 'string', 'max:65535'],
+            'description'  => ['nullable', 'string', 'max:65535'],
             'eta_duration' => ['integer', 'min:1', 'max:999999'],
         ];
     }

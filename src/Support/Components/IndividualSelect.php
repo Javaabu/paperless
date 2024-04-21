@@ -10,7 +10,7 @@ class IndividualSelect extends Field implements Htmlable
 {
     use CanBeRepeated;
 
-    protected string $view = 'paperless::field-components.individual-select';
+    protected string $view                  = 'paperless::field-components.individual-select';
     protected Individual | null $individual = null;
 
     public static function make(string $name): self

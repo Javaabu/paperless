@@ -28,17 +28,17 @@ class ApplicationTypesController extends Controller
     protected static function initOrderbys(): void
     {
         static::$orderbys = [
-            'name' => __('Name'),
+            'name'       => __('Name'),
             'created_at' => __('Created At'),
-            'id' => __('ID'),
+            'id'         => __('ID'),
         ];
     }
 
     public function index(Request $request): View
     {
-        $title = __('All Application Types');
-        $orderby = $this->getOrderBy($request, 'created_at');
-        $order = $this->getOrder($request, 'created_at', $orderby);
+        $title    = __('All Application Types');
+        $orderby  = $this->getOrderBy($request, 'created_at');
+        $order    = $this->getOrder($request, 'created_at', $orderby);
         $per_page = $this->getPerPage($request);
 
         $application_types = $this->getModelClass()::query()
@@ -80,13 +80,13 @@ class ApplicationTypesController extends Controller
         $this->authorize('viewAny', ApplicationType::class);
 
         $this->validate($request, [
-            'action' => 'required|in:',
-            'application_types' => 'required|array',
+            'action'              => 'required|in:',
+            'application_types'   => 'required|array',
             'application_types.*' => 'exists:application_types,id',
         ]);
 
         $action = $request->input('action');
-        $ids = $request->input('application_types', []);
+        $ids    = $request->input('application_types', []);
 
         //        switch ($action) {
         //        }
@@ -108,7 +108,7 @@ class ApplicationTypesController extends Controller
         $type = $request->hasFile('image') ? 'file' : 'url';
 
         $rules = [
-            'url' => ['string', 'url', 'required_without:image'],
+            'url'   => ['string', 'url', 'required_without:image'],
             'image' => AllowedMimeTypes::getValidationRule('image') . '|required_without:url',
         ];
 
@@ -126,10 +126,10 @@ class ApplicationTypesController extends Controller
 
         return response()->json([
             'success' => 1,
-            'file' => [
-                'url' => $media->getUrl('large'),
+            'file'    => [
+                'url'      => $media->getUrl('large'),
                 'original' => $media->getUrl(),
-                'id' => $media->id,
+                'id'       => $media->id,
             ],
         ]);
     }
@@ -166,7 +166,7 @@ class ApplicationTypesController extends Controller
         $this->validateStatsFilters($request);
 
         $metric = $request->input('metric');
-        $mode = $request->input('mode');
+        $mode   = $request->input('mode');
 
         if ($request->filled('date_range')) {
             $range = $request->input('date_range');
@@ -199,7 +199,7 @@ class ApplicationTypesController extends Controller
         }
 
         $formatter = new CombinedStatsFormatter($stats, $compare);
-        $exporter = new StatsExport($formatter, $mode);
+        $exporter  = new StatsExport($formatter, $mode);
 
         $title = $exporter->getReportTitle();
 

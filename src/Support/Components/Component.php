@@ -13,7 +13,7 @@ abstract class Component
 
     protected string $view;
     protected string | Closure | null $defaultView = null;
-    protected array $viewData = [];
+    protected array $viewData                      = [];
 
     /**
      * @throws Exception
@@ -24,9 +24,9 @@ abstract class Component
 
         if (isset($this->view)) {
             if ($view_path) {
-                $pos = strpos($this->view, '::');
+                $pos            = strpos($this->view, '::');
                 $replace_string = $view_path . ".";
-                $position = $pos + 2;
+                $position       = $pos + 2;
 
                 return substr_replace($this->view, $replace_string, $position, 0);
             }
@@ -70,9 +70,9 @@ abstract class Component
 
     public function extractPublicMethods(): array
     {
-        $reflection = new \ReflectionClass($this);
+        $reflection     = new \ReflectionClass($this);
         $public_methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
-        $methods = [];
+        $methods        = [];
 
         foreach ($public_methods as $method) {
             $methods[$method->getName()] = \Closure::fromCallable([$this, $method->getName()]);
