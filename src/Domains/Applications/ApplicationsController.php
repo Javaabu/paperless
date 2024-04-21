@@ -5,9 +5,9 @@ namespace Javaabu\Paperless\Domains\Applications;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\ModelStates\State;
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Database\Eloquent\Model;
 use Javaabu\Helpers\Traits\HasOrderbys;
 use Illuminate\Support\Facades\Validator;
 use Javaabu\Paperless\Models\FormSection;
@@ -120,12 +120,19 @@ class ApplicationsController extends Controller
         }
 
         $rules = [
-            'applicant_type'   => ['required', 'exists:entity_types,id'],
-            'applicant'        => ['required', 'exists:users,id'],
+            'applicant_type'   => [
+                'required', Rule::exists('entity_types', 'id'),
+            ],
+            'applicant'        => [
+                'required',
+                Rule::exists(config('paperless.public_user_table'), 'id'),
+            ],
             'application_type' => [
                 'required',
-                'exists:application_types,id',
-                'exists:entity_type_application_type,application_type_id,entity_type_id,' . $request->input('applicant_type')],
+                Rule::exists('application_types', 'id'),
+                Rule::exists('application_type_entity_type', 'application_type_id')
+                    ->where('entity_type_id', $request->input('applicant_type')),
+            ],
         ];
 
         $validator = Validator::make($request->all(), $rules);
