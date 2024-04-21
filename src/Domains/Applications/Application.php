@@ -41,11 +41,11 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     protected array $searchable = [];
 
     protected $casts = [
-        'eta_at'       => 'datetime',
-        'alert_at'     => 'datetime',
+        'eta_at' => 'datetime',
+        'alert_at' => 'datetime',
         'submitted_at' => 'datetime',
-        'verified_at'  => 'datetime',
-        'approved_at'  => 'datetime',
+        'verified_at' => 'datetime',
+        'approved_at' => 'datetime',
     ];
 
     public static function boot()
@@ -160,6 +160,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
             $reference_number_format = str_replace(':year', $this->created_at->format('y'), $reference_number_format);
             $formatted_id = str_pad($this->id, 3, '0', STR_PAD_LEFT);
             $reference_number_format = str_replace(':no', $formatted_id, $reference_number_format);
+
             return $reference_number_format;
         });
     }
@@ -211,6 +212,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         }
 
         $documents = $this->getMedia('documents');
+
         return $this->renderDocuments(
             $required_documents,
             $documents,
@@ -273,6 +275,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     public function canBeAccessedByPublicUser(PublicUser $public_user): bool
     {
         $this->loadMissing('applicant');
+
         return $public_user->id === $this->public_user_id
             || (
                 $this->applicant_type == 'individual'
@@ -283,12 +286,14 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     public function getStatusColor(string $status): string
     {
         $action = config('paperless.application_status')::make($status, $this);
+
         return $action->getColor();
     }
 
     public function getStatusLabel(string $status): string
     {
         $action = config('paperless.application_status')::make($status, $this);
+
         return $action->getLabel();
     }
 
@@ -296,10 +301,10 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     {
         return Attribute::get(function () {
             return match ($this->generated_type) {
-                'license'           => __('License'),
-                'certificate'       => __('Certificate'),
+                'license' => __('License'),
+                'certificate' => __('Certificate'),
                 'instructor_course' => __('Course Instructor'),
-                default             => __('Generated')
+                default => __('Generated')
             };
         });
     }
@@ -309,7 +314,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         return Attribute::get(function () {
             return match ($this->related_type) {
                 'academy_instructor' => __('Academy Instructor'),
-                default              => __('Related')
+                default => __('Related')
             };
         });
     }

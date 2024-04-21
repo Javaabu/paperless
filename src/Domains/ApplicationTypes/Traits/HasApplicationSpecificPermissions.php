@@ -27,6 +27,7 @@ trait HasApplicationSpecificPermissions
     public function getApplicationTypePermissionSlug(): ?string
     {
         $application_type_class = $this->getApplicationTypeClass();
+
         return (new $application_type_class())->getSlug();
     }
 
@@ -79,114 +80,133 @@ trait HasApplicationSpecificPermissions
     public function getViewPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "view_{$slug}_application_type";
     }
 
     public function getViewAnyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "view_any_{$slug}_application_type";
     }
 
     public function getEditAnyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "edit_any_{$slug}_application_type";
     }
 
     public function getEditPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "edit_{$slug}_application_type";
     }
 
     public function getDeleteAnyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "delete_any_{$slug}_application_type";
     }
 
     public function getDeletePermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "delete_{$slug}_application_types";
     }
 
     public function getForceDeletePermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "force_delete_{$slug}_application_types";
     }
 
     public function getCancelAnyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "cancel_any_{$slug}_application_type";
     }
 
     public function getCancelPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "cancel_{$slug}_application_types";
     }
 
     public function getVerifyAnyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "verify_any_{$slug}_application_type";
     }
 
     public function getVerifyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "verify_{$slug}_application_types";
     }
 
     public function getExtendEtaAnyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "extend_any_{$slug}_application_type_eta";
     }
 
     public function getExtendEtaPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "extend_{$slug}_application_type_eta";
     }
 
     public function getPayAnyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "pay_any_{$slug}_application_type";
     }
 
     public function getPayPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "pay_{$slug}_application_types";
     }
 
     public function getApproveAnyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "approve_any_{$slug}_application_type";
     }
 
     public function getApprovePermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "approve_{$slug}_application_types";
     }
 
     public function getAssignUserAnyPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "assign_user_any_{$slug}_application_type";
     }
 
     public function getAssignUserPermissionAttribute(): string
     {
         $slug = $this->getApplicationTypePermissionSlug();
+
         return "assign_user_{$slug}_application_types";
     }
 
@@ -206,29 +226,29 @@ trait HasApplicationSpecificPermissions
     public static function getPermissionList(): array
     {
         $permissions = [
-            'view_any_application_type'        => 'View any application type',
-            'view_application_types'           => 'View application types',
-            'edit_any_application_type'        => 'Edit any application type',
-            'edit_application_types'           => 'Edit application types',
-            'delete_any_application_type'      => 'Delete any application type',
-            'delete_application_types'         => 'Delete application types',
-            'force_delete_application_types'   => 'Force delete application types',
-            'cancel_any_application_type'      => 'Cancel any application type',
-            'cancel_application_types'         => 'Cancel application types',
-            'verify_any_application_type'      => 'Verify any application type',
-            'verify_application_type_types'    => 'Verify application types',
-            'extend_any_application_type_eta'  => 'Extend any application type eta',
-            'extend_application_type_eta'      => 'Extend application type eta',
-            'approve_any_application_type'     => 'Approve any application type',
-            'approve_application_types'        => 'Approve application types',
+            'view_any_application_type' => 'View any application type',
+            'view_application_types' => 'View application types',
+            'edit_any_application_type' => 'Edit any application type',
+            'edit_application_types' => 'Edit application types',
+            'delete_any_application_type' => 'Delete any application type',
+            'delete_application_types' => 'Delete application types',
+            'force_delete_application_types' => 'Force delete application types',
+            'cancel_any_application_type' => 'Cancel any application type',
+            'cancel_application_types' => 'Cancel application types',
+            'verify_any_application_type' => 'Verify any application type',
+            'verify_application_type_types' => 'Verify application types',
+            'extend_any_application_type_eta' => 'Extend any application type eta',
+            'extend_application_type_eta' => 'Extend application type eta',
+            'approve_any_application_type' => 'Approve any application type',
+            'approve_application_types' => 'Approve application types',
             'assign_user_any_application_type' => 'Assign user to any application types',
-            'assign_user_application_types'    => 'Assign user to application types',
+            'assign_user_application_types' => 'Assign user to application types',
         ];
 
         if (config('paperless.relations.services')) {
             $permissions = array_merge($permissions, [
                 'pay_any_application_type' => 'Pay any application type',
-                'pay_application_types'    => 'Pay application types',
+                'pay_application_types' => 'Pay application types',
             ]);
         }
 

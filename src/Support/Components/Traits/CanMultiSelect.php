@@ -9,6 +9,7 @@ trait CanMultiSelect
     public function multiple(bool $condition = false): static
     {
         $this->isMultiple = $condition;
+
         return $this;
     }
 

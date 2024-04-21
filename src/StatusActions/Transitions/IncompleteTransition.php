@@ -31,6 +31,7 @@ class IncompleteTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsIncomplete');
+
         return $this->application;
     }
 

@@ -16,7 +16,7 @@ class ApplicationTypeServiceRequest extends FormRequest
         $application_type = $this->route('application_type');
 
         return [
-            'service'                  => [
+            'service' => [
                 'required',
                 'exists:services,id',
                 'unique:application_type_service,service_id,NULL,id,application_type_id,' . $application_type->id,

@@ -11,6 +11,7 @@ trait HasDhivehiInput
     public function dhivehi(Closure | bool $condition): static
     {
         $this->is_dhivehi_input = $condition;
+
         return $this;
     }
 

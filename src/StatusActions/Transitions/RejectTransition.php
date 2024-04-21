@@ -31,6 +31,7 @@ class RejectTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsRejected');
+
         return $this->application;
     }
 

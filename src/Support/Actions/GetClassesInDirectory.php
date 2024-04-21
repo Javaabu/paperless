@@ -2,10 +2,8 @@
 
 namespace Javaabu\Paperless\Support\Actions;
 
-
 class GetClassesInDirectory
 {
-
     public function handle(string $directory, string $namespace): array
     {
         $classes = [];

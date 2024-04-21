@@ -34,6 +34,7 @@ class UpdateFileAction
 
         // save the content back to the file
         file_put_contents($file_path, $admin_routes_content);
+
         return true;
     }
 }

@@ -29,7 +29,7 @@ class PaperlessInstallCommand extends Command
     {
         $this->call('vendor:publish', [
             '--provider' => 'Javaabu\Paperless\PaperlessServiceProvider',
-            '--tag'      => 'paperless-config'
+            '--tag' => 'paperless-config',
         ]);
     }
 
@@ -37,7 +37,7 @@ class PaperlessInstallCommand extends Command
     {
         $this->call('vendor:publish', [
             '--provider' => 'Javaabu\Paperless\PaperlessServiceProvider',
-            '--tag'      => 'paperless-migrations'
+            '--tag' => 'paperless-migrations',
         ]);
     }
 
@@ -100,7 +100,7 @@ class PaperlessInstallCommand extends Command
         // copy seeders from the package to the project
         $this->call('vendor:publish', [
             '--provider' => 'Javaabu\Paperless\PaperlessServiceProvider',
-            '--tag'      => 'paperless-seeders'
+            '--tag' => 'paperless-seeders',
         ]);
     }
 
@@ -109,7 +109,7 @@ class PaperlessInstallCommand extends Command
         // copy entity_types.stub to App\Paperless\Enums directory
         $this->call('vendor:publish', [
             '--provider' => 'Javaabu\Paperless\PaperlessServiceProvider',
-            '--tag'      => 'paperless-enums'
+            '--tag' => 'paperless-enums',
         ]);
     }
 }

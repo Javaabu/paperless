@@ -33,9 +33,9 @@ class ApplicationsController extends Controller
     protected static function initOrderbys()
     {
         static::$orderbys = [
-            'name'       => __('Name'),
+            'name' => __('Name'),
             'created_at' => __('Created At'),
-            'id'         => __('ID'),
+            'id' => __('ID'),
         ];
     }
 
@@ -115,13 +115,13 @@ class ApplicationsController extends Controller
         ])) {
             return view('paperless::admin.applications.initiate', [
                 'application' => new $application_class(),
-                'initialize'  => true,
+                'initialize' => true,
             ]);
         }
 
         $rules = [
-            'applicant_type'   => ['required', 'exists:entity_types,id'],
-            'applicant'        => ['required', 'exists:users,id'],
+            'applicant_type' => ['required', 'exists:entity_types,id'],
+            'applicant' => ['required', 'exists:users,id'],
             'application_type' => [
                 'required',
                 'exists:application_types,id',
@@ -138,8 +138,8 @@ class ApplicationsController extends Controller
         $applicant = $applicant_model_class::find($request->input('applicant'));
 
         return view('paperless::admin.applications.create', [
-            'application'      => new $application_class(),
-            'applicant'        => $applicant,
+            'application' => new $application_class(),
+            'applicant' => $applicant,
             'application_type' => $application_type,
         ]);
 
@@ -169,6 +169,7 @@ class ApplicationsController extends Controller
         );
 
         $this->flashSuccessMessage();
+
         return to_route('admin.applications.documents', $application);
     }
 
@@ -176,6 +177,7 @@ class ApplicationsController extends Controller
     {
         $application_type = $application->applicationType;
         $applicant = $application->applicant;
+
         return view('paperless::admin.applications.edit', compact('application', 'application_type', 'applicant'));
     }
 
@@ -183,6 +185,7 @@ class ApplicationsController extends Controller
     {
         $application->updateFormInputs($request->validated());
         $this->flashSuccessMessage();
+
         return to_route('admin.applications.documents', $application);
     }
 
@@ -194,6 +197,7 @@ class ApplicationsController extends Controller
         }
 
         $this->flashSuccessMessage();
+
         return to_route('admin.applications.show', $application);
     }
 
@@ -219,6 +223,7 @@ class ApplicationsController extends Controller
     public function trash(Request $request)
     {
         $this->authorize('trash', Application::class);
+
         return $this->index($request, true);
     }
 
@@ -289,8 +294,8 @@ class ApplicationsController extends Controller
         $this->authorize('viewAny', Application::class);
 
         $this->validate($request, [
-            'action'         => 'required|in:delete',
-            'applications'   => 'required|array',
+            'action' => 'required|in:delete',
+            'applications' => 'required|array',
             'applications.*' => 'exists:applications,id',
         ]);
 
@@ -307,10 +312,12 @@ class ApplicationsController extends Controller
                            ->each(function (Application $application) {
                                $application->delete();
                            });
+
                 break;
         }
 
         $this->flashSuccessMessage();
+
         return $this->redirect($request, to_route('admin.applications.index'));
     }
 
@@ -338,7 +345,7 @@ class ApplicationsController extends Controller
     public function statusUpdate(Application $application, Request $request): RedirectResponse
     {
         $request->validate([
-            'action'  => new ValidStateRule(config('paperless.application_status')),
+            'action' => new ValidStateRule(config('paperless.application_status')),
             'remarks' => ['nullable', 'string', 'max:255'],
         ]);
 
@@ -350,6 +357,7 @@ class ApplicationsController extends Controller
         $application->status->transitionTo($transition_to_state, $remarks);
 
         $this->flashSuccessMessage('Application status updated successfully');
+
         return to_route('admin.applications.show', $application);
     }
 
@@ -367,6 +375,7 @@ class ApplicationsController extends Controller
         ApplicationStaffAssignedJob::dispatch($application->refresh());
 
         $this->flashSuccessMessage('Application assigned to staff successfully');
+
         return to_route('admin.applications.show', $application);
     }
 
@@ -375,6 +384,7 @@ class ApplicationsController extends Controller
         $this->authorize('view', $application);
 
         $application_receipt_name = 'application-receipt-' . $application->id . '.pdf';
+
         return response()->streamDownload(
             function () use ($application) {
                 echo $application->receipt();

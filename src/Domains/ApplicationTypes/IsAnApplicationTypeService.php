@@ -6,5 +6,3 @@ interface IsAnApplicationTypeService
 {
     public static function getApplicationTypeClass(): string;
 }
-
-

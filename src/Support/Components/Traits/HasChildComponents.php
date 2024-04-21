@@ -9,6 +9,7 @@ trait HasChildComponents
     public function schema(string $components): static
     {
         $this->childComponents = $components;
+
         return $this;
     }
 

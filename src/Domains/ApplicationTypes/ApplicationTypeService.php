@@ -33,6 +33,7 @@ abstract class ApplicationTypeService implements IsAnApplicationTypeService
     {
         $application_type_class = static::$application_type_class ?? null;
         dd($application_type_class);
+
         return (new $application_type_class())->getCode();
     }
 

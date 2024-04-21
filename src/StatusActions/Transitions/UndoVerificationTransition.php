@@ -30,6 +30,7 @@ class UndoVerificationTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterUndoVerification');
+
         return $this->application;
     }
 

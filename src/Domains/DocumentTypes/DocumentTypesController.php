@@ -111,6 +111,7 @@ class DocumentTypesController extends Controller
     public function trash(Request $request)
     {
         $this->authorize('trash', DocumentType::class);
+
         return $this->index($request, true);
     }
 
@@ -199,6 +200,7 @@ class DocumentTypesController extends Controller
                     ->each(function (DocumentType $document_type) {
                         $document_type->delete();
                     });
+
                 break;
         }
 

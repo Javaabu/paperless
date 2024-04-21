@@ -49,6 +49,7 @@ class ResubmitTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterResubmitting');
+
         return $this->application;
     }
 

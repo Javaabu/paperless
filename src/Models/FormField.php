@@ -20,10 +20,10 @@ class FormField extends Model
     public function casts(): array
     {
         return [
-            'builder'                     => FieldBuilderAttribute::class,
-            'language'                    => Languages::class,
+            'builder' => FieldBuilderAttribute::class,
+            'language' => Languages::class,
             'additional_validation_rules' => 'array',
-            'options'                     => 'array',
+            'options' => 'array',
         ];
     }
 
@@ -134,7 +134,7 @@ class FormField extends Model
     public function getRenderedFieldValue($form_input): mixed
     {
         return match ($this->builder->getSlug()) {
-            default      => $form_input,
+            default => $form_input,
         };
     }
 
@@ -142,6 +142,7 @@ class FormField extends Model
     {
         $value = $this->getFormInputValue($form_input);
         $builder = $this->getBuilder();
+
         return $builder?->renderInfoList($this, $value);
     }
 
@@ -152,7 +153,7 @@ class FormField extends Model
         }
 
         return match ($this->builder->getSlug()) {
-            default                                   => $form_input,
+            default => $form_input,
         };
     }
 

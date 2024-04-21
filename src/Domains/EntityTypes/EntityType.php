@@ -16,7 +16,7 @@ class EntityType extends Model
 
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
     ];
 
     public function scopeSearch($query, $search): mixed

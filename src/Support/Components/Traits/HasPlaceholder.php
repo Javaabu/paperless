@@ -9,6 +9,7 @@ trait HasPlaceholder
     public function placeholder(string | null $placeholder): static
     {
         $this->placeholder = $placeholder;
+
         return $this;
     }
 

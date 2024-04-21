@@ -6,7 +6,6 @@ use Javaabu\Auth\User;
 use Javaabu\Activitylog\Models\Activity;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
-use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
 
 class ApplicationPolicy
 {

@@ -32,6 +32,7 @@ class UndoRejectionTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterUndoRejection');
+
         return $this->application;
     }
 

@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Console\Commands\Actions;
 
-
 class CreateApplicationTypeMainClass
 {
     public function handle(string $name, ?string $category = null, ?array $entity_type_slugs = []): void

@@ -16,14 +16,12 @@ use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
 use Javaabu\Paperless\Domains\Applications\ApplicationPolicy;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Javaabu\Paperless\Console\Commands\PaperlessInstallCommand;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy;
-use Javaabu\Paperless\Console\Commands\PaperlessInstallCommand;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
 use Javaabu\Paperless\Console\Commands\CreateNewApplicationTypeCommand;
-use Javaabu\Paperless\Console\Commands\CreateSampleApplicationTypeCommand;
 use Javaabu\Paperless\Console\Commands\CreateApplicationTypeCategoryCommand;
-use Javaabu\Paperless\Console\Commands\ApplicationTypesPermissionsSeedCommand;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
@@ -42,12 +40,12 @@ class PaperlessServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'paperless');
 
         Relation::enforceMorphMap([
-            'service'          => Service::class,
+            'service' => Service::class,
             'application_type' => ApplicationType::class,
-            'document_type'    => DocumentType::class,
-            'entity_type'      => EntityType::class,
-            'application'      => Application::class,
-            'status_event'     => StatusEvent::class,
+            'document_type' => DocumentType::class,
+            'entity_type' => EntityType::class,
+            'application' => Application::class,
+            'status_event' => StatusEvent::class,
         ]);
     }
 
@@ -73,7 +71,7 @@ class PaperlessServiceProvider extends ServiceProvider
         ], 'paperless-config');
 
         $this->publishes([
-            __DIR__ . '/../database/migrations/create_paperless_migrations_table.php' => $this->getMigrationFileName('create_paperless_migrations_table.php')
+            __DIR__ . '/../database/migrations/create_paperless_migrations_table.php' => $this->getMigrationFileName('create_paperless_migrations_table.php'),
         ], 'paperless-migrations');
 
         $this->publishes([
@@ -147,10 +145,10 @@ class PaperlessServiceProvider extends ServiceProvider
     protected function registerPolicies(): void
     {
         $policies = [
-            config('paperless.models.application')      => ApplicationPolicy::class,
+            config('paperless.models.application') => ApplicationPolicy::class,
             config('paperless.models.application_type') => ApplicationTypePolicy::class,
-            config('paperless.models.service')          => ServicePolicy::class,
-            config('paperless.models.document_type')    => DocumentTypePolicy::class,
+            config('paperless.models.service') => ServicePolicy::class,
+            config('paperless.models.document_type') => DocumentTypePolicy::class,
         ];
 
         foreach ($policies as $key => $value) {

@@ -10,6 +10,7 @@ trait HasRepeatingChildComponents
     public function repeatingSchema(string $schema): self
     {
         $this->repeatingSchema = $schema;
+
         return $this;
     }
 

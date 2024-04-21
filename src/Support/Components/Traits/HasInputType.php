@@ -11,6 +11,7 @@ trait HasInputType
     public function type(Closure | string $type): static
     {
         $this->type = $type;
+
         return $this;
     }
 

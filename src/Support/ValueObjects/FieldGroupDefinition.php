@@ -22,24 +22,28 @@ class FieldGroupDefinition
     public function description(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
     public function fields(array $fields): self
     {
         $this->fields = $fields;
+
         return $this;
     }
 
     public function label(string $label): self
     {
         $this->label = $label;
+
         return $this;
     }
 
     public function orderColumn(int $order_column): self
     {
         $this->order_column = $order_column;
+
         return $this;
     }
 
