@@ -22,7 +22,7 @@ class RejectTransition extends Transition
         $this->application->status = new Rejected($this->application);
         $this->application->verifiedBy()->associate(auth()->user());
         $this->application->verified_at = now();
-        $this->application->eta_at      = null;
+        $this->application->eta_at = null;
         $this->application->save();
 
         $this->application->createStatusEvent(

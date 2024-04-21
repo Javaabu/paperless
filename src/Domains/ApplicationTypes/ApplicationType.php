@@ -32,7 +32,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     use LogsActivity;
 
     protected static array $logAttributes = ['*'];
-    protected static bool $logOnlyDirty   = true;
+    protected static bool $logOnlyDirty = true;
 
     protected $fillable = [
         'description',
@@ -120,7 +120,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
 
     public function scopeUserVisible($query, ?\Javaabu\Auth\User $user = null): void
     {
-        $user           = $user ?? auth()->user();
+        $user = $user ?? auth()->user();
         $view_any_codes = self::getViewAnyCodes($user);
         if ($view_any_codes) {
             $query->whereIn('code', $view_any_codes);
@@ -171,13 +171,13 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         }
 
         $form_sections = $form_sections->sortBy('order_column');
-        $form_fields   = $this->formFields->sortBy('order_column');
+        $form_fields = $this->formFields->sortBy('order_column');
 
         $html = '';
 
         foreach ($form_sections as $form_section) {
             $section_form_field_ids = $form_fields->where('form_section_id', $form_section->id)->pluck('id');
-            $section_inputs         = $form_inputs->whereIn('form_field_id', $section_form_field_ids);
+            $section_inputs = $form_inputs->whereIn('form_field_id', $section_form_field_ids);
             $html .= $form_section->render($entity, $section_inputs);
         }
 

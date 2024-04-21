@@ -26,14 +26,14 @@ class CreateNewApplicationTypeCommand extends Command
         );
 
         $categories = ApplicationTypeCategory::getAllApplicationCategoriesArray();
-        $category   = select(
+        $category = select(
             label: 'What category does this application type belong to?',
             options: array_keys($categories),
             required: true,
         );
 
         $entity_types_list = EntityType::all()->pluck('slug')->toArray();
-        $entity_types      = multiselect(
+        $entity_types = multiselect(
             label: 'What entity types can apply for this application type?',
             options: $entity_types_list,
             required: true,

@@ -29,9 +29,9 @@ abstract class ApplicationTypeCategory
     public static function getAllApplicationCategoriesArray(): array
     {
         $application_type_categories = static::getAllApplicationCategories();
-        $categories                  = [];
+        $categories = [];
         foreach($application_type_categories as $application_type_category) {
-            $category                         = new $application_type_category();
+            $category = new $application_type_category();
             $categories[$category->getSlug()] = $category->getLabel();
         }
 

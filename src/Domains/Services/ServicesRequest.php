@@ -25,7 +25,7 @@ class ServicesRequest extends FormRequest
             $rules['name'][] = 'required';
             $rules['code'][] = 'required';
             $rules['code'][] = 'unique:services,code';
-            $rules['fee'][]  = 'required';
+            $rules['fee'][] = 'required';
         }
 
         return $rules;

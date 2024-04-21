@@ -8,7 +8,7 @@ use Javaabu\Paperless\Support\Components\RepeatingGroup;
 trait CanBeRepeated
 {
     protected RepeatingGroup | Closure | null $repeatingGroup = null;
-    protected bool | Closure | null $canBeRepeated            = false;
+    protected bool | Closure | null $canBeRepeated = false;
 
     protected int | Closure $repeatingInstance = 0;
 

@@ -22,9 +22,9 @@ class ApplicationTypeServicesController extends Controller
 
     public function index(ApplicationType $application_type, Request $request)
     {
-        $title    = __('All Application Types');
-        $orderby  = $this->getOrderBy($request, 'created_at');
-        $order    = $this->getOrder($request, 'created_at', $orderby);
+        $title = __('All Application Types');
+        $orderby = $this->getOrderBy($request, 'created_at');
+        $order = $this->getOrder($request, 'created_at', $orderby);
         $per_page = $this->getPerPage($request);
 
         $services = $application_type->services()->orderBy($orderby, $order);
@@ -48,7 +48,7 @@ class ApplicationTypeServicesController extends Controller
     public function store(ApplicationType $application_type, ApplicationTypeServiceRequest $request)
     {
         $this->authorize('update', $application_type);
-        $service                  = $request->input('service');
+        $service = $request->input('service');
         $is_applied_automatically = $request->input('is_applied_automatically', false);
 
         $application_type->services()->attach($service, ['is_applied_automatically' => $is_applied_automatically]);
@@ -83,7 +83,7 @@ class ApplicationTypeServicesController extends Controller
         ]);
 
         $action = $request->input('action');
-        $ids    = $request->input('services', []);
+        $ids = $request->input('services', []);
 
         switch ($action) {
             case 'delete':

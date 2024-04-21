@@ -10,8 +10,8 @@ class ApplicationsUpdateRequest extends BaseApplicationsRequest
 {
     public function rules(): array
     {
-        $request_data        = $this->all();
-        $rules               = [];
+        $request_data = $this->all();
+        $rules = [];
         $dynamic_field_rules = $this->getDynamicFieldRules($request_data);
 
         return array_merge($rules, ...$dynamic_field_rules);

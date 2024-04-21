@@ -68,19 +68,19 @@ abstract class ApplicationTypeBlueprint implements IsAnApplicationType
 
     public function seedEntityTypes(ApplicationType $application_type): void
     {
-        $entity_types      = $this->getEntityTypes();
+        $entity_types = $this->getEntityTypes();
         $entity_type_model = config('paperless.models.entity_type');
-        $entity_types      = $entity_type_model::whereIn('slug', $entity_types)->get();
+        $entity_types = $entity_type_model::whereIn('slug', $entity_types)->get();
         $application_type->entityTypes()->sync($entity_types);
     }
 
     public function seedServices(ApplicationType $application_type): void
     {
         $automatically_applied_services = $this->getAutomaticallyAppliedServices();
-        $manually_applied_services      = $this->getManuallyAppliedServices();
+        $manually_applied_services = $this->getManuallyAppliedServices();
 
         $service_model = config('paperless.models.service');
-        $services      = $service_model::whereIn('code', array_merge(
+        $services = $service_model::whereIn('code', array_merge(
             $automatically_applied_services,
             $manually_applied_services
         ))->get();
@@ -88,12 +88,12 @@ abstract class ApplicationTypeBlueprint implements IsAnApplicationType
         $services_array = [];
 
         foreach ($automatically_applied_services as $service_code) {
-            $service_id                  = $services->where('code', $service_code)->first()?->id;
+            $service_id = $services->where('code', $service_code)->first()?->id;
             $services_array[$service_id] = ['is_applied_automatically' => true];
         }
 
         foreach ($manually_applied_services as $service_code) {
-            $service_id                  = $services->where('code', $service_code)->first()?->id;
+            $service_id = $services->where('code', $service_code)->first()?->id;
             $services_array[$service_id] = ['is_applied_automatically' => false];
         }
 

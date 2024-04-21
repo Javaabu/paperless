@@ -4,14 +4,14 @@ namespace Javaabu\Paperless\Support\ValueObjects;
 
 class FieldDefinition
 {
-    private string | null $label                       = null;
-    private int | null $order_column                   = null;
-    private string | null $language                    = 'en';
-    private string | null $placeholder                 = null;
-    private string | null $builder                     = null;
-    private bool $is_required                          = false;
+    private string | null $label = null;
+    private int | null $order_column = null;
+    private string | null $language = 'en';
+    private string | null $placeholder = null;
+    private string | null $builder = null;
+    private bool $is_required = false;
     private string | null $additional_validation_rules = '';
-    private string | null $options                     = '';
+    private string | null $options = '';
 
     public function __construct(
         private readonly ?string $slug,

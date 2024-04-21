@@ -7,14 +7,14 @@ trait HasApplicationSpecificPermissions
     public static function getApplicationTypePermissions(): array
     {
         $application_type_permissions = [];
-        $application_types            = config('paperless.application_types');
+        $application_types = config('paperless.application_types');
         foreach ($application_types as $application_type) {
-            $name        = str((new $application_type())->getName() . ' application type')->lower();
-            $slug        = (new $application_type())->getSlug() . '_application_type';
+            $name = str((new $application_type())->getName() . ' application type')->lower();
+            $slug = (new $application_type())->getSlug() . '_application_type';
             $permissions = [];
             foreach (self::getPermissionList() as $value => $label) {
-                $updated_value               = str($value)->replace('application_type', $slug)->__toString();
-                $updated_label               = str($label)->replace('application type', $name)->__toString();
+                $updated_value = str($value)->replace('application_type', $slug)->__toString();
+                $updated_label = str($label)->replace('application type', $name)->__toString();
                 $permissions[$updated_value] = $updated_label;
             }
 
@@ -34,9 +34,9 @@ trait HasApplicationSpecificPermissions
     public static function getDynamicPermissionList(string $prefix, string $suffix = '_application_types'): array
     {
         $application_types = config('paperless.application_types');
-        $permissions       = [];
+        $permissions = [];
         foreach ($application_types as $application_type) {
-            $slug          = (new $application_type())->getSlug();
+            $slug = (new $application_type())->getSlug();
             $permissions[] = "{$prefix}{$slug}{$suffix}";
         }
 
@@ -51,7 +51,7 @@ trait HasApplicationSpecificPermissions
     public static function getAllAssignPermissionList(): array
     {
         $assign_any = self::getDynamicPermissionList('assign_user_any_', '_application_type');
-        $assign     = self::getDynamicPermissionList('assign_user_');
+        $assign = self::getDynamicPermissionList('assign_user_');
 
         return array_merge($assign_any, $assign);
     }
@@ -213,7 +213,7 @@ trait HasApplicationSpecificPermissions
     public static function getViewAnyCodes(\Javaabu\Auth\User $user): array
     {
         $view_any_permissions = self::getViewAnyPermissionList();
-        $view_any_codes       = [];
+        $view_any_codes = [];
         foreach ($view_any_permissions as $code => $permission) {
             if ($user->can($permission)) {
                 $view_any_codes[] = $code;

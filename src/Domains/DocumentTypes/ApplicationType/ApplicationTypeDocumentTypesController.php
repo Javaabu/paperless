@@ -24,9 +24,9 @@ class ApplicationTypeDocumentTypesController extends Controller
 
     public function index(ApplicationType $application_type, Request $request)
     {
-        $title    = __('All Application Types');
-        $orderby  = $this->getOrderBy($request, 'created_at');
-        $order    = $this->getOrder($request, 'created_at', $orderby);
+        $title = __('All Application Types');
+        $orderby = $this->getOrderBy($request, 'created_at');
+        $order = $this->getOrder($request, 'created_at', $orderby);
         $per_page = $this->getPerPage($request);
 
         $document_types = $application_type->documentTypes()->orderBy($orderby, $order);
@@ -51,7 +51,7 @@ class ApplicationTypeDocumentTypesController extends Controller
     {
         $this->authorize('update', $application_type);
         $document_type = $request->input('document_type');
-        $is_required   = $request->input('is_required', false);
+        $is_required = $request->input('is_required', false);
 
         $application_type->documentTypes()->attach($document_type, ['is_required' => $is_required]);
 
@@ -85,7 +85,7 @@ class ApplicationTypeDocumentTypesController extends Controller
         ]);
 
         $action = $request->input('action');
-        $ids    = $request->input('document_types', []);
+        $ids = $request->input('document_types', []);
 
         switch ($action) {
             case 'delete':

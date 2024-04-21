@@ -4,7 +4,7 @@ namespace Javaabu\Paperless\Support\Components\Traits;
 
 trait HasContainerAttributes
 {
-    protected string $containerId    = '';
+    protected string $containerId = '';
     protected string $containerClass = '';
 
     public function containerId(string $id): static

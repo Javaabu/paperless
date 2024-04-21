@@ -60,7 +60,7 @@ class FormSection extends Model
             $form_section = $fields_html;
         }
 
-        $field_groups     = $this->fieldGroups->sortBy('order_column');
+        $field_groups = $this->fieldGroups->sortBy('order_column');
         $field_group_html = '';
         foreach ($field_groups as $field_group) {
             $field_group_html .= $field_group->render($entity, $form_inputs);
@@ -90,7 +90,7 @@ class FormSection extends Model
         }
 
 
-        $field_groups      = $this->fieldGroups->sortBy('order_column');
+        $field_groups = $this->fieldGroups->sortBy('order_column');
         $field_groups_html = '';
         foreach ($field_groups as $field_group) {
             $field_group_html = $field_group->renderInfoList($entity, $form_inputs);

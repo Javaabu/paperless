@@ -20,7 +20,7 @@ class ResubmitTransition extends Transition
         public string | null $remarks = null,
     ) {
         $this->check_presence_of_required_documents = app(CheckPresenceOfRequiredDocuments::class);
-        $this->check_presence_of_required_fields    = app(CheckPresenceOfRequiredFields::class);
+        $this->check_presence_of_required_fields = app(CheckPresenceOfRequiredFields::class);
     }
 
     public function handle(): Application
@@ -36,11 +36,11 @@ class ResubmitTransition extends Transition
 
         $this->application->callServiceFunction('doBeforeResubmitting');
 
-        $application_eta_days      = $this->application?->applicationType?->eta_duration ?? 0;
+        $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
         $this->application->status = new PendingVerification($this->application);
         $this->application->verifiedBy()->dissociate();
         $this->application->verified_at = null;
-        $this->application->eta_at      = now()->addDays($application_eta_days);
+        $this->application->eta_at = now()->addDays($application_eta_days);
         $this->application->save();
 
         $this->application->createStatusEvent(

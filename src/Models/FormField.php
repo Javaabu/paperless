@@ -45,7 +45,7 @@ class FormField extends Model
 
     public function validationRules(ApplicationType $application_type, Applicant $applicant, string $applicant_type, ?array $request_data = []): array
     {
-        $default_validation_rules    = $this->getDefaultValidationRules($applicant, $request_data);
+        $default_validation_rules = $this->getDefaultValidationRules($applicant, $request_data);
         $additional_validation_rules = $this->getAdditionalValidationRules($application_type, $applicant, $applicant_type, $request_data);
         foreach ($default_validation_rules as $key => $value) {
             if ($key == $this->slug) {
@@ -76,9 +76,9 @@ class FormField extends Model
     {
         $additional_rules = [];
         foreach ($additional_validation_rules as $additional_validation_rule) {
-            $validation_rule      = trim($additional_validation_rule);
+            $validation_rule = trim($additional_validation_rule);
             $replace_placeholders = $this->replacePlaceHolders($validation_rule, $applicant, $applicant_type, $request_data);
-            $additional_rules[]   = $replace_placeholders;
+            $additional_rules[] = $replace_placeholders;
         }
 
         return $additional_rules;
@@ -140,7 +140,7 @@ class FormField extends Model
 
     public function renderInfoList($entity, $form_input = null): string
     {
-        $value   = $this->getFormInputValue($form_input);
+        $value = $this->getFormInputValue($form_input);
         $builder = $this->getBuilder();
 
         return $builder?->renderInfoList($this, $value);

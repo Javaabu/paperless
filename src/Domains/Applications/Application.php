@@ -53,7 +53,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         parent::boot();
 
         static::creating(function ($model) {
-            $status_class  = config('paperless.application_status')::make(config('paperless.application_status_on_create'), $model);
+            $status_class = config('paperless.application_status')::make(config('paperless.application_status_on_create'), $model);
             $model->status = $status_class;
         });
     }
@@ -158,7 +158,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         return Attribute::get(function () {
             $reference_number_format = $this->reference_number_format;
             $reference_number_format = str_replace(':year', $this->created_at->format('y'), $reference_number_format);
-            $formatted_id            = str_pad($this->id, 3, '0', STR_PAD_LEFT);
+            $formatted_id = str_pad($this->id, 3, '0', STR_PAD_LEFT);
             $reference_number_format = str_replace(':no', $formatted_id, $reference_number_format);
 
             return $reference_number_format;
@@ -192,12 +192,12 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     public function renderInfoList(): string
     {
         $form_sections = $this->applicationType->formSections->sortBy('order_column');
-        $form_fields   = $this->applicationType->formFields->sortBy('order_column');
+        $form_fields = $this->applicationType->formFields->sortBy('order_column');
 
         $html = '';
         foreach ($form_sections as $form_section) {
             $section_form_field_ids = $form_fields->where('form_section_id', $form_section->id)->pluck('id');
-            $section_inputs         = $this->formInputs->whereIn('form_field_id', $section_form_field_ids);
+            $section_inputs = $this->formInputs->whereIn('form_field_id', $section_form_field_ids);
             $html .= $form_section->renderInfoList($this->applicant, $section_inputs);
         }
 

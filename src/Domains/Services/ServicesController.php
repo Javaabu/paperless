@@ -31,7 +31,7 @@ class ServicesController extends Controller
 
     public function index(Request $request, $trashed = false)
     {
-        $title    = __('All Services');
+        $title = __('All Services');
         $per_page = $request->input('per_page', 20);
 
         $services = $this->getModelClass()::query()
@@ -119,7 +119,7 @@ class ServicesController extends Controller
     public function forceDelete($id, Request $request)
     {
         //find the model
-        $field   = with(new Service())->getRouteKeyName();
+        $field = with(new Service())->getRouteKeyName();
         $service = Service::onlyTrashed()
             ->where($field, $id)
             ->firstOrFail();
@@ -148,7 +148,7 @@ class ServicesController extends Controller
     public function restore($id, Request $request)
     {
         //find the model
-        $field   = with(new Service())->getRouteKeyName();
+        $field = with(new Service())->getRouteKeyName();
         $service = Service::onlyTrashed()
             ->where($field, $id)
             ->firstOrFail();
@@ -186,7 +186,7 @@ class ServicesController extends Controller
         ]);
 
         $action = $request->input('action');
-        $ids    = $request->input('services', []);
+        $ids = $request->input('services', []);
 
         switch ($action) {
             case 'delete':

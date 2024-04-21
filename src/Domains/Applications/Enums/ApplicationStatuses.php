@@ -13,10 +13,10 @@ enum ApplicationStatuses: string implements IsEnum
 {
     use NativeEnumsTrait;
 
-    case Draft     = 'draft';
-    case Pending   = 'pending';
-    case Approved  = 'approved';
-    case Rejected  = 'rejected';
+    case Draft = 'draft';
+    case Pending = 'pending';
+    case Approved = 'approved';
+    case Rejected = 'rejected';
     case Cancelled = 'cancelled';
 
     public static function labels(): array
@@ -81,7 +81,7 @@ enum ApplicationStatuses: string implements IsEnum
 
     public static function getProcessActions(): array
     {
-        $actions        = self::actions();
+        $actions = self::actions();
         $manual_actions = self::manualActions();
 
         return array_diff_key($actions, array_flip($manual_actions));

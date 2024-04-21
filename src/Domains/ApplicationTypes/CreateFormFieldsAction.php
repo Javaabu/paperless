@@ -20,13 +20,13 @@ class CreateFormFieldsAction
             $form_section = $this->seedSection($application_type, $section_definition, $section_order);
 
             $field_group_definitions = $section_definition->getFieldGroups();
-            $group_order             = 1;
+            $group_order = 1;
             foreach ($field_group_definitions as $field_group_definition) {
                 /* @var FieldGroupDefinition $field_group_definition */
                 $field_group = $this->seedFieldGroup($application_type, $form_section, $field_group_definition, $group_order);
 
                 $field_definitions = $field_group_definition->getFields();
-                $field_order       = 1;
+                $field_order = 1;
                 foreach ($field_definitions as $field_definition) {
                     /* @var FieldDefinition $field_definition */
                     $this->seedField($application_type, $form_section, $field_definition, $field_group, $field_order);
@@ -37,7 +37,7 @@ class CreateFormFieldsAction
             }
 
             $field_definitions = $section_definition->getFields();
-            $field_order       = 1;
+            $field_order = 1;
             foreach ($field_definitions as $field_definition) {
                 /* @var FieldDefinition $field_definition */
                 $this->seedField($application_type, $form_section, $field_definition, null, $field_order);

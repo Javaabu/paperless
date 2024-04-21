@@ -20,7 +20,7 @@ class SubmitTransition extends Transition
         public string | null $remarks = null,
     ) {
         $this->check_presence_of_required_documents = app(CheckPresenceOfRequiredDocuments::class);
-        $this->check_presence_of_required_fields    = app(CheckPresenceOfRequiredFields::class);
+        $this->check_presence_of_required_fields = app(CheckPresenceOfRequiredFields::class);
     }
 
     public function handle(): Application
@@ -35,10 +35,10 @@ class SubmitTransition extends Transition
 
         $this->application->callServiceFunction('doBeforeSubmitting');
 
-        $application_eta_days            = $this->application?->applicationType?->eta_duration ?? 0;
-        $this->application->status       = new PendingVerification($this->application);
+        $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
+        $this->application->status = new PendingVerification($this->application);
         $this->application->submitted_at = now();
-        $this->application->eta_at       = now()->addDays($application_eta_days);
+        $this->application->eta_at = now()->addDays($application_eta_days);
         $this->application->save();
 
         $this->application->createStatusEvent(

@@ -17,7 +17,7 @@ class Service extends Model implements AdminModel
     use SoftDeletes;
 
     protected static array $logAttributes = ['*'];
-    protected static bool $logOnlyDirty   = true;
+    protected static bool $logOnlyDirty = true;
 
     protected $fillable = [
         'name',

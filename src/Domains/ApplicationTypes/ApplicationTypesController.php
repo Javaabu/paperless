@@ -36,9 +36,9 @@ class ApplicationTypesController extends Controller
 
     public function index(Request $request): View
     {
-        $title    = __('All Application Types');
-        $orderby  = $this->getOrderBy($request, 'created_at');
-        $order    = $this->getOrder($request, 'created_at', $orderby);
+        $title = __('All Application Types');
+        $orderby = $this->getOrderBy($request, 'created_at');
+        $order = $this->getOrder($request, 'created_at', $orderby);
         $per_page = $this->getPerPage($request);
 
         $application_types = $this->getModelClass()::query()
@@ -86,7 +86,7 @@ class ApplicationTypesController extends Controller
         ]);
 
         $action = $request->input('action');
-        $ids    = $request->input('application_types', []);
+        $ids = $request->input('application_types', []);
 
         //        switch ($action) {
         //        }
@@ -166,7 +166,7 @@ class ApplicationTypesController extends Controller
         $this->validateStatsFilters($request);
 
         $metric = $request->input('metric');
-        $mode   = $request->input('mode');
+        $mode = $request->input('mode');
 
         if ($request->filled('date_range')) {
             $range = $request->input('date_range');
@@ -199,7 +199,7 @@ class ApplicationTypesController extends Controller
         }
 
         $formatter = new CombinedStatsFormatter($stats, $compare);
-        $exporter  = new StatsExport($formatter, $mode);
+        $exporter = new StatsExport($formatter, $mode);
 
         $title = $exporter->getReportTitle();
 
