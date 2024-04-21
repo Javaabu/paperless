@@ -175,6 +175,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
 
         $html = '';
 
+        /** @var FormSection $form_section */
         foreach ($form_sections as $form_section) {
             $section_form_field_ids = $form_fields->where('form_section_id', $form_section->id)->pluck('id');
             $section_inputs = $form_inputs->whereIn('form_field_id', $section_form_field_ids);

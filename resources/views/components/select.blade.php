@@ -63,7 +63,7 @@
         ]);
     }
 
-    $attributes = (new \App\Helpers\FormBuilder\HtmlBuilder())->attributes($attribs);
+    $attributes = (new \Javaabu\Paperless\Support\HtmlBuilder())->attributes($attribs);
     $select_element = new \Illuminate\Support\HtmlString($attributes);
     $error = $errors->get($error_name);
 @endphp

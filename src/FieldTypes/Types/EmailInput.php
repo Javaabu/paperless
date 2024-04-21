@@ -9,6 +9,4 @@ class EmailInput extends FieldType
     protected string $slug = 'email_input';
     protected string $label = 'Email Input';
     protected string $icon = 'text-size';
-    protected string $builder = EmailInputBuilder::class;
-
 }
