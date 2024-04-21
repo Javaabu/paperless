@@ -25,7 +25,6 @@ return (new PhpCsFixer\Config())
         'binary_operator_spaces'            => [
             'default'   => 'single_space',
             'operators' => [
-                '=' => 'align_single_space',
                 '=>' => 'align_single_space',
             ],
         ],
