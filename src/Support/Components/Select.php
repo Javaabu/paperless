@@ -14,15 +14,29 @@ class Select extends Field implements Htmlable
     use HasPlaceholder;
 
     protected string $view = 'paperless::field-components.select';
-
+    protected string|null $child = null;
 
     public function __construct(
         public string $name
-    ) {
+    )
+    {
     }
 
     public static function make(string $name): self
     {
         return new self($name);
+    }
+
+
+    public function child(string|null $child): static
+    {
+        $this->child = $child;
+
+        return $this;
+    }
+
+    public function getChild(): ?string
+    {
+        return $this->child ?? '';
     }
 }

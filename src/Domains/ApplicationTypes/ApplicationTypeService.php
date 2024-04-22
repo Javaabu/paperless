@@ -4,9 +4,9 @@ namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Collection;
-use Javaabu\Paperless\Models\DocumentType;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 use Javaabu\Paperless\Support\Actions\GetClassesInDirectory;
 
 abstract class ApplicationTypeService implements IsAnApplicationTypeService

@@ -2,6 +2,7 @@
 
 namespace Javaabu\Paperless\Domains\Applications;
 
+use Illuminate\Validation\Rule;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Requests\BaseApplicationsRequest;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
@@ -17,9 +18,15 @@ class ApplicationsRequest extends BaseApplicationsRequest
         $applicant_type_id = $this->input('applicant_type_id');
 
         $rules = [];
-        $rules['application_type_id'] = ['exists:entity_type_application_type,application_type_id,entity_type_id,' . $applicant_type_id];
-        $rules['applicant_type_id'] = ['exists:entity_type_application_type,entity_type_id,application_type_id,' . $application_type_id];
-        $rules['applicant_id'] = ['exists:users,id'];
+        $rules['application_type_id'] = [
+            Rule::exists('entity_type_application_type', 'application_type_id')
+                ->where('entity_type_id', $applicant_type_id),
+        ];
+        $rules['applicant_type_id'] = [
+            Rule::exists('entity_type_application_type', 'entity_type_id')
+                ->where('application_type_id', $application_type_id),
+        ];
+        $rules['applicant_id'] = [Rule::exists(config('paperless.public_user_table'), 'id')];
 
         $dynamic_field_rules = $this->getDynamicFieldRules($request_data);
         $rules = array_merge($rules, ...$dynamic_field_rules);
@@ -39,7 +46,7 @@ class ApplicationsRequest extends BaseApplicationsRequest
         $applicant_id = $this->input('applicant_id');
         $applicant_type = $this->getApplicantType();
 
-        return match($applicant_type) {
+        return match ($applicant_type) {
             'user'  => config('paperless.models.user')::find($applicant_id),
             default => throw new InvalidOperationException('Invalid applicant')
         };

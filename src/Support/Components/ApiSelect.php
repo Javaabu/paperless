@@ -22,13 +22,10 @@ class ApiSelect extends Field implements Htmlable
     protected Model | Closure | string | null $selected = null;
     protected array | Closure | null $filter_by = null;
 
-
-
     public function __construct(
         public string $name
     ) {
     }
-
 
     public function nameField(string | Closure | null $name_field): static
     {
@@ -61,9 +58,15 @@ class ApiSelect extends Field implements Htmlable
         return $this;
     }
 
-    public function getFilterBy(): ?array
+    public function getFilterBy(): null|array|string
     {
-        return $this->evaluate($this->filter_by);
+        $evaluated = $this->evaluate($this->filter_by);
+
+        if (count($evaluated) === 1) {
+            return $evaluated[0];
+        }
+
+        return $evaluated;
     }
 
     public static function make(string $name): self

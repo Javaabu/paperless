@@ -83,6 +83,11 @@ return [
         'application_status' => \Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses::class,
     ],
 
+    /**
+     * This config section defines what relationships on the Paperless package should be active.
+     * Currently, this is only applicable for Services (AKA Automatic Payment raising).
+     * This is to prevent the package from trying to load relationships that are not needed.
+     */
     'relations' => [
         'services' => false,
     ],
@@ -90,8 +95,15 @@ return [
     'application_status' => \Javaabu\Paperless\StatusActions\Statuses\ApplicationStatus::class,
     'application_status_on_submit' => \Javaabu\Paperless\StatusActions\Statuses\PendingVerification::getMorphClass(),
     'application_status_on_create' => \Javaabu\Paperless\StatusActions\Statuses\Draft::getMorphClass(),
+
+    /**
+     * This config section helps to define where the Service Classes for all the Applications
+     * live. This is used to dynamically load the service classes for the
+     * application types and help process the application data.
+     *
+     */
     'services' => [
-        'path' => app_path('/Paperless/ApplicationTypes/Services'),
-        'namespace' => 'App\\Paperless\\ApplicationTypes\\Services',
+        'path' => app_path('/Paperless/Services'),
+        'namespace' => 'App\\Paperless\\Services',
     ]
 ];

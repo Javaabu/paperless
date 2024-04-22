@@ -54,6 +54,8 @@ Additionally, don't forget to point to your `Media` model in the `media-library.
     'media_model' => \App\Models\Media::class,
 ```
 
+You may store your Media Model wherever you may please. Just make sure to update the configuration file to point to the correct model.
+
 
 ## Seeding Data
 First you need to seed the entity types. You may update the EntityTypes enum created during the installation process to add/update the entity types you want to seed. Then you can run the following command to seed the entity types.

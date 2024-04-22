@@ -1,15 +1,11 @@
-<x-paperless::input-group
-    for="{{ $getId() }}"
-    :label="$getLabel()"
+<x-forms::select2
+    name="{{ $getName() }}{{ $isMultiple() ? '[]' : '' }}"
+    :options="$getOptions()"
+    :multiple="$isMultiple()"
     :required="$isMarkedAsRequired()"
->
-    <x-paperless::select
-        name="{{ $getName() }}{{ $isMultiple() ? '[]' : '' }}"
-        :options="$getOptions()"
-        :multiple="$isMultiple()"
-        :required="$isMarkedAsRequired()"
-        :value="$getState()"
-        :placeholder="$getPlaceholder()"
-    />
+    :placeholder="$getPlaceholder() ?? ''"
+    :child="$getChild()"
+    :default="$getState()"
+    inline
+/>
 
-</x-paperless::input-group>

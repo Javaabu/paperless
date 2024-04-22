@@ -1,15 +1,8 @@
-<x-paperless::input-group
-    for="{{ $getId() }}"
-    :label="$getLabel()"
+<x-forms::select2
+    :name="$getName()"
+    :ajax-url="route('api.islands.index')"
+    :filter-field="$getFilterBy()"
     :required="$isMarkedAsRequired()"
->
-    <x-paperless::api-select
-        name="{{ $getName() }}"
-        name-field="{{ $getNameField() }}"
-        :selected="$getSelected()"
-        ajax-url="{{ $getApiUrl() }}"
-        :filter-by="$getFilterBy()"
-        :required="$isMarkedAsRequired()"
-        :placeholder="$getPlaceholder()"
-    />
-</x-paperless::input-group>
+    :placeholder="$getPlaceholder() ?? ''"
+    inline
+/>
