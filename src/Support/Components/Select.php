@@ -18,8 +18,7 @@ class Select extends Field implements Htmlable
 
     public function __construct(
         public string $name
-    )
-    {
+    ) {
     }
 
     public static function make(string $name): self
