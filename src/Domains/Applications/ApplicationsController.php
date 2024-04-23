@@ -144,7 +144,8 @@ class ApplicationsController extends Controller
         }
 
         $application_type = config('paperless.models.application_type')::find($request->input('application_type'));
-        $applicant_model_class = config('paperless.models.user');
+        $applicant_model_class = config('paperless.entity_type_enum')::getModelClassFromEntityTypeId($request->input('applicant_type'));
+
         $applicant = $applicant_model_class::find($request->input('applicant'));
 
         return view('paperless::admin.applications.create', [
