@@ -79,6 +79,10 @@ return [
         'payment'          => '',
     ],
 
+    'controllers' => [
+        'applications' => \Javaabu\Paperless\Domains\Applications\ApplicationsController::class,
+    ],
+
     'enums' => [
         'application_status' => \Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses::class,
     ],

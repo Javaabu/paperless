@@ -5,7 +5,6 @@ namespace Javaabu\Paperless\Support;
 use Illuminate\Support\Facades\Route;
 use Javaabu\Paperless\Models\FormSection;
 use Javaabu\Paperless\Domains\Services\ServicesController;
-use Javaabu\Paperless\Domains\Applications\ApplicationsController;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypesController;
 use Javaabu\Paperless\Domains\Applications\ApplicationViewsController;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypesController;
@@ -35,18 +34,20 @@ class ApplicationRoutes
 
     public static function applicationCreateAndUpdateRoutes(): void
     {
+        $applications_controller = config('paperless.controllers.applications');
+
         //        Route::get('/template/field-groups/{field_group:slug}/download', [TemplateController::class, 'download'])->name('template.download');
-        Route::match(['PUT', 'PATCH'], 'applications', [ApplicationsController::class, 'bulk'])->name('applications.bulk');
-        Route::match(['PUT', 'PATCH'], 'applications/{application}/status-update', [ApplicationsController::class, 'statusUpdate'])->name('applications.status-update');
-        Route::match(['PUT', 'PATCH'], 'applications/{application}/sections/{admin_section}/update', [ApplicationsController::class, 'adminSectionUpdate'])->name('applications.admin-section-update');
-        Route::match(['PUT', 'PATCH'], 'applications/{application}/assign-staff', [ApplicationsController::class, 'assignStaff'])->name('applications.assign-staff');
-        Route::get('applications/{application}/receipt', [ApplicationsController::class, 'receipt'])->name('applications.receipt');
-        Route::get('applications/{application}/review', [ApplicationsController::class, 'review'])->name('applications.review');
-        Route::get('applications/{application}/documents', [ApplicationsController::class, 'documents'])->name('applications.documents');
-        Route::get('applications/trash', [ApplicationsController::class, 'trash'])->name('applications.trash');
-        Route::post('applications/{id}/restore', [ApplicationsController::class, 'restore'])->name('applications.restore');
-        Route::delete('applications/{id}/force-delete', [ApplicationsController::class, 'forceDelete'])->name('applications.force-delete');
-        Route::resource('applications', ApplicationsController::class)->except(['show']);
+        Route::match(['PUT', 'PATCH'], 'applications', [$applications_controller, 'bulk'])->name('applications.bulk');
+        Route::match(['PUT', 'PATCH'], 'applications/{application}/status-update', [$applications_controller, 'statusUpdate'])->name('applications.status-update');
+        Route::match(['PUT', 'PATCH'], 'applications/{application}/sections/{admin_section}/update', [$applications_controller, 'adminSectionUpdate'])->name('applications.admin-section-update');
+        Route::match(['PUT', 'PATCH'], 'applications/{application}/assign-staff', [$applications_controller, 'assignStaff'])->name('applications.assign-staff');
+        Route::get('applications/{application}/receipt', [$applications_controller, 'receipt'])->name('applications.receipt');
+        Route::get('applications/{application}/review', [$applications_controller, 'review'])->name('applications.review');
+        Route::get('applications/{application}/documents', [$applications_controller, 'documents'])->name('applications.documents');
+        Route::get('applications/trash', [$applications_controller, 'trash'])->name('applications.trash');
+        Route::post('applications/{id}/restore', [$applications_controller, 'restore'])->name('applications.restore');
+        Route::delete('applications/{id}/force-delete', [$applications_controller, 'forceDelete'])->name('applications.force-delete');
+        Route::resource('applications', $applications_controller)->except(['show']);
         Route::bind('admin_section', function ($value, $route) {
             $application_id = $route->parameter('application');
 

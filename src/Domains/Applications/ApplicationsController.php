@@ -104,6 +104,25 @@ class ApplicationsController extends Controller
         return view('paperless::admin.applications.index', compact('applications', 'title', 'per_page', 'trashed'));
     }
 
+    public function initializationRules(Request $request): array
+    {
+        return [
+            'applicant_type'   => [
+                'required', Rule::exists('entity_types', 'id'),
+            ],
+            'applicant'        => [
+                'required',
+                Rule::exists(config('paperless.public_user_table'), 'id'),
+            ],
+            'application_type' => [
+                'required',
+                Rule::exists('application_types', 'id'),
+                Rule::exists('entity_type_application_type', 'application_type_id')
+                    ->where('entity_type_id', $request->input('applicant_type')),
+            ],
+        ];
+    }
+
     public function create(Request $request)
     {
         $application_class = $this->getModelClass();
@@ -119,23 +138,7 @@ class ApplicationsController extends Controller
             ]);
         }
 
-        $rules = [
-            'applicant_type'   => [
-                'required', Rule::exists('entity_types', 'id'),
-            ],
-            'applicant'        => [
-                'required',
-                Rule::exists(config('paperless.public_user_table'), 'id'),
-            ],
-            'application_type' => [
-                'required',
-                Rule::exists('application_types', 'id'),
-                Rule::exists('entity_type_application_type', 'application_type_id')
-                    ->where('entity_type_id', $request->input('applicant_type')),
-            ],
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $this->initializationRules($request));
         if ($validator->fails()) {
             return view('paperless::admin.applications.initiate', ['application' => new $application_class()])->withErrors($validator);
         }
