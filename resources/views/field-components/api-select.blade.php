@@ -2,7 +2,7 @@
     :name="$getName()"
     :options="$getOptions()"
     :default="$getSelected()"
-    :ajax-url="route('api.islands.index')"
+    :ajax-url="$getApiUrl()"
     :filter-field="$getFilterBy()"
     :required="$isMarkedAsRequired()"
     :placeholder="$getPlaceholder() ?? ''"
