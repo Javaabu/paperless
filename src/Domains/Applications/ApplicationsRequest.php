@@ -49,7 +49,7 @@ class ApplicationsRequest extends BaseApplicationsRequest
 
         $map = [];
         foreach (config('paperless.entity_type_enum')::cases() as $entity_type) {
-            $map[str($entity_type->value)->toString()] = $entity_type->modelClass()::find($applicant_id);
+            $map[$entity_type->value] = $entity_type->modelClass()::find($applicant_id);
         }
 
         if (array_key_exists($applicant_type, $map)) {
