@@ -49,8 +49,9 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     public function casts(): array
     {
         return [
-            'application_category' => ApplicationTypeCategoryAttribute::class,
-            'description'          => 'array',
+            'application_category'       => ApplicationTypeCategoryAttribute::class,
+            'description'                => 'array',
+            'allow_additional_documents' => 'bool',
         ];
     }
 
@@ -94,7 +95,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
             'id',
             'id'
         )
-            ->withPivot(['id', 'is_active']);
+                    ->withPivot(['id', 'is_active']);
     }
 
     public function formSections(): HasMany
@@ -115,7 +116,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     public function scopeWhereHasEntityType($query, EntityType|int $entity_type): void
     {
         $entity_type_id = $entity_type instanceof EntityType ? $entity_type->id : $entity_type;
-        $query->whereHas('entityTypes', fn ($q) => $q->where('entity_types.id', $entity_type_id));
+        $query->whereHas('entityTypes', fn($q) => $q->where('entity_types.id', $entity_type_id));
     }
 
     public function scopeUserVisible($query, ?\Javaabu\Auth\User $user = null): void
@@ -156,14 +157,14 @@ class ApplicationType extends Model implements AdminModel, HasMedia
 
     public function url(string $action = 'show'): string
     {
-        return match($action) {
+        return match ($action) {
             'index'  => route('admin.application-types.index'),
             'create' => route('admin.application-types.create'),
             default  => route("admin.application-types.$action", $this),
         };
     }
 
-    public function render(Applicant $entity, Collection | null $form_inputs = null, bool $with_admin_sections = false): string
+    public function render(Applicant $entity, Collection|null $form_inputs = null, bool $with_admin_sections = false): string
     {
         $form_sections = $this->formSections;
         if (! $with_admin_sections) {

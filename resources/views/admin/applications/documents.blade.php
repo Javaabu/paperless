@@ -2,7 +2,10 @@
 
 @section('inner-content')
    @include('paperless::admin.applications.documents._documents')
-   @include('paperless::admin.applications.documents._additional-documents')
+
+   @if($application->applicationType->allow_additional_documents)
+       @include('paperless::admin.applications.documents._additional-documents')
+   @endif
 
    <x-forms::button-group :inline="true" class="d-flex justify-content-between mt-0">
        <x-forms::form method="PATCH" :model="$application" :action="route('admin.applications.status-update', $application)">

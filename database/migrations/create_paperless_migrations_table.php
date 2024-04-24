@@ -45,6 +45,7 @@ class CreatePaperlessMigrationsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('eta_duration');
             $table->string('application_category')->index();
+            $table->boolean('allow_additional_documents')->default(false);
             $table->timestamps();
         });
 
