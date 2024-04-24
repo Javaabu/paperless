@@ -40,11 +40,11 @@ class PaperlessServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'paperless');
 
         Relation::enforceMorphMap([
-            'service'          => Service::class,
-            'application_type' => ApplicationType::class,
-            'document_type'    => DocumentType::class,
-            'entity_type'      => EntityType::class,
-            'application'      => Application::class,
+            'application'      => config('paperless.models.application'),
+            'application_type' => config('paperless.models.application_type'),
+            'document_type'    => config('paperless.models.document_type'),
+            'entity_type'      => config('paperless.models.entity_type'),
+            'service'          => config('paperless.models.service'),
             'status_event'     => StatusEvent::class,
         ]);
     }

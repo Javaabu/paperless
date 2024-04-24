@@ -122,7 +122,9 @@ abstract class ApplicationTypeBlueprint implements IsAnApplicationType
 
         $application_category = (new ($this->getCategory()))->getSlug();
 
-        return ApplicationType::updateOrCreate([
+        $application_type_class = config('paperless.models.application_type');
+
+        return $application_type_class::updateOrCreate([
             'code' => $this->code,
         ], [
             'name'                 => $this->getName(),
