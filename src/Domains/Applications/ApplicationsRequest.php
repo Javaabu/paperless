@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\Domains\Applications;
 
 use Illuminate\Validation\Rule;
 use Javaabu\Paperless\Interfaces\Applicant;
+use Javaabu\Paperless\Domains\EntityTypes\EntityType;
 use Javaabu\Paperless\Requests\BaseApplicationsRequest;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
@@ -46,15 +47,26 @@ class ApplicationsRequest extends BaseApplicationsRequest
         $applicant_id = $this->input('applicant_id');
         $applicant_type = $this->getApplicantType();
 
-        return match ($applicant_type) {
-            'user'  => config('paperless.models.user')::find($applicant_id),
-            default => throw new InvalidOperationException('Invalid applicant')
-        };
+        $map = [];
+        foreach (config('paperless.entity_type_enum')::cases() as $entity_type) {
+            $map[str($entity_type->value)->toString()] = $entity_type->modelClass()::find($applicant_id);
+        }
+
+        if (array_key_exists($applicant_type, $map)) {
+            return $map[$applicant_type];
+        } else {
+            throw new InvalidOperationException('Invalid applicant');
+        }
     }
 
     public function getApplicantType(): string
     {
-        return 'user';
+        $applicant_type_id = $this->input('applicant_type_id');
+
+        return EntityType::query()
+                         ->where('id', $applicant_type_id)
+                         ->firstOrFail()
+                         ->slug;
     }
 
     public function getApplicationType(): ?ApplicationType
