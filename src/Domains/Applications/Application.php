@@ -67,7 +67,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
 
     public function applicationType(): BelongsTo
     {
-        return $this->belongsTo(ApplicationType::class);
+        return $this->belongsTo(config('paperless.models.application_type'));
     }
 
     public function applicant(): MorphTo
