@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
-use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 use Javaabu\Paperless\Domains\Applications\Traits\HasStatusActions;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
