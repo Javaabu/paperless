@@ -17,6 +17,7 @@ use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
 use Javaabu\Paperless\Console\Commands\CreateNewApplicationTypeCommand;
 use Javaabu\Paperless\Console\Commands\CreateApplicationTypeCategoryCommand;
+use Javaabu\Paperless\Middleware\OverridePaperlessComponentViews;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
@@ -50,6 +51,13 @@ class PaperlessServiceProvider extends ServiceProvider
             __DIR__ . '/../config/paperless.php',
             'paperless'
         );
+
+        $this->registerMiddlewareAliases();
+    }
+
+    public function registerMiddlewareAliases(): void
+    {
+        app('router')->aliasMiddleware('paperless-views', OverridePaperlessComponentViews::class);
     }
 
     /**

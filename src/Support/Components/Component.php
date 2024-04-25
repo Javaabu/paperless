@@ -5,6 +5,7 @@ namespace Javaabu\Paperless\Support\Components;
 use Closure;
 use Exception;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\File;
 use Javaabu\Paperless\Support\Components\Traits\EvaluatesClosures;
 
 abstract class Component
@@ -14,6 +15,25 @@ abstract class Component
     protected string $view;
     protected string | Closure | null $defaultView = null;
     protected array $viewData = [];
+
+    /**
+     * This function is used to check if the overridden file exists in the views directory of
+     * the project that is using the paperless package.
+     *
+     * @param  string  $replaced
+     * @return bool
+     */
+    protected function checkIfOverriddenFileExists(string $replaced): bool
+    {
+        $raw_file_path = str($replaced)
+            ->after('::')
+            ->replace('.', '/')
+            ->prepend('views/vendor/paperless/')
+            ->append('.blade.php')
+            ->toString();
+
+        return File::exists(resource_path($raw_file_path));
+    }
 
     /**
      * @throws Exception
@@ -28,7 +48,11 @@ abstract class Component
                 $replace_string = $view_path . ".";
                 $position = $pos + 2;
 
-                return substr_replace($this->view, $replace_string, $position, 0);
+                $replaced = substr_replace($this->view, $replace_string, $position, 0);
+
+                if ($this->checkIfOverriddenFileExists($replaced)) {
+                    return $replaced;
+                }
             }
 
             return $this->view;
