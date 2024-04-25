@@ -14,10 +14,10 @@ use Javaabu\Paperless\Domains\Applications\ApplicationPolicy;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Javaabu\Paperless\Console\Commands\PaperlessInstallCommand;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy;
+use Javaabu\Paperless\Middleware\OverridePaperlessComponentViews;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
 use Javaabu\Paperless\Console\Commands\CreateNewApplicationTypeCommand;
 use Javaabu\Paperless\Console\Commands\CreateApplicationTypeCategoryCommand;
-use Javaabu\Paperless\Middleware\OverridePaperlessComponentViews;
 
 class PaperlessServiceProvider extends ServiceProvider
 {
