@@ -77,7 +77,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
 
     public function publicUser(): BelongsTo
     {
-        return $this->belongsTo(PublicUser::class);
+        return $this->belongsTo(config('paperless.models.user'));
     }
 
     public function formInputs(): HasMany

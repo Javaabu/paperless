@@ -1,9 +1,8 @@
-<x-paperless::form-container
+<x-forms::card
     id="{{ $getContainerId() }}"
     class="{{ $getContainerClass() }}"
 >
-
-    <x-slot:cardHeader>
+    <x-slot name="header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
                 <div class="card-title">{{ $getHeading() }}</div>
@@ -12,16 +11,15 @@
                 @endif
             </div>
             @if ($getCanBeRemoved() && ! empty($getContainerId()))
-            <div>
-                <button data-remove-section="#{{ $getContainerId() }}" class="btn btn-danger">{{ __('Remove') }}</button>
-            </div>
+                <div>
+                    <button data-remove-section="#{{ $getContainerId() }}" class="btn btn-danger">{{ __('Remove') }}</button>
+                </div>
             @endif
         </div>
-    </x-slot:cardHeader>
+    </x-slot>
 
     {!! $getChildComponents() !!}
-
-</x-paperless::form-container>
+</x-forms::card>
 
 @pushonce('scripts')
     <script>
