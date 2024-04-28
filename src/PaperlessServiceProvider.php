@@ -8,15 +8,11 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Javaabu\StatusEvents\Models\StatusEvent;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Javaabu\Paperless\Domains\Services\ServicePolicy;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
-use Javaabu\Paperless\Domains\Applications\ApplicationPolicy;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Javaabu\Paperless\Console\Commands\PaperlessInstallCommand;
-use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy;
-use Javaabu\Paperless\Middleware\OverridePaperlessComponentViews;
 use Javaabu\Paperless\Exceptions\PolicyModelClassesNotConfigured;
-use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
+use Javaabu\Paperless\Middleware\OverridePaperlessComponentViews;
 use Javaabu\Paperless\Console\Commands\CreateNewApplicationTypeCommand;
 use Javaabu\Paperless\Console\Commands\CreateApplicationTypeCategoryCommand;
 
