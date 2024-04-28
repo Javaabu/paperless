@@ -271,7 +271,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         return $user->id == $this->assigned_to_id;
     }
 
-    public function canBeAccessedByPublicUser(PublicUser $public_user): bool
+    public function canBeAccessedByPublicUser($public_user): bool
     {
         $this->loadMissing('applicant');
 
