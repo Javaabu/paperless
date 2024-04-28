@@ -83,6 +83,13 @@ return [
         'applications' => \Javaabu\Paperless\Domains\Applications\ApplicationsController::class,
     ],
 
+    'policies' => [
+        'application' => \Javaabu\Paperless\Domains\Applications\ApplicationPolicy::class,
+        'application_type' => \Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy::class,
+        'document_type' => \Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy::class,
+        'service' => \Javaabu\Paperless\Domains\Services\ServicePolicy::class,
+    ],
+
     'enums' => [
         'application_status' => \Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses::class,
     ],

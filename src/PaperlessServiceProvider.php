@@ -15,6 +15,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Javaabu\Paperless\Console\Commands\PaperlessInstallCommand;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy;
 use Javaabu\Paperless\Middleware\OverridePaperlessComponentViews;
+use Javaabu\Paperless\Exceptions\PolicyModelClassesNotConfigured;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy;
 use Javaabu\Paperless\Console\Commands\CreateNewApplicationTypeCommand;
 use Javaabu\Paperless\Console\Commands\CreateApplicationTypeCategoryCommand;
@@ -145,17 +146,48 @@ class PaperlessServiceProvider extends ServiceProvider
                          ->first();
     }
 
+    /**
+     * @throws PolicyModelClassesNotConfigured
+     */
     protected function registerPolicies(): void
     {
-        $policies = [
-            config('paperless.models.application')      => ApplicationPolicy::class,
-            config('paperless.models.application_type') => ApplicationTypePolicy::class,
-            config('paperless.models.service')          => ServicePolicy::class,
-            config('paperless.models.document_type')    => DocumentTypePolicy::class,
-        ];
+        $this->ensurePolicyModelClassesAreConfigured();
+
+        $policies = $this->getPolicies();
 
         foreach ($policies as $key => $value) {
             Gate::policy($key, $value);
         }
+    }
+
+    /**
+     * @throws PolicyModelClassesNotConfigured
+     */
+    private function ensurePolicyModelClassesAreConfigured(): void
+    {
+        $policy_keys = array_keys(config('paperless.policies'));
+
+        $missing_model_policies = [];
+
+        foreach ($policy_keys as $policy_key) {
+            if (! config("paperless.models.{$policy_key}")) {
+                $missing_model_policies[] = $policy_key;
+            }
+        }
+
+        if (count($missing_model_policies) > 0) {
+            throw new PolicyModelClassesNotConfigured();
+        }
+    }
+
+    private function getPolicies(): array
+    {
+        $policies = [];
+
+        foreach (config('paperless.policies') as $model_name => $policy) {
+            $policies[config("paperless.models.{$model_name}")] = $policy;
+        }
+
+        return $policies;
     }
 }
