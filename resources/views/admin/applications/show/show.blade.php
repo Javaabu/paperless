@@ -11,4 +11,8 @@
         @include('paperless::admin.applications.show.cards._payments')
     @endif
 
+{{--    @dd($application->applicationType->getApplicationTypeClassInstance()->getName())--}}
+
+
+
 @endsection

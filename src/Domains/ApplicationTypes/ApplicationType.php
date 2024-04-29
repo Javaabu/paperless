@@ -203,6 +203,25 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         return null;
     }
 
+    public function getApplicationTypeClassInstance(): IsAnApplicationType
+    {
+        return new ($this->getApplicationTypeClass())();
+    }
+
+    public function hasExtraViewsToRender(): bool
+    {
+        return count($this->getApplicationTypeClassInstance()->hasExtraViewsToRender()) >= 1;
+    }
+
+    public function determineExtraViewsToRender(): array
+    {
+        $something = [];
+        
+        
+    }
+    
+    
+
     public function requiresPayment(): bool
     {
         $this->loadMissing('services');

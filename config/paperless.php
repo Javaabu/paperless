@@ -108,6 +108,8 @@ return [
     'application_status_on_submit' => \Javaabu\Paperless\StatusActions\Statuses\PendingVerification::getMorphClass(),
     'application_status_on_create' => \Javaabu\Paperless\StatusActions\Statuses\Draft::getMorphClass(),
 
+    
+
     /**
      * This config section helps to define where the Service Classes for all the Applications
      * live. This is used to dynamically load the service classes for the

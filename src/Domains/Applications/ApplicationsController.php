@@ -352,6 +352,7 @@ class ApplicationsController extends Controller
         ]);
 
         $application_status = config('paperless.application_status');
+
         /* @var State $application_status */
         $transition_to_state = $application_status::make($request->input('action'), $application);
         $remarks = $request->input('remarks');
