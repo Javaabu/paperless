@@ -25,7 +25,7 @@ class ApplicationsController extends Controller
         return config('paperless.models.application');
     }
 
-    public function __construct()
+    public function __construct(public ApplicationService $applicationService)
     {
         //        $this->authorizeResource(config('paperless.application_model'));
     }
@@ -140,13 +140,23 @@ class ApplicationsController extends Controller
 
         $validator = Validator::make($request->all(), $this->initializationRules($request));
         if ($validator->fails()) {
-            return view('paperless::admin.applications.initiate', ['application' => new $application_class()])->withErrors($validator);
+            return view('paperless::admin.applications.initiate', [
+                'application' => new $application_class()
+            ])->withErrors($validator);
         }
 
         $application_type = config('paperless.models.application_type')::find($request->input('application_type'));
         $applicant_model_class = config('paperless.entity_type_enum')::getModelClassFromEntityTypeId($request->input('applicant_type'));
 
         $applicant = $applicant_model_class::find($request->input('applicant'));
+
+        // If the application type does not have any input fields,
+        // redirect immediately to the documents upload page.
+        if (! $application_type->formFields()->exists()) {
+            $application = $this->applicationService->createWithoutInputs($applicant, $application_type);
+            $this->flashSuccessMessage();
+            return to_route('admin.applications.documents', $application);
+        }
 
         return view('paperless::admin.applications.create', [
             'application'      => new $application_class(),
@@ -158,26 +168,7 @@ class ApplicationsController extends Controller
 
     public function store(ApplicationsRequest $request)
     {
-        $application_class = config('paperless.models.application');
-
-        $application = new $application_class();
-        $application->applicant()->associate($request->getApplicant());
-        $application->applicationType()->associate($request->input('application_type_id'));
-        $application->save();
-
-        $input_data_array = collect($request->validated())->except([
-            'applicant_type_id',
-            'applicant_id',
-            'application_type_id',
-        ])->toArray();
-
-        $application->updateFormInputs($input_data_array);
-
-        $status_enum = config('paperless.enums.application_status');
-        $application->createStatusEvent(
-            $status_enum::Draft->value,
-            $status_enum::Draft->getRemarks()
-        );
+        $application = $this->applicationService->create($request);
 
         $this->flashSuccessMessage();
 
@@ -194,7 +185,7 @@ class ApplicationsController extends Controller
 
     public function update(ApplicationsUpdateRequest $request, Application $application): RedirectResponse
     {
-        $application->updateFormInputs($request->validated());
+        $this->applicationService->update($request, $application);
         $this->flashSuccessMessage();
 
         return to_route('admin.applications.documents', $application);

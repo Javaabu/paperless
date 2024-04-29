@@ -27,7 +27,9 @@ class ApplicationsRequest extends BaseApplicationsRequest
             Rule::exists('entity_type_application_type', 'entity_type_id')
                 ->where('application_type_id', $application_type_id),
         ];
-        $rules['applicant_id'] = [Rule::exists(config('paperless.public_user_table'), 'id')];
+        $rules['applicant_id'] = [
+            Rule::exists(config('paperless.public_user_table'), 'id')
+        ];
 
         $dynamic_field_rules = $this->getDynamicFieldRules($request_data);
         $rules = array_merge($rules, ...$dynamic_field_rules);
