@@ -86,12 +86,12 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
 
     public function verifiedBy(): BelongsTo
     {
-        return $this->belongsTo(config('paperless.models.user'), 'verified_by_id');
+        return $this->belongsTo(config('paperless.models.admin'), 'verified_by_id');
     }
 
     public function approvedBy(): BelongsTo
     {
-        return $this->belongsTo(config('paperless.models.user'), 'approved_by_id');
+        return $this->belongsTo(config('paperless.models.admin'), 'approved_by_id');
     }
 
     public function payments(): MorphMany

@@ -6,7 +6,7 @@ return [
     /*
      * Add the application type classes here
      * */
-    'application_types' => [
+    'application_types'           => [
     ],
 
     /*
@@ -20,7 +20,7 @@ return [
      * Paperless requires some other routes defined in your project,
      * provide any required routes here
      * */
-    'routes' => [
+    'routes'                      => [
         /*
          * Add your documents store route here
          * */
@@ -33,7 +33,7 @@ return [
      * and should have the trait ActsAsEntityTypeEnum to get the default implementation
      * of the methods.
      * */
-    'entity_type_enum' => \App\Paperless\Enums\EntityTypes::class,
+    'entity_type_enum'            => \App\Paperless\Enums\EntityTypes::class,
 
     'language_enum' => Javaabu\Paperless\Enums\Languages::class,
 
@@ -66,6 +66,7 @@ return [
      * classes and override from here
      */
     'models'            => [
+        'admin'            => \App\Models\User::class,
         'user'             => \App\Models\User::class,
         'application'      => \Javaabu\Paperless\Domains\Applications\Application::class,
         'application_type' => \Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType::class,
@@ -84,13 +85,13 @@ return [
     ],
 
     'policies' => [
-        'application' => \Javaabu\Paperless\Domains\Applications\ApplicationPolicy::class,
+        'application'      => \Javaabu\Paperless\Domains\Applications\ApplicationPolicy::class,
         'application_type' => \Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy::class,
-        'document_type' => \Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy::class,
-        'service' => \Javaabu\Paperless\Domains\Services\ServicePolicy::class,
+        'document_type'    => \Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy::class,
+        'service'          => \Javaabu\Paperless\Domains\Services\ServicePolicy::class,
     ],
 
-    'enums' => [
+    'enums'     => [
         'application_status' => \Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses::class,
     ],
 
@@ -103,7 +104,7 @@ return [
         'services' => false,
     ],
 
-    'application_status' => \Javaabu\Paperless\StatusActions\Statuses\ApplicationStatus::class,
+    'application_status'           => \Javaabu\Paperless\StatusActions\Statuses\ApplicationStatus::class,
     'application_status_on_submit' => \Javaabu\Paperless\StatusActions\Statuses\PendingVerification::getMorphClass(),
     'application_status_on_create' => \Javaabu\Paperless\StatusActions\Statuses\Draft::getMorphClass(),
 
@@ -113,8 +114,8 @@ return [
      * application types and help process the application data.
      *
      */
-    'services' => [
-        'path' => app_path('/Paperless/Services'),
+    'services'                     => [
+        'path'      => app_path('/Paperless/Services'),
         'namespace' => 'App\\Paperless\\Services',
-    ]
+    ],
 ];
