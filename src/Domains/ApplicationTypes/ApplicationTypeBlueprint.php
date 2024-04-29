@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
-use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 use Javaabu\Paperless\Domains\ApplicationTypes\Traits\SeedsApplicationTypes;
 
 abstract class ApplicationTypeBlueprint implements IsAnApplicationType

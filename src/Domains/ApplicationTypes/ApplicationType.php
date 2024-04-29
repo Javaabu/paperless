@@ -216,11 +216,11 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     public function determineExtraViewsToRender(): array
     {
         $something = [];
-        
-        
+
+
     }
-    
-    
+
+
 
     public function requiresPayment(): bool
     {

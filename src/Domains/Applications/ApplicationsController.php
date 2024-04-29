@@ -141,7 +141,7 @@ class ApplicationsController extends Controller
         $validator = Validator::make($request->all(), $this->initializationRules($request));
         if ($validator->fails()) {
             return view('paperless::admin.applications.initiate', [
-                'application' => new $application_class()
+                'application' => new $application_class(),
             ])->withErrors($validator);
         }
 
@@ -155,6 +155,7 @@ class ApplicationsController extends Controller
         if (! $application_type->formFields()->exists()) {
             $application = $this->applicationService->createWithoutInputs($applicant, $application_type);
             $this->flashSuccessMessage();
+
             return to_route('admin.applications.documents', $application);
         }
 

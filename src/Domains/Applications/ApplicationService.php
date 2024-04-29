@@ -51,6 +51,7 @@ class ApplicationService
     public function update($request, $application)
     {
         $application->updateFormInputs($request->validated());
+
         return $application;
     }
 }
