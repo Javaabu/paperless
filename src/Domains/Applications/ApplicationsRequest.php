@@ -35,7 +35,7 @@ class ApplicationsRequest extends BaseApplicationsRequest
         $rules = array_merge($rules, ...$dynamic_field_rules);
 
 
-        if (! ($application = $this->route('application'))) {
+        if (! ($application = $this->route(config('paperless.routing.admin_application_param')))) {
             $rules['application_type_id'][] = 'required';
             $rules['applicant_type_id'][] = 'required';
             $rules['applicant_id'][] = 'required';

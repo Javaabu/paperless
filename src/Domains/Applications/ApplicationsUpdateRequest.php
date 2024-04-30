@@ -19,21 +19,24 @@ class ApplicationsUpdateRequest extends BaseApplicationsRequest
 
     public function getApplicant(): Applicant
     {
-        $application = $this->route('application') ?: $this->route('public_application');
+        $application = $this->route(config('paperless.routing.admin_application_param'))
+            ?: $this->route(config('paperless.routing.public_application_param'));
 
         return $application->applicant;
     }
 
     public function getApplicantType(): string
     {
-        $application = $this->route('application') ?: $this->route('public_application');
+        $application = $this->route(config('paperless.routing.admin_application_param'))
+            ?: $this->route(config('paperless.routing.public_application_param'));
 
         return $application->applicant_type;
     }
 
     public function getApplicationType(): ?ApplicationType
     {
-        $application = $this->route('application') ?: $this->route('public_application');
+        $application = $this->route(config('paperless.routing.admin_application_param'))
+            ?: $this->route(config('paperless.routing.public_application_param'));
 
         return $application->applicationType;
     }
