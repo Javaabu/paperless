@@ -9,7 +9,7 @@
 
    <x-forms::button-group :inline="true" class="d-flex justify-content-between mt-0">
        <x-forms::form method="PATCH" :model="$application" :action="route('admin.applications.status-update', $application)">
-           <x-forms::submit color="dark" class="btn--icon-text btn--raised">
+           <x-forms::submit color="dark" class="btn--icon-text btn--raised" name="action" value="cancelled">
                <i class="zmdi zmdi-block"></i> {{ __('Cancel Application') }}
            </x-forms::submit>
        </x-forms::form>
