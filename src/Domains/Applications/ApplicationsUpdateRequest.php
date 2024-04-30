@@ -33,7 +33,7 @@ class ApplicationsUpdateRequest extends BaseApplicationsRequest
 
     public function getApplicationType(): ?ApplicationType
     {
-        $application = $this->route('application');
+        $application = $this->route('application') ?: $this->route('public_application');
 
         return $application->applicationType;
     }
