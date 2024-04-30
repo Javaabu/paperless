@@ -215,7 +215,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
 
     public function isApplicationType($application_type_class): bool
     {
-        $type_instance = new $application_type_class;
+        $type_instance = new $application_type_class();
 
         $type_code = $type_instance->getCode();
 
