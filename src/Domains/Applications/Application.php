@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Verified;
+use Javaabu\Paperless\StatusActions\Statuses\Rejected;
 use Javaabu\Paperless\StatusActions\Statuses\Cancelled;
 use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
@@ -312,7 +313,13 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         return in_array($this->status->getValue(), [
             Approved::getMorphClass(),
             Cancelled::getMorphClass(),
+            Rejected::getMorphClass(),
         ]);
+    }
+
+    public function isRejected()
+    {
+        return $this->status->getValue() === Rejected::getMorphClass();
     }
 
     public function getStatusColor(string $status): string
