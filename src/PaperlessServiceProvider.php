@@ -120,12 +120,14 @@ class PaperlessServiceProvider extends ServiceProvider
         Route::bind($paperless_admin_application_param, function ($value) {
             /* @var PaperlessRouteModelFinder $finder */
             $finder = app(config('paperless.routing.model_finder'));
+
             return $finder->forAdmin($value);
         });
 
         $paperless_public_application_param = config('paperless.routing.public_application_param');
         Route::bind($paperless_public_application_param, function ($value) {
             $finder = app(config('paperless.routing.model_finder'));
+
             return $finder->forPublic($value);
         });
     }
@@ -148,7 +150,7 @@ class PaperlessServiceProvider extends ServiceProvider
         $filesystem = $this->app->make(Filesystem::class);
 
         return Collection::make([$this->app->databasePath() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR])
-                         ->flatMap(fn($path) => $filesystem->glob($path . '*_' . $migrationFileName))
+                         ->flatMap(fn ($path) => $filesystem->glob($path . '*_' . $migrationFileName))
                          ->push($this->app->databasePath() . "/migrations/{$timestamp}_{$migrationFileName}")
                          ->first();
     }
