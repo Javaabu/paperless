@@ -91,6 +91,13 @@ return [
         'service'          => \Javaabu\Paperless\Domains\Services\ServicePolicy::class,
     ],
 
+    'routing' => [
+        'admin_application_param' => 'paperless_application',
+        'public_application_param' => 'paperless_public_application',
+        'model_finder' => \Javaabu\Paperless\Routing\PaperlessRouteModelFinder::class,
+    ],
+
+
     'enums'     => [
         'application_status' => \Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses::class,
     ],
@@ -108,7 +115,6 @@ return [
     'application_status_on_submit' => \Javaabu\Paperless\StatusActions\Statuses\PendingVerification::getMorphClass(),
     'application_status_on_create' => \Javaabu\Paperless\StatusActions\Statuses\Draft::getMorphClass(),
 
-    
 
     /**
      * This config section helps to define where the Service Classes for all the Applications

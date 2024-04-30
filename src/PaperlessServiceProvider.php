@@ -2,12 +2,14 @@
 
 namespace Javaabu\Paperless;
 
+use Route;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Javaabu\StatusEvents\Models\StatusEvent;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Javaabu\Paperless\Routing\PaperlessRouteModelFinder;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Javaabu\Paperless\Console\Commands\PaperlessInstallCommand;
@@ -114,9 +116,18 @@ class PaperlessServiceProvider extends ServiceProvider
      */
     protected function registerModelBindings(): void
     {
-        // $this->app->bind(SomeContract::class, function ($app) {
-        //    return $app->make($app->config['paperless.models.something']);
-        // });
+        $paperless_admin_application_param = config('paperless.routing.admin_application_param');
+        Route::bind($paperless_admin_application_param, function ($value) {
+            /* @var PaperlessRouteModelFinder $finder */
+            $finder = app(config('paperless.routing.model_finder'));
+            return $finder->forAdmin($value);
+        });
+
+        $paperless_public_application_param = config('paperless.routing.public_application_param');
+        Route::bind($paperless_public_application_param, function ($value) {
+            $finder = app(config('paperless.routing.model_finder'));
+            return $finder->forPublic($value);
+        });
     }
 
     /**
@@ -137,7 +148,7 @@ class PaperlessServiceProvider extends ServiceProvider
         $filesystem = $this->app->make(Filesystem::class);
 
         return Collection::make([$this->app->databasePath() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR])
-                         ->flatMap(fn ($path) => $filesystem->glob($path . '*_' . $migrationFileName))
+                         ->flatMap(fn($path) => $filesystem->glob($path . '*_' . $migrationFileName))
                          ->push($this->app->databasePath() . "/migrations/{$timestamp}_{$migrationFileName}")
                          ->first();
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Javaabu\Paperless\Support;
+namespace Javaabu\Paperless\Routing;
 
 use Illuminate\Support\Facades\Route;
 use Javaabu\Paperless\Models\FormSection;
@@ -35,19 +35,36 @@ class ApplicationRoutes
     public static function applicationCreateAndUpdateRoutes(): void
     {
         $applications_controller = config('paperless.controllers.applications');
+        $application_slug = config('paperless.routing.admin_application_param');
 
-        //        Route::get('/template/field-groups/{field_group:slug}/download', [TemplateController::class, 'download'])->name('template.download');
+        // Bulk method
         Route::match(['PUT', 'PATCH'], 'applications', [$applications_controller, 'bulk'])->name('applications.bulk');
-        Route::match(['PUT', 'PATCH'], 'applications/{application}/status-update', [$applications_controller, 'statusUpdate'])->name('applications.status-update');
-        Route::match(['PUT', 'PATCH'], 'applications/{application}/sections/{admin_section}/update', [$applications_controller, 'adminSectionUpdate'])->name('applications.admin-section-update');
-        Route::match(['PUT', 'PATCH'], 'applications/{application}/assign-staff', [$applications_controller, 'assignStaff'])->name('applications.assign-staff');
-        Route::get('applications/{application}/receipt', [$applications_controller, 'receipt'])->name('applications.receipt');
-        Route::get('applications/{application}/review', [$applications_controller, 'review'])->name('applications.review');
-        Route::get('applications/{application}/documents', [$applications_controller, 'documents'])->name('applications.documents');
+
+        // Grouping for easy dynamic route param
+        Route::group([
+            'prefix' => "applications/{{$application_slug}}",
+        ], function () use ($applications_controller) {
+            Route::match(['PUT', 'PATCH'], 'status-update', [$applications_controller, 'statusUpdate'])->name('applications.status-update');
+            Route::match(['PUT', 'PATCH'], 'sections/{admin_section}/update', [$applications_controller, 'adminSectionUpdate'])->name('applications.admin-section-update');
+            Route::match(['PUT', 'PATCH'], 'assign-staff', [$applications_controller, 'assignStaff'])->name('applications.assign-staff');
+
+            Route::get('receipt', [$applications_controller, 'receipt'])->name('applications.receipt');
+            Route::get('review', [$applications_controller, 'review'])->name('applications.review');
+            Route::get('documents', [$applications_controller, 'documents'])->name('applications.documents');
+        });
+
+        // trash routes
         Route::get('applications/trash', [$applications_controller, 'trash'])->name('applications.trash');
         Route::post('applications/{id}/restore', [$applications_controller, 'restore'])->name('applications.restore');
         Route::delete('applications/{id}/force-delete', [$applications_controller, 'forceDelete'])->name('applications.force-delete');
-        Route::resource('applications', $applications_controller)->except(['show']);
+
+        // resource route
+        Route::resource('applications', $applications_controller)
+             ->parameters([
+                 'applications' => $application_slug,
+             ])
+             ->except(['show']);
+
         Route::bind('admin_section', function ($value, $route) {
             $application_id = $route->parameter('application');
 
@@ -57,11 +74,17 @@ class ApplicationRoutes
 
     public static function applicationViewRoutes(): void
     {
-        /* Application View */
-        Route::get('applications/{application}', [ApplicationViewsController::class, 'show'])->name('applications.show');
-        Route::get('applications/{application}/details', [ApplicationViewsController::class, 'details'])->name('applications.details');
-        Route::get('applications/{application}/view-documents', [ApplicationViewsController::class, 'viewDocuments'])->name('applications.view-documents');
-        Route::get('applications/{application}/history', [ApplicationViewsController::class, 'history'])->name('applications.history');
+        $application_slug = config('paperless.routing.admin_application_param');
+
+        Route::group([
+            'prefix' => "applications/{{$application_slug}}",
+        ], function () {
+            /* Application View */
+            Route::get('/', [ApplicationViewsController::class, 'show'])->name('applications.show');
+            Route::get('details', [ApplicationViewsController::class, 'details'])->name('applications.details');
+            Route::get('view-documents', [ApplicationViewsController::class, 'viewDocuments'])->name('applications.view-documents');
+            Route::get('history', [ApplicationViewsController::class, 'history'])->name('applications.history');
+        });
     }
 
     public static function serviceRoutes(): void

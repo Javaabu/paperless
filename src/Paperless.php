@@ -2,7 +2,7 @@
 
 namespace Javaabu\Paperless;
 
-use Javaabu\Paperless\Support\ApplicationRoutes;
+use Javaabu\Paperless\Routing\ApplicationRoutes;
 
 class Paperless
 {

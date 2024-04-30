@@ -18,6 +18,7 @@ use Javaabu\Paperless\Support\Components\Section;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
+use Javaabu\Paperless\Contracts\ApplicationContract;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
@@ -31,7 +32,7 @@ use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 use Javaabu\Paperless\Domains\Applications\Traits\HasStatusActions;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
 
-class Application extends Model implements HasMedia, Trackable, AdminModel
+class Application extends Model implements HasMedia, Trackable, AdminModel, ApplicationContract
 {
     use HasStates;
     use HasStatusActions;
