@@ -20,8 +20,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Javaabu\Paperless\StatusActions\Statuses\Verified;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
+use Javaabu\Paperless\StatusActions\Statuses\Verified;
 use Javaabu\Paperless\StatusActions\Statuses\Cancelled;
 use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
@@ -243,8 +243,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         Collection|null $documents = null,
         Collection|null $uploaded_documents = null,
         string|null     $section_label = null
-    )
-    {
+    ) {
         $documents_html = "";
         if ($documents) {
             foreach ($documents as $document) {

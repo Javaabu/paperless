@@ -55,9 +55,12 @@ class CancelTransition extends Transition
         dd($this->application->canBeAccessedBy(auth()->user()));
         dd(auth()->user()->can('cancel_register_new_group_application_types'));
         dd($this->application->applicationType?->getCancelPermissionAttribute());
+
         return auth()->user()->can(
-            $this->application->applicationType?->getCancelPermissionAttribute())
-            && $this->application->canBeAccessedBy(auth()->user()
+            $this->application->applicationType?->getCancelPermissionAttribute()
+        )
+            && $this->application->canBeAccessedBy(
+                auth()->user()
             );
     }
 }
