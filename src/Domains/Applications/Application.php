@@ -17,9 +17,15 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Javaabu\Paperless\Support\Components\Section;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Javaabu\Paperless\StatusActions\Statuses\Draft;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Javaabu\Paperless\StatusActions\Statuses\Verified;
+use Javaabu\Paperless\StatusActions\Statuses\Approved;
+use Javaabu\Paperless\StatusActions\Statuses\Cancelled;
+use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
+use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 use Javaabu\Paperless\Domains\Applications\Traits\HasStatusActions;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
@@ -237,7 +243,8 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
         Collection|null $documents = null,
         Collection|null $uploaded_documents = null,
         string|null     $section_label = null
-    ) {
+    )
+    {
         $documents_html = "";
         if ($documents) {
             foreach ($documents as $document) {
@@ -275,11 +282,38 @@ class Application extends Model implements HasMedia, Trackable, AdminModel
     {
         $this->loadMissing('applicant');
 
-        return $public_user->id === $this->public_user_id
-            || (
-                $this->applicant_type == 'individual'
-                && $public_user->id === $this->applicant->id
-            );
+        if ($public_user->id === $this->public_user_id) {
+            return true;
+        }
+
+        if ($this->applicant_type == 'individual') {
+            return $public_user->id === $this->applicant->id;
+        }
+
+        return false;
+    }
+
+    public function isProcessing(): bool
+    {
+        return in_array($this->status->getValue(), [
+            PendingVerification::getMorphClass(),
+            Verified::getMorphClass(),
+            Incomplete::getMorphClass(),
+        ]);
+    }
+
+    public function isNotProcessing(): bool
+    {
+        return ! $this->isProcessing()
+            || $this->status->getValue() === Draft::getMorphClass();
+    }
+
+    public function isCompleted(): bool
+    {
+        return in_array($this->status->getValue(), [
+            Approved::getMorphClass(),
+            Cancelled::getMorphClass(),
+        ]);
     }
 
     public function getStatusColor(string $status): string
