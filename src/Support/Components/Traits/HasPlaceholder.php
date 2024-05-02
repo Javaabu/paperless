@@ -15,6 +15,6 @@ trait HasPlaceholder
 
     public function getPlaceholder(): ?string
     {
-        return $this->placeholder ?? null;
+        return $this->placeholder ?? $this->getLabel();
     }
 }
