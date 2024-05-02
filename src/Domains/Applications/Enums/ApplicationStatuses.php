@@ -9,7 +9,7 @@ use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\StatusActions\DraftApplicationStatus;
 use Javaabu\Paperless\StatusActions\PendingApplicationStatus;
 
-enum ApplicationStatuses: string implements IsEnum
+enum ApplicationStatuses: string implements IsEnum, IsApplicationStatusesEnum
 {
     use NativeEnumsTrait;
 

@@ -8,6 +8,7 @@ use Spatie\ModelStates\HasStates;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\FormInput;
+use Illuminate\Database\Eloquent\Builder;
 use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,6 +32,8 @@ use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 use Javaabu\Paperless\Domains\Applications\Traits\HasStatusActions;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
+use Javaabu\Paperless\Exceptions\ApplicationStatusEnumDoesNotImplement;
+use Javaabu\Paperless\Domains\Applications\Enums\IsApplicationStatusesEnum;
 
 class Application extends Model implements HasMedia, Trackable, AdminModel, ApplicationContract
 {
@@ -132,6 +135,20 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
             });
     }
 
+    /**
+     * @throws ApplicationStatusEnumDoesNotImplement
+     */
+    public function getApplicationStatusEnum(): string
+    {
+        $enum_class = config('paperless.enums.application_status');
+
+        if (! in_array(IsApplicationStatusesEnum::class, class_implements($enum_class))) {
+            throw new ApplicationStatusEnumDoesNotImplement();
+        }
+
+        return $enum_class;
+    }
+
     public function scopePending($query): void
     {
         $query->whereIn('status', [
@@ -139,25 +156,44 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         ]);
     }
 
-    public function scopeOngoing($query): void
+    /**
+     * @throws ApplicationStatusEnumDoesNotImplement
+     */
+    public function scopeDraft(Builder $query): void
     {
         $query->whereIn('status', [
-            ApplicationStatuses::Draft,
-            ApplicationStatuses::Pending,
+            $this->getApplicationStatusEnum()::Draft,
         ]);
     }
 
+    /**
+     * @throws ApplicationStatusEnumDoesNotImplement
+     */
+    public function scopeOngoing(Builder $query): void
+    {
+        $query->whereIn('status', [
+            $this->getApplicationStatusEnum()::Draft,
+            $this->getApplicationStatusEnum()::Pending,
+        ]);
+    }
+
+    /**
+     * @throws ApplicationStatusEnumDoesNotImplement
+     */
     public function scopeCompleted($query): void
     {
         $query->whereIn('status', [
-            ApplicationStatuses::Rejected,
-            ApplicationStatuses::Approved,
+            $this->getApplicationStatusEnum()::Rejected,
+            $this->getApplicationStatusEnum()::Approved,
         ]);
     }
 
+    /**
+     * @throws ApplicationStatusEnumDoesNotImplement
+     */
     public function scopeCancelled($query): void
     {
-        $query->where('status', ApplicationStatuses::Cancelled);
+        $query->where('status', $this->getApplicationStatusEnum()::Cancelled);
     }
 
     public function formattedId(): Attribute
@@ -245,7 +281,8 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         Collection|null $documents = null,
         Collection|null $uploaded_documents = null,
         string|null     $section_label = null
-    ) {
+    )
+    {
         $documents_html = "";
         if ($documents) {
             foreach ($documents as $document) {
