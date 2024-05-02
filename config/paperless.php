@@ -4,7 +4,8 @@
 return [
 
     /*
-     * Add the application type classes here
+     * The Application Types that you create to be used in your
+     * project.
      * */
     'application_types'           => [
     ],
@@ -33,7 +34,7 @@ return [
      * and should have the trait ActsAsEntityTypeEnum to get the default implementation
      * of the methods.
      * */
-    'entity_type_enum'            => \App\Paperless\Enums\EntityTypes::class,
+    'entity_type_enum' => \App\Paperless\Enums\EntityTypes::class,
 
     'language_enum' => Javaabu\Paperless\Enums\Languages::class,
 
@@ -57,7 +58,8 @@ return [
     'public_user'       => '',
 
     /*
-     * This table will be used to store the public user id in the application,
+     * The table that will be used to create the constraint for
+     * Application Model to `Applicant` of the Application
      * */
     'public_user_table' => 'public_users',
 
@@ -80,25 +82,42 @@ return [
         'payment'          => '',
     ],
 
-    'controllers' => [
+    /**
+     * You can change what controllers that you want Paperless to use when it
+     * registers the routes. This is useful if you want to extend the
+     * controllers to add extra functionality or modify
+     * specific areas to your needs.
+     */
+    'controllers'       => [
         'applications' => \Javaabu\Paperless\Domains\Applications\ApplicationsController::class,
     ],
 
-    'policies' => [
+    /**
+     * This config section defines the policies that are used in the Paperless package.
+     * Not all applications will be having the same policies, so you can define the
+     * policies that you want to use in the application for Paperless models here.
+     */
+    'policies'          => [
         'application'      => \Javaabu\Paperless\Domains\Applications\ApplicationPolicy::class,
         'application_type' => \Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy::class,
         'document_type'    => \Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy::class,
         'service'          => \Javaabu\Paperless\Domains\Services\ServicePolicy::class,
     ],
 
-    'routing' => [
-        'admin_application_param' => 'paperless_application',
+    /**
+     * This config section defines the names of the routes that are used in
+     * the Paperless package. We also define the model finder class that
+     * is used to find and used for `Explicit Model Binding` so your
+     * controllers know what it's looking for.
+     */
+    'routing'           => [
+        'admin_application_param'  => 'paperless_application',
         'public_application_param' => 'paperless_public_application',
-        'model_finder' => \Javaabu\Paperless\Routing\PaperlessRouteModelFinder::class,
+        'model_finder'             => \Javaabu\Paperless\Routing\PaperlessRouteModelFinder::class,
     ],
 
 
-    'enums'     => [
+    'enums'                        => [
         'application_status' => \Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses::class,
     ],
 
@@ -107,12 +126,23 @@ return [
      * Currently, this is only applicable for Services (AKA Automatic Payment raising).
      * This is to prevent the package from trying to load relationships that are not needed.
      */
-    'relations' => [
+    'relations'                    => [
         'services' => false,
     ],
 
+    /**
+     * The status class to use for the Application Model
+     */
     'application_status'           => \Javaabu\Paperless\StatusActions\Statuses\ApplicationStatus::class,
+
+    /**
+     * The status action to use for when an Application is submitted
+     */
     'application_status_on_submit' => \Javaabu\Paperless\StatusActions\Statuses\PendingVerification::getMorphClass(),
+
+    /**
+     * The status action to use for when an Application is created
+     */
     'application_status_on_create' => \Javaabu\Paperless\StatusActions\Statuses\Draft::getMorphClass(),
 
 
