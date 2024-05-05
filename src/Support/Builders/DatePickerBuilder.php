@@ -5,6 +5,7 @@ namespace Javaabu\Paperless\Support\Builders;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Javaabu\Paperless\Support\Components\DatePicker;
+use Javaabu\Paperless\Support\Components\RepeatingGroup;
 
 class DatePickerBuilder extends ComponentBuilder implements IsComponentBuilder
 {
@@ -14,6 +15,14 @@ class DatePickerBuilder extends ComponentBuilder implements IsComponentBuilder
     {
         return DatePicker::make($this->form_field->slug)
                          ->label($this->form_field->name)
+                         ->repeatingGroup(function () {
+                             if ($this->form_field->field_group_id) {
+                                 return RepeatingGroup::make($this->form_field->fieldGroup->name)
+                                                      ->id($this->form_field->fieldGroup->slug);
+                             }
+
+                             return null;
+                         })
                          ->markAsRequired($this->form_field->is_required)
                          ->state($input)
                          ->toHtml();

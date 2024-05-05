@@ -33,7 +33,6 @@
 
                 bindSelectCustom($(newRepeater));
 
-
                 // $(firstNationalitySelect).select2();
                 numberOfRepetitions++;
 
@@ -75,9 +74,10 @@
                 htmlString = htmlString.replace(/data-enable-elem="#([A-Za-z0-9_-]*)_0"/g, enable_suffix);
 
                 let field_group = '{{ $getId() }}';
-                let regex = new RegExp('name="' + field_group + '\\[0\\]', 'g');
-                let field_names = 'name="' + field_group + '[' + suffix + ']';
+                let regex = new RegExp('name="' + field_group + '\\[0\\]\\[([A-Za-z0-9_-]*)\\]"', 'g');
+                let field_names = 'name="' + field_group + '[' + suffix + '][$1]"';
                 htmlString = htmlString.replace(regex, field_names);
+
                 return htmlString;
             }
 
