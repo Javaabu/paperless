@@ -20,7 +20,6 @@ abstract class BaseApplicationsRequest extends FormRequest
 
     public function getDynamicFieldRules(?array $request_data = []): array
     {
-        dd($request_data);
         $application_type = $this->getApplicationType();
         $application_type?->loadMissing('formSections', 'formSections.formFields');
         $applicant_type = $this->getApplicantType();
