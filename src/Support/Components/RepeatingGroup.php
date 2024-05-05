@@ -19,6 +19,8 @@ class RepeatingGroup extends Component
 
     protected string $view = 'paperless::view-components.repeating-group';
 
+    protected string $addMoreButtonName = 'Add More';
+
     public function __construct(
         public string | Closure $heading,
     ) {
@@ -32,5 +34,17 @@ class RepeatingGroup extends Component
     public function getHeading(): string
     {
         return $this->evaluate($this->heading);
+    }
+
+    public function addMoreButtonName(?string $value): static
+    {
+        $this->addMoreButtonName = $value;
+
+        return $this;
+    }
+
+    public function getAddMoreButtonName(): string
+    {
+        return $this->addMoreButtonName;
     }
 }

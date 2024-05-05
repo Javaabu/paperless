@@ -8,6 +8,8 @@ use Javaabu\Paperless\Support\Components\DatePicker;
 
 class DatePickerBuilder extends ComponentBuilder implements IsComponentBuilder
 {
+    public static string $value = 'datepicker';
+
     public function render(?string $input = null)
     {
         return DatePicker::make($this->form_field->slug)

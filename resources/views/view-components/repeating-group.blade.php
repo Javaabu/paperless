@@ -6,7 +6,7 @@
     <div data-repeat-section="repeater-wrapper-{{ $getId() }}"
          class="card d-flex flex-row py-4 px-2 justify-content-center align-items-center bg-success text-white"
          style="cursor:pointer;">
-        <i class="fa fa-plus mr-2"></i><span>{{ __('Add Student') }}</span>
+        <i class="fa fa-plus mr-2"></i><span>{{ __(':add_more_button_name', ['add_more_button_name' => $getAddMoreButtonName()]) }}</span>
     </div>
 </div>
 

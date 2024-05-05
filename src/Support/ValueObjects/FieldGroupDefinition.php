@@ -8,6 +8,7 @@ class FieldGroupDefinition
     private string | null $description = null;
     private array | null $fields = [];
     private int | null $order_column = null;
+    private string | null $add_more_button = null;
 
     public function __construct(
         private readonly ?string $slug,
@@ -70,5 +71,17 @@ class FieldGroupDefinition
     public function getOrderColumn(): int | null
     {
         return $this->order_column;
+    }
+
+    public function addMoreButton(string $value): self
+    {
+        $this->add_more_button = $value;
+
+        return $this;
+    }
+
+    public function getAddMoreButton(): ?string
+    {
+        return $this->add_more_button;
     }
 }

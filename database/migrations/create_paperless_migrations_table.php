@@ -97,6 +97,7 @@ class CreatePaperlessMigrationsTable extends Migration
             $table->integer('order_column');
             $table->foreignId('form_section_id')->constrained('form_sections')->cascadeOnDelete();
             $table->foreignId('application_type_id')->constrained('application_types')->cascadeOnDelete();
+            $table->json('meta')->nullable();
             $table->timestamps();
         });
 

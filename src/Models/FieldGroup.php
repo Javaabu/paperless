@@ -16,6 +16,13 @@ class FieldGroup extends Model
 {
     use HasFactory;
 
+    public function getCasts(): array
+    {
+        return [
+            'meta' => 'array',
+        ];
+    }
+
     public function formSection(): BelongsTo
     {
         return $this->belongsTo(FormSection::class);
@@ -32,9 +39,10 @@ class FieldGroup extends Model
         return $this->hasMany(FormField::class);
     }
 
-    public function render(Entity|Individual $entity, Collection|null $form_inputs = null): string
+    public function render($entity, Collection|null $form_inputs = null): string
     {
         $this->loadMissing('formFields');
+
         $form_fields = $this->formFields->sortBy('order_column');
 
         $field_group_form_inputs = $form_inputs?->where('field_group_id', $this->id)->groupBy('group_instance_number');
@@ -54,16 +62,18 @@ class FieldGroup extends Model
 
             return RepeatingGroup::make($this->name)
                                  ->id($this->slug)
+                                 ->addMoreButtonName($this->meta['add_more_button'])
                                  ->schema($repeating_group)
                                  ->repeatingSchema($fields_section_html)
                                  ->toHtml();
         }
 
         if ($field_group_form_inputs->isEmpty()) {
-
             return RepeatingGroup::make($this->name)
                                  ->id($this->slug)
-                                 ->schema($fields_section_html)
+                ->addMoreButtonName($this->meta['add_more_button'])
+
+                ->schema($fields_section_html)
                                  ->repeatingSchema($fields_section_html)
                                  ->toHtml();
         }
@@ -74,7 +84,9 @@ class FieldGroup extends Model
 
             return RepeatingGroup::make($this->name)
                                  ->id($this->slug)
-                                 ->schema($repeating_group)
+                ->addMoreButtonName($this->meta['add_more_button'])
+
+                ->schema($repeating_group)
                                  ->repeatingSchema($fields_section_html)
                                  ->toHtml();
         }

@@ -7,7 +7,7 @@ use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 
 class NumberInputBuilder extends ComponentBuilder implements IsComponentBuilder
 {
-    public string $value = 'text_input';
+    public static string $value = 'number_input';
 
     public function render(?string $input = null)
     {

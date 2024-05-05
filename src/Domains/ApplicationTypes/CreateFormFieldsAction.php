@@ -49,10 +49,11 @@ class CreateFormFieldsAction
     }
 
     public function seedSection(
-        ApplicationType $application_type,
+        ApplicationType   $application_type,
         SectionDefinition $section_definition,
-        int | null $section_order = null
-    ): FormSection {
+        int|null          $section_order = null
+    ): FormSection
+    {
         return FormSection::updateOrCreate([
             'slug' => $section_definition->getSlug(),
         ], [
@@ -65,29 +66,36 @@ class CreateFormFieldsAction
     }
 
     public function seedFieldGroup(
-        ApplicationType $application_type,
-        FormSection $form_section,
+        ApplicationType      $application_type,
+        FormSection          $form_section,
         FieldGroupDefinition $field_group_definition,
-        int | null $group_order = null
-    ): FieldGroup {
+        int|null             $group_order = null
+    ): FieldGroup
+    {
+        $meta = [
+            'add_more_button' => $field_group_definition->getAddMoreButton(),
+        ];
+
         return FieldGroup::updateOrCreate([
-                    'slug' => $field_group_definition->getSlug(),
-                ], [
-                    'order_column'        => $field_group_definition->getOrderColumn() ?? $group_order,
-                    'name'                => $field_group_definition->getLabel(),
-                    'description'         => $field_group_definition->getDescription(),
-                    'application_type_id' => $application_type->id,
-                    'form_section_id'     => $form_section->id,
-                ]);
+            'slug' => $field_group_definition->getSlug(),
+        ], [
+            'order_column'        => $field_group_definition->getOrderColumn() ?? $group_order,
+            'name'                => $field_group_definition->getLabel(),
+            'description'         => $field_group_definition->getDescription(),
+            'application_type_id' => $application_type->id,
+            'form_section_id'     => $form_section->id,
+            'meta'                => $meta,
+        ]);
     }
 
     public function seedField(
         ApplicationType $application_type,
-        FormSection $form_section,
+        FormSection     $form_section,
         FieldDefinition $field_definition,
-        FieldGroup | null $field_group = null,
-        int | null $field_order = null
-    ): void {
+        FieldGroup|null $field_group = null,
+        int|null        $field_order = null
+    ): void
+    {
         FormField::updateOrCreate([
             'slug'                => $field_definition->getSlug(),
             'form_section_id'     => $form_section->id,
