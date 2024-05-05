@@ -1,5 +1,21 @@
+@php
+    $name = $getName();
+    $id = $getId();
+    if ($isRepeatable()) {
+        $repeating_instance = $getRepeatingInstance();
+        $id .= "_{$repeating_instance}";
+        $name = "{$getRepeatingGroupId()}[{$repeating_instance}][$name]";
+    }
+
+    if ($isMultiple()) {
+        $name .= '[]';
+    }
+
+@endphp
+
 <x-forms::select2
-    name="{{ $getName() }}{{ $isMultiple() ? '[]' : '' }}"
+    :name="$name"
+    :id="$id"
     :options="$getOptions()"
     :multiple="$isMultiple()"
     :required="$isMarkedAsRequired()"
@@ -8,4 +24,3 @@
     :default="$getState()"
     inline
 />
-

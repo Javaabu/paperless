@@ -15,6 +15,8 @@ class ApplicationsRequest extends BaseApplicationsRequest
     {
         $request_data = $this->all();
 
+        dd($request_data);
+
         $application_type_id = $this->input('application_type_id');
         $applicant_type_id = $this->input('applicant_type_id');
 

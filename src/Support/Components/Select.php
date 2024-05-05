@@ -4,11 +4,13 @@ namespace Javaabu\Paperless\Support\Components;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Javaabu\Paperless\Support\Components\Traits\HasOptions;
+use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
 use Javaabu\Paperless\Support\Components\Traits\CanMultiSelect;
 use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
 
 class Select extends Field implements Htmlable
 {
+    use CanBeRepeated;
     use CanMultiSelect;
     use HasOptions;
     use HasPlaceholder;

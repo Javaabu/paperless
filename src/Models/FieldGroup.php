@@ -71,9 +71,8 @@ class FieldGroup extends Model
         if ($field_group_form_inputs->isEmpty()) {
             return RepeatingGroup::make($this->name)
                                  ->id($this->slug)
-                ->addMoreButtonName($this->meta['add_more_button'])
-
-                ->schema($fields_section_html)
+                                 ->addMoreButtonName($this->meta['add_more_button'])
+                                 ->schema($fields_section_html)
                                  ->repeatingSchema($fields_section_html)
                                  ->toHtml();
         }
@@ -84,9 +83,8 @@ class FieldGroup extends Model
 
             return RepeatingGroup::make($this->name)
                                  ->id($this->slug)
-                ->addMoreButtonName($this->meta['add_more_button'])
-
-                ->schema($repeating_group)
+                                 ->addMoreButtonName($this->meta['add_more_button'])
+                                 ->schema($repeating_group)
                                  ->repeatingSchema($fields_section_html)
                                  ->toHtml();
         }
@@ -120,31 +118,31 @@ class FieldGroup extends Model
             $field_html = '';
             foreach ($form_fields as $form_field) {
                 $form_input = null;
-                if (is_array($group_form_inputs)) {
-                    $gov_id = data_get($group_form_inputs, 'gov_id');
-                    $name = data_get($group_form_inputs, 'name');
-
-                    $individual = Individual::where('gov_id', $gov_id)->where('name', $name)->first();
-                    $form_input = $individual?->id;
-
-                    if (! $individual && $form_field->slug == 'student') {
-                        $form_input = [
-                            'name'               => $name,
-                            'name_dv'            => data_get($group_form_inputs, 'name_dv'),
-                            'nationality'        => data_get($group_form_inputs, 'nationality'),
-                            'gov_id'             => $gov_id,
-                            'gender'             => data_get($group_form_inputs, 'gender'),
-                            'certificate_number' => data_get($group_form_inputs, 'certificate_number'),
-                        ];
-                    }
-
-                    if ($form_field->slug == 'certificate_number') {
-                        $form_input = data_get($group_form_inputs, 'certificate_number');
-                    }
-
-                } else {
+//                if (is_array($group_form_inputs)) {
+//                    $gov_id = data_get($group_form_inputs, 'gov_id');
+//                    $name = data_get($group_form_inputs, 'name');
+//
+//                    $individual = Individual::where('gov_id', $gov_id)->where('name', $name)->first();
+//                    $form_input = $individual?->id;
+//
+//                    if (! $individual && $form_field->slug == 'student') {
+//                        $form_input = [
+//                            'name'               => $name,
+//                            'name_dv'            => data_get($group_form_inputs, 'name_dv'),
+//                            'nationality'        => data_get($group_form_inputs, 'nationality'),
+//                            'gov_id'             => $gov_id,
+//                            'gender'             => data_get($group_form_inputs, 'gender'),
+//                            'certificate_number' => data_get($group_form_inputs, 'certificate_number'),
+//                        ];
+//                    }
+//
+//                    if ($form_field->slug == 'certificate_number') {
+//                        $form_input = data_get($group_form_inputs, 'certificate_number');
+//                    }
+//
+//                } else {
                     $form_input = $group_form_inputs->where('form_field_id', $form_field->id)->where('group_instance_number', $key)->first()?->value;
-                }
+//                }
 
                 $form_field->setRelation('fieldGroup', $this);
                 $field_html .= $form_field->render($entity, $form_input, $key);
