@@ -36,7 +36,7 @@ abstract class BaseApplicationsRequest extends FormRequest
 
         foreach ($application_type->formSections as $section) {
             $fields = $section->formFields->filter(fn ($field) => ! $field->field_group_id);
-             $grouped_fields = $section->formFields->filter(fn ($field) => $field->field_group_id)->groupBy('field_group_id');
+            $grouped_fields = $section->formFields->filter(fn ($field) => $field->field_group_id)->groupBy('field_group_id');
 
             foreach ($fields as $field) {
                 $rules[] = $field->validationRules($application_type, $applicant, $applicant_type, $request_data);
