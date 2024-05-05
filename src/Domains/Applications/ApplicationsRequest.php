@@ -15,8 +15,6 @@ class ApplicationsRequest extends BaseApplicationsRequest
     {
         $request_data = $this->all();
 
-        dd($request_data);
-
         $application_type_id = $this->input('application_type_id');
         $applicant_type_id = $this->input('applicant_type_id');
 
@@ -35,7 +33,6 @@ class ApplicationsRequest extends BaseApplicationsRequest
 
         $dynamic_field_rules = $this->getDynamicFieldRules($request_data);
         $rules = array_merge($rules, ...$dynamic_field_rules);
-
 
         if (! ($application = $this->route(config('paperless.routing.admin_application_param')))) {
             $rules['application_type_id'][] = 'required';
