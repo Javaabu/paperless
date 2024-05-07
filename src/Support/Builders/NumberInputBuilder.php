@@ -2,6 +2,7 @@
 
 namespace Javaabu\Paperless\Support\Builders;
 
+use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Support\Components\TextInput;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Javaabu\Paperless\Support\Components\NumberInput;
@@ -13,7 +14,7 @@ class NumberInputBuilder extends ComponentBuilder implements IsComponentBuilder
 
     public function render(?string $input = null)
     {
-        return NumberInput::make($this->form_field->name)
+        return NumberInput::make($this->form_field->slug)
                         ->repeatingGroup(function () {
                             if ($this->form_field->field_group_id) {
                                 return RepeatingGroup::make($this->form_field->fieldGroup->name)
@@ -25,5 +26,15 @@ class NumberInputBuilder extends ComponentBuilder implements IsComponentBuilder
                         ->markAsRequired($this->form_field->is_required)
                         ->state($input)
                         ->toHtml();
+    }
+
+    public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = []): array
+    {
+        return [
+            'required',
+            'integer',
+            'min:1',
+            'max:999999999',
+        ];
     }
 }

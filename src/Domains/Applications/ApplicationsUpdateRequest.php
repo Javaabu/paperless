@@ -14,7 +14,7 @@ class ApplicationsUpdateRequest extends BaseApplicationsRequest
         $rules = [];
         $dynamic_field_rules = $this->getDynamicFieldRules($request_data);
 
-        return array_merge($rules, ...$dynamic_field_rules);
+        return array_merge($rules, $dynamic_field_rules);
     }
 
     public function getApplicant(): Applicant

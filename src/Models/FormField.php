@@ -46,6 +46,7 @@ class FormField extends Model
     {
         $default_validation_rules = $this->getDefaultValidationRules($applicant, $request_data);
         $additional_validation_rules = $this->getAdditionalValidationRules($application_type, $applicant, $applicant_type, $request_data);
+
         foreach ($default_validation_rules as $key => $value) {
             if ($key == $this->slug) {
                 $default_validation_rules[$key] = array_merge($value, $additional_validation_rules);
@@ -112,7 +113,7 @@ class FormField extends Model
 
     public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = []): array
     {
-        return $this->getBuilder()->getDefaultValidationRules($applicant, $request_data);
+        return $this->getBuilder()->getValidationRules($applicant, $request_data);
     }
 
     public function render(Applicant $entity, array | string $form_input = null, int | null $instance = null): string

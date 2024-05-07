@@ -2,6 +2,7 @@
 
 namespace Javaabu\Paperless\Requests;
 
+use Javaabu\Paperless\Models\FieldGroup;
 use Illuminate\Foundation\Http\FormRequest;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
@@ -35,20 +36,26 @@ abstract class BaseApplicationsRequest extends FormRequest
 
         foreach ($application_type->formSections as $section) {
             $fields = $section->formFields->filter(fn ($field) => ! $field->field_group_id);
+
             $grouped_fields = $section->formFields->filter(fn ($field) => $field->field_group_id)->groupBy('field_group_id');
 
             foreach ($fields as $field) {
-                $rules[] = $field->validationRules($application_type, $applicant, $applicant_type, $request_data);
+                $field_rules = $field->validationRules($application_type, $applicant, $applicant_type, $request_data);
+                $rules = array_merge($rules, $field_rules);
             }
 
             foreach ($grouped_fields as $group_id => $group_fields) {
-                $rules[''] = ['required', 'array'];
+                $field_group = FieldGroup::find($group_id);
+                $rules[$field_group->slug] = ['required', 'array'];
 
+                foreach ($group_fields as $field) {
+                    $field_rules = $field->validationRules($application_type, $applicant, $applicant_type, $request_data);
 
+                    $validation_key = $field_group->slug . '.*.' . $field->slug;
 
+                    $rules[$validation_key] = $field_rules;
+                }
             }
-
-            // TODO: validate field groups
         }
 
         return $rules;

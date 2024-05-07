@@ -32,8 +32,6 @@ class DatePickerBuilder extends ComponentBuilder implements IsComponentBuilder
     {
         $is_required = $this->form_field->is_required ? 'required' : 'nullable';
 
-        return [
-            $this->form_field->slug => [$is_required, 'date'],
-        ];
+        return [$is_required, 'date'];
     }
 }

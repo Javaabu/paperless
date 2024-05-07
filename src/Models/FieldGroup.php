@@ -141,7 +141,7 @@ class FieldGroup extends Model
                 //                    }
                 //
                 //                } else {
-                $form_input = $group_form_inputs->where('form_field_id', $form_field->id)->where('group_instance_number', $key)->first()?->value;
+                $form_input = collect($group_form_inputs)->where('form_field_id', $form_field->id)->where('group_instance_number', $key)->first()?->value;
                 //                }
 
                 $form_field->setRelation('fieldGroup', $this);

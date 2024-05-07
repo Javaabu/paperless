@@ -30,6 +30,19 @@ abstract class ComponentBuilder
         ];
     }
 
+    public function getValidationRules(Applicant $applicant, ?array $request_data = []): array
+    {
+        $rules = $this->getDefaultValidationRules($applicant, $request_data);
+
+        if ($this->form_field->field_group_id) {
+            return $rules;
+        }
+
+        return [
+            $this->form_field->slug => $rules,
+        ];
+    }
+
     public function saveInputs(Application $application, FormField $form_field, array | null $form_inputs = []): void
     {
         $form_input_value = $form_inputs[$form_field->slug] ?? null;
