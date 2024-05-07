@@ -82,7 +82,6 @@ abstract class ComponentBuilder
 
         $form_input->value = $array_value ? json_encode($form_input_value) : $form_input_value;
         $form_input->save();
-
     }
 
     public function renderInfoList(FormField $form_field, $value = null): string

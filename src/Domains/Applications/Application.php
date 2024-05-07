@@ -231,11 +231,20 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
 
         $field_groups = $this->applicationType->fieldGroups;
         foreach ($field_groups as $field_group) {
-            foreach (data_get($validated_data, $field_group->slug, []) as $iteration => $field_group_validated_data) {
+            $validated_field_group_data = data_get($validated_data, $field_group->slug, []);
+
+            foreach ($validated_field_group_data as $iteration => $field_group_validated_data) {
                 foreach ($field_group->formFields as $form_field) {
                     $form_field->getBuilder()->saveFieldGroupInputs($this, $form_field, $field_group, $iteration, $field_group_validated_data);
                 }
             }
+
+            // Delete all unused repeating group instances.
+            $this
+                ->formInputs()
+                ->where('field_group_id', $field_group->id)
+                ->where('group_instance_number', '>=', count($validated_field_group_data))
+                ->delete();
         }
     }
 
