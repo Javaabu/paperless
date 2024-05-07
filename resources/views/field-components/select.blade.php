@@ -14,6 +14,7 @@
 @endphp
 
 <x-forms::select2
+    :label="$getLabel()"
     :name="$name"
     :id="$id"
     :options="$getOptions()"

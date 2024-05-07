@@ -9,7 +9,7 @@
 
 @endphp
 
-<x-forms::text
+<x-forms::number
     :label="$getLabel()"
     :name="$name"
     :value="$getState()"
