@@ -29,12 +29,14 @@ class RepeatingGroupInfo extends Component
     public function fieldGroup(FieldGroup $field_group): self
     {
         $this->fieldGroup = $field_group;
+
         return $this;
     }
 
     public function formInputs(Collection | null $form_inputs): self
     {
         $this->formInputs = $form_inputs;
+
         return $this;
     }
 

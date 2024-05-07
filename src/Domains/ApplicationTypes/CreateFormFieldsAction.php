@@ -52,8 +52,7 @@ class CreateFormFieldsAction
         ApplicationType   $application_type,
         SectionDefinition $section_definition,
         int|null          $section_order = null
-    ): FormSection
-    {
+    ): FormSection {
         return FormSection::updateOrCreate([
             'slug' => $section_definition->getSlug(),
         ], [
@@ -70,8 +69,7 @@ class CreateFormFieldsAction
         FormSection          $form_section,
         FieldGroupDefinition $field_group_definition,
         int|null             $group_order = null
-    ): FieldGroup
-    {
+    ): FieldGroup {
         $meta = [
             'add_more_button' => $field_group_definition->getAddMoreButton(),
         ];
@@ -94,8 +92,7 @@ class CreateFormFieldsAction
         FieldDefinition $field_definition,
         FieldGroup|null $field_group = null,
         int|null        $field_order = null
-    ): void
-    {
+    ): void {
         $meta = [
             'child' => $field_definition->getChild(),
         ];
