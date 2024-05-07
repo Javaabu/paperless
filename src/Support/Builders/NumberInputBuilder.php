@@ -3,7 +3,6 @@
 namespace Javaabu\Paperless\Support\Builders;
 
 use Javaabu\Paperless\Interfaces\Applicant;
-use Javaabu\Paperless\Support\Components\TextInput;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Javaabu\Paperless\Support\Components\NumberInput;
 use Javaabu\Paperless\Support\Components\RepeatingGroup;
