@@ -14,8 +14,7 @@ abstract class ComponentBuilder
 {
     public function __construct(
         public FormField $form_field,
-    )
-    {
+    ) {
     }
 
     public function getRenderParameters($field, $entity, int|null $instance = null): array
