@@ -113,6 +113,7 @@ class CreatePaperlessMigrationsTable extends Migration
             $table->boolean('is_required')->index()->default(false);
             $table->string('builder')->index(); // FormFieldTypes: Repeating Group, Text, Textarea, Select, Radio, Checkbox, Multiselect, Date
             $table->unsignedInteger('order_column')->default(0);
+            $table->json('meta')->nullable();
             $table->timestamps();
 
             $table->unique(['application_type_id', 'field_group_id', 'slug'], 'unique_form_field');

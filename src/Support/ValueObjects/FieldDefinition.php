@@ -9,6 +9,7 @@ class FieldDefinition
     private string | null $language = 'en';
     private string | null $placeholder = null;
     private string | null $builder = null;
+    private string | null $child = null;
     private bool $is_required = false;
     private string | null $additional_validation_rules = '';
     private string | null $options = '';
@@ -63,6 +64,18 @@ class FieldDefinition
         $this->is_required = $is_required;
 
         return $this;
+    }
+
+    public function child(string $child): self
+    {
+        $this->child = $child;
+
+        return $this;
+    }
+
+    public function getChild(): string | null
+    {
+        return $this->child;
     }
 
     public function getSlug(): string

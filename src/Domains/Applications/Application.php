@@ -8,6 +8,7 @@ use Spatie\ModelStates\HasStates;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\FormInput;
+use Javaabu\Paperless\Models\FieldGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -418,6 +419,13 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
                         $query->where('slug', $field_name);
                     })
                     ->first()?->value;
+    }
+
+    public function getFormInputsForFieldGroup(FieldGroup $field_group)
+    {
+        return $this->formInputs()
+            ->where('field_group_id', $field_group)
+            ->get();
     }
 
     public function getAdminUrlAttribute(): string

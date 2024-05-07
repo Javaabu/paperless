@@ -24,6 +24,7 @@ class FormField extends Model
             'language'                    => Languages::class,
             'additional_validation_rules' => 'array',
             'options'                     => 'array',
+            'meta'                        => 'array',
         ];
     }
 
@@ -116,7 +117,7 @@ class FormField extends Model
         return $this->getBuilder()->getValidationRules($applicant, $request_data);
     }
 
-    public function render(Applicant $entity, array | string $form_input = null, int | null $instance = null): string
+    public function render(Applicant $entity, array|string $form_input = null, int|null $instance = null): string
     {
         $parameters = $this->builder->getRenderParameters($this, $entity, $instance);
         $form_input = $this->getRenderedFieldValue($form_input);
