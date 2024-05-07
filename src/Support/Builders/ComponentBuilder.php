@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\Support\Builders;
 
 use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FormInput;
+use Javaabu\Paperless\Models\FieldGroup;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
@@ -13,7 +14,8 @@ abstract class ComponentBuilder
 {
     public function __construct(
         public FormField $form_field,
-    ) {
+    )
+    {
     }
 
     public function getRenderParameters($field, $entity, int|null $instance = null): array
@@ -43,7 +45,7 @@ abstract class ComponentBuilder
         ];
     }
 
-    public function saveInputs(Application $application, FormField $form_field, array | null $form_inputs = []): void
+    public function saveInputs(Application $application, FormField $form_field, array|null $form_inputs = []): void
     {
         $form_input_value = $form_inputs[$form_field->slug] ?? null;
         $array_value = static::getValue() == 'select';
@@ -57,6 +59,30 @@ abstract class ComponentBuilder
 
         $form_input->value = $array_value ? json_encode($form_input_value) : $form_input_value;
         $form_input->save();
+    }
+
+    public function saveFieldGroupInputs(Application $application, FormField $form_field, FieldGroup $field_group, int $group_instance_number, ?array $form_inputs = []): void
+    {
+        $form_input_value = $form_inputs[$form_field->slug] ?? null;
+        $array_value = static::getValue() == 'select';
+
+        $form_input = $application->formInputs()
+                                  ->where('form_field_id', $form_field->id)
+                                  ->where('field_group_id', $field_group->id)
+                                  ->where('group_instance_number', $group_instance_number)
+                                  ->first();
+
+        if (! $form_input) {
+            $form_input = new FormInput();
+            $form_input->application()->associate($application);
+            $form_input->formField()->associate($form_field);
+            $form_input->fieldGroup()->associate($field_group);
+            $form_input->group_instance_number = $group_instance_number;
+        }
+
+        $form_input->value = $array_value ? json_encode($form_input_value) : $form_input_value;
+        $form_input->save();
+
     }
 
     public function renderInfoList(FormField $form_field, $value = null): string
@@ -80,7 +106,7 @@ abstract class ComponentBuilder
     public static function make(string $builder, FormField $form_field)
     {
         $field_types = config('paperless.field_builders');
-        foreach($field_types as $field_type) {
+        foreach ($field_types as $field_type) {
             if ($field_type::getValue() === $builder) {
                 return new $field_type($form_field);
             }

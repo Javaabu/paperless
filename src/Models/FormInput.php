@@ -26,5 +26,4 @@ class FormInput extends Model
     {
         return $this->belongsTo(FieldGroup::class);
     }
-
 }

@@ -228,8 +228,15 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
             $form_field->getBuilder()->saveInputs($this, $form_field, $validated_data);
         }
 
+
         $field_groups = $this->applicationType->fieldGroups;
-        // TODO: field groups
+        foreach ($field_groups as $field_group) {
+            foreach (data_get($validated_data, $field_group->slug, []) as $iteration => $field_group_validated_data) {
+                foreach ($field_group->formFields as $form_field) {
+                    $form_field->getBuilder()->saveFieldGroupInputs($this, $form_field, $field_group, $iteration, $field_group_validated_data);
+                }
+            }
+        }
     }
 
     public function renderInfoList(): string

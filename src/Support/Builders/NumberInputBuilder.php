@@ -12,7 +12,14 @@ class NumberInputBuilder extends ComponentBuilder implements IsComponentBuilder
 {
     public static string $value = 'number_input';
 
-    public function render(?string $input = null)
+    public function getRenderParameters($field, $entity, ?int $instance = null): array
+    {
+        return [
+          $instance
+        ];
+    }
+
+    public function render(?string $input = null, ?int $instance = null)
     {
         return NumberInput::make($this->form_field->slug)
                         ->repeatingGroup(function () {
@@ -23,6 +30,7 @@ class NumberInputBuilder extends ComponentBuilder implements IsComponentBuilder
 
                             return null;
                         })
+                        ->repeatingInstance($instance)
                         ->markAsRequired($this->form_field->is_required)
                         ->state($input)
                         ->toHtml();
