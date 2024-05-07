@@ -83,11 +83,16 @@ abstract class ComponentBuilder
         $form_input->save();
     }
 
+    public function getValueForInfo($value = null, bool $admin_link = false): string
+    {
+        return $value;
+    }
+
     public function renderInfoList(FormField $form_field, $value = null): string
     {
         return TextEntry::make($form_field->name)
                         ->markAsRequired($form_field->is_required)
-                        ->value($value)
+                        ->value($this->getValueForInfo($value, true))
                         ->toHtml();
     }
 

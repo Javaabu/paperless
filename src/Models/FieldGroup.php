@@ -92,7 +92,7 @@ class FieldGroup extends Model
         return '';
     }
 
-    public function renderInfoList(Individual|Entity $entity, Collection|null $form_inputs = null): string
+    public function renderInfoList($entity, Collection|null $form_inputs = null): string
     {
         return RepeatingGroupInfo::make()
                                  ->fieldGroup($this)
