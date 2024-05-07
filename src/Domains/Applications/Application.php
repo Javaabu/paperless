@@ -149,7 +149,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         return $enum_class;
     }
 
-    public function scopePending($query): void
+    public function scopePending(Builder $query): void
     {
         $query->whereIn('status', [
             ApplicationStatuses::Pending,
