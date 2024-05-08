@@ -421,6 +421,50 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
                     ->first()?->value;
     }
 
+    public function getFormInputsForAllFieldGroups(): array
+    {
+        $field_groups = $this->applicationType->fieldGroups;
+
+        // Form fields grouped by their field group id
+        $form_fields_grouped = $this->applicationType
+            ->formFields()
+            ->whereIn('field_group_id', $field_groups->pluck('id'))
+            ->get()
+            ->groupBy('field_group_id');
+
+        $form_inputs_for_repeating_groups = $this->formInputs()
+                                                        ->whereIn('field_group_id', $form_fields_grouped->keys())
+                                                        ->get()
+                                                        ->groupBy('group_instance_number');
+
+        $data = [];
+
+        foreach ($field_groups as $field_group) {
+            $field_group_slug = $field_group->slug;
+            $form_fields = $form_fields_grouped->get($field_group->id);
+
+            $group_instance_data = [];
+
+            foreach ($form_inputs_for_repeating_groups as $group_instance_number => $form_inputs) {
+                $field_group_data = [];
+
+                foreach ($form_fields as $form_field) {
+                    $form_input = $form_inputs->where('form_field_id', $form_field->id)->first();
+                    $form_field_slug = $form_field->slug;
+                    $form_field_value = $form_input->value;
+
+                    $field_group_data[$form_field_slug] = $form_field_value;
+                }
+
+                $group_instance_data[] = $field_group_data;
+            }
+
+            $data[$field_group_slug] = $group_instance_data;
+        }
+
+        return $data;
+    }
+
     public function getFormInputsForFieldGroup(FieldGroup $field_group)
     {
         return $this->formInputs()
