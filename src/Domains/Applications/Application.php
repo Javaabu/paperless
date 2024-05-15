@@ -298,8 +298,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         Collection|null $documents = null,
         Collection|null $uploaded_documents = null,
         string|null     $section_label = null
-    )
-    {
+    ) {
         $documents_html = "";
         if ($documents) {
             foreach ($documents as $document) {
