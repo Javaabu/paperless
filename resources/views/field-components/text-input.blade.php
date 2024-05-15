@@ -12,7 +12,9 @@
 <x-forms::text
     :label="$getLabel()"
     :name="$name"
+    :show-label="$labelShouldBeHidden()"
     :value="$getState()"
+    :hidden="$isHidden()"
     :placeholder="$getPlaceholder()"
     :required="$isMarkedAsRequired()"
     inline

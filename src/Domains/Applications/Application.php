@@ -298,7 +298,8 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         Collection|null $documents = null,
         Collection|null $uploaded_documents = null,
         string|null     $section_label = null
-    ) {
+    )
+    {
         $documents_html = "";
         if ($documents) {
             foreach ($documents as $document) {
@@ -433,9 +434,9 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
             ->groupBy('field_group_id');
 
         $form_inputs_for_repeating_groups = $this->formInputs()
-                                                        ->whereIn('field_group_id', $form_fields_grouped->keys())
-                                                        ->get()
-                                                        ->groupBy('group_instance_number');
+                                                 ->whereIn('field_group_id', $form_fields_grouped->keys())
+                                                 ->get()
+                                                 ->groupBy('group_instance_number');
 
         $data = [];
 
@@ -468,8 +469,8 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
     public function getFormInputsForFieldGroup(FieldGroup $field_group)
     {
         return $this->formInputs()
-            ->where('field_group_id', $field_group)
-            ->get();
+                    ->where('field_group_id', $field_group)
+                    ->get();
     }
 
     public function getAdminUrlAttribute(): string
