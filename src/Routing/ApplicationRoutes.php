@@ -15,6 +15,16 @@ use Javaabu\Paperless\Domains\ApplicationTypes\Api\ApplicationTypesController as
 
 class ApplicationRoutes
 {
+    public static function documentUpload(): void
+    {
+        Route::resource('documents', config('paperless.controllers.documents'))->only([
+            'store',
+            'update',
+            'destroy',
+        ]);
+    }
+
+
     public static function apiRoutes(): void
     {
         Route::resource('application-types', ApiApplicationTypesController::class)->only(['index', 'show']);
@@ -134,5 +144,10 @@ class ApplicationRoutes
         Route::get('application-types/{application_type}/form-fields', [
             ApplicationTypeFormFieldsController::class, 'index',
         ])->name('application-types.form-fields.index');
+    }
+
+    public static function documentsShow(): void
+    {
+        Route::get('documents/{media}', [config('paperless.controllers.documents'), 'show'])->name('paperless.documents.show');
     }
 }

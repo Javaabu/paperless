@@ -26,7 +26,14 @@ return [
          * Add your documents store route here
          * */
         'document_store' => 'api.documents.store',
+        'document_show'  => 'documents.show',
     ],
+
+    /**
+     * The disk to use for storing the uploaded files. The disk should be ideally a disk that
+     * is not publicly accessible over the default Laravel public storage route.
+     */
+    'storage_disk' => 'paperless_uploads',
 
     /*
      * IMPORTANT:
@@ -90,6 +97,7 @@ return [
      */
     'controllers'       => [
         'applications' => \Javaabu\Paperless\Domains\Applications\ApplicationsController::class,
+        'documents'    => \Javaabu\Paperless\Domains\Documents\DocumentsController::class,
     ],
 
     /**

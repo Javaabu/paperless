@@ -15,4 +15,14 @@ class Paperless
     {
         ApplicationRoutes::apiRoutes();
     }
+
+    public static function documentUpload(): void
+    {
+        ApplicationRoutes::documentUpload();
+    }
+
+    public static function documentsShow(): void
+    {
+        ApplicationRoutes::documentsShow();
+    }
 }
