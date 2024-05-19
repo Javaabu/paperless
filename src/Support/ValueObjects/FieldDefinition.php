@@ -2,8 +2,12 @@
 
 namespace Javaabu\Paperless\Support\ValueObjects;
 
+use Javaabu\Paperless\Support\ValueObjects\Traits\HasApiHelperFields;
+
 class FieldDefinition
 {
+    use HasApiHelperFields;
+
     private string | null $label = null;
     private int | null $order_column = null;
     private string | null $language = 'en';
@@ -13,6 +17,7 @@ class FieldDefinition
     private bool $is_required = false;
     private string | null $additional_validation_rules = '';
     private string | null $options = '';
+
 
     public function __construct(
         private readonly ?string $slug,
