@@ -3,12 +3,12 @@
 namespace Javaabu\Paperless\Domains\Documents;
 
 use Illuminate\Routing\Controller;
+use Javaabu\Paperless\Support\Media\Media;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 use Javaabu\Helpers\Exceptions\AppException;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -45,7 +45,10 @@ class DocumentsController extends Controller
     {
         $this->authorize('view', $media);
 
-        return response()->download($media->getPath(), $media->file_name);
+        return response()->file($media->getPath(), [
+            'Content-Type' => $media->mime_type,
+            'Content-Disposition' => 'inline; filename="'.$media->file_name.'"',
+        ]);
     }
 
     /**
