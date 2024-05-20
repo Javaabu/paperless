@@ -54,6 +54,7 @@ class Media extends BaseMedia
     {
         $controller = $this->isImageAttachment() ? 'Images' : 'Documents';
         $controller = Str::kebab($controller);
+
         return route('api.' . $controller . '.destroy', $this);
     }
 

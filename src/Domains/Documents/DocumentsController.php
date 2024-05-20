@@ -2,19 +2,19 @@
 
 namespace Javaabu\Paperless\Domains\Documents;
 
-use Illuminate\Routing\Controller;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Illuminate\Database\Eloquent\Model;
 use Javaabu\Helpers\Exceptions\AppException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Javaabu\Paperless\Domains\Applications\Application;
-use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 
 class DocumentsController extends Controller
 {
@@ -51,7 +51,7 @@ class DocumentsController extends Controller
         $this->authorize('view', $media);
 
         return response()->file($media->getPath(), [
-            'Content-Type' => $media->mime_type,
+            'Content-Type'        => $media->mime_type,
             'Content-Disposition' => 'inline; filename="'.$media->file_name.'"',
         ]);
     }
