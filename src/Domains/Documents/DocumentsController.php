@@ -3,12 +3,12 @@
 namespace Javaabu\Paperless\Domains\Documents;
 
 use Illuminate\Routing\Controller;
-use Javaabu\Paperless\Support\Media\Media;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 use Javaabu\Helpers\Exceptions\AppException;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentType;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -133,17 +133,17 @@ class DocumentsController extends Controller
         }
 
         return response()->json([
-            'success' => true,
-            'id' => $document->id,
-            'type_slug' => $document->type_slug,
+            'success'             => true,
+            'id'                  => $document->id,
+            'type_slug'           => $document->type_slug,
             'human_readable_size' => $document->human_readable_size,
-            'icon' => $document->icon,
-            'web_icon' => $document->web_icon,
-            'extension' => $document->extension,
-            'name' => $document->name,
-            'file_name' => $document->file_name,
-            'url' => $document->getUrl(),
-            'delete_url' => $document->delete_url,
+            'icon'                => $document->icon,
+            'web_icon'            => $document->web_icon,
+            'extension'           => $document->extension,
+            'name'                => $document->name,
+            'file_name'           => $document->file_name,
+            'url'                 => $document->getUrl(),
+            'delete_url'          => $document->delete_url,
         ]);
     }
 
