@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\Routing;
 
 use Illuminate\Support\Facades\Route;
 use Javaabu\Paperless\Models\FormSection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Javaabu\Paperless\Domains\Services\ServicesController;
 use Javaabu\Paperless\Domains\DocumentTypes\DocumentTypesController;
 use Javaabu\Paperless\Domains\Applications\ApplicationViewsController;
@@ -148,6 +149,15 @@ class ApplicationRoutes
 
     public static function documentsShow(): void
     {
-        Route::get('documents/{media}', [config('paperless.controllers.documents'), 'show'])->name('paperless.documents.show');
+        Route::get('documents/{paperless_document}', [config('paperless.controllers.documents'), 'show'])->name(config('paperless.routes.document_show'));
+        Route::bind('paperless_document', function ($value) {
+            try {
+                return config('paperless.models.media')::where('collection_name', 'documents')
+                    ->where('disk', config('paperless.storage_disk'))
+                    ->findOrFail($value);
+            } catch (ModelNotFoundException $e) {
+                abort(404, 'Document not found');
+            }
+        });
     }
 }

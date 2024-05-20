@@ -20,6 +20,11 @@ class DocumentsController extends Controller
 {
     use AuthorizesRequests;
 
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(config('paperless.models.media'), 'media');
+    // }
+
     /**
      * Find the model from the request
      *

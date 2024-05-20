@@ -26,14 +26,14 @@ return [
          * Add your documents store route here
          * */
         'document_store' => 'api.documents.store',
-        'document_show'  => 'documents.show',
+        'document_show'  => 'paperless.documents.show',
     ],
 
     /**
      * The disk to use for storing the uploaded files. The disk should be ideally a disk that
      * is not publicly accessible over the default Laravel public storage route.
      */
-    'storage_disk' => 'paperless_uploads',
+    'storage_disk'                => 'paperless_uploads',
 
     /*
      * IMPORTANT:
@@ -41,7 +41,7 @@ return [
      * and should have the trait ActsAsEntityTypeEnum to get the default implementation
      * of the methods.
      * */
-    'entity_type_enum' => \App\Paperless\Enums\EntityTypes::class,
+    'entity_type_enum'            => \App\Paperless\Enums\EntityTypes::class,
 
     'language_enum' => Javaabu\Paperless\Enums\Languages::class,
 
@@ -85,6 +85,7 @@ return [
         'form_input'       => \Javaabu\Paperless\Models\FormInput::class,
         'form_section'     => \Javaabu\Paperless\Models\FormSection::class,
         'field_group'      => \Javaabu\Paperless\Models\FieldGroup::class,
+        'media'            => \Javaabu\Paperless\Support\Media\Media::class,
         'service'          => \Javaabu\Paperless\Domains\Services\Service::class,
         'payment'          => '',
     ],
@@ -110,6 +111,7 @@ return [
         'application_type' => \Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypePolicy::class,
         'document_type'    => \Javaabu\Paperless\Domains\DocumentTypes\DocumentTypePolicy::class,
         'service'          => \Javaabu\Paperless\Domains\Services\ServicePolicy::class,
+        'media'            => \Javaabu\Paperless\Support\Media\MediaPolicy::class,
     ],
 
     /**
