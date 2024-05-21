@@ -17,6 +17,7 @@ class Select extends Field implements Htmlable
 
     protected string $view = 'paperless::field-components.select';
     protected string|null $child = null;
+    protected bool $with_hidden_input_helpers = false;
 
     public function __construct(
         public string $name
@@ -39,5 +40,21 @@ class Select extends Field implements Htmlable
     public function getChild(): ?string
     {
         return $this->child ?? '';
+    }
+
+    public function withHiddenInputHelpers()
+    {
+        $this->with_hidden_input_helpers = true;
+
+        return $this;
+    }
+
+    public function getHiddenInputHelperClassName()
+    {
+        if ($this->with_hidden_input_helpers) {
+            return $this->name . '_helpers';
+        }
+
+        return null;
     }
 }

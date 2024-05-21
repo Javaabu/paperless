@@ -95,7 +95,7 @@ class CreateFormFieldsAction
     ): void {
         $meta = [
             'child'                => $field_definition->getChild(),
-            'helper_for'           => $field_definition->getHelperForClass(),
+            'helper_for'           => $field_definition->getHelperForId(),
             'helper_api_url'       => $field_definition->getHelperApiUrl(),
             'helper_target_column' => $field_definition->getHelperTargetColumn(),
         ];

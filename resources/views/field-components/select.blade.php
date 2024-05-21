@@ -11,6 +11,11 @@
         $name .= '[]';
     }
 
+    $class = '';
+    if ($hidden_input_helper_class = $getHiddenInputHelperClassName()) {
+        $class .= " {$hidden_input_helper_class}";
+    }
+
 @endphp
 
 <x-forms::select2
@@ -24,4 +29,5 @@
     :child="$getChild()"
     :default="$getState()"
     inline
+    class="{{ $class }}"
 />

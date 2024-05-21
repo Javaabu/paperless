@@ -24,9 +24,13 @@ trait HasApiHelperFields
         return $this;
     }
 
-    public function getHelperForClass(): string
+    public function getHelperForId(): ?string
     {
-        return $this->helper_for . '_helpers';
+        if (! filled($this->helper_for)) {
+            return null;
+        }
+
+        return '#' . $this->helper_for;
     }
 
     public function helperApiUrl(string $api_url): static
