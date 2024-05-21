@@ -2,7 +2,6 @@
 
 namespace Javaabu\Paperless\Support\Media;
 
-
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MediaPolicy
