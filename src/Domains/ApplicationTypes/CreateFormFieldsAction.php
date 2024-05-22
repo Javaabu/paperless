@@ -98,6 +98,8 @@ class CreateFormFieldsAction
             'helper_for'           => $field_definition->getHelperForId(),
             'helper_api_url'       => $field_definition->getHelperApiUrl(),
             'helper_target_column' => $field_definition->getHelperTargetColumn(),
+            'conditional_on'       => $field_definition->getConditionalOn(),
+            'conditional_value'    => $field_definition->getConditionalValue(),
         ];
 
         FormField::updateOrCreate([

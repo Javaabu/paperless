@@ -18,16 +18,20 @@ class ApiSelect extends Field implements Htmlable
     use HasPlaceholder;
 
     protected string $view = 'paperless::field-components.api-select';
-    protected string | Closure | null $name_field = 'name';
-    protected Model | Closure | string | null $selected = null;
-    protected array | Closure | null $filter_by = null;
+    protected string|Closure|null $name_field = 'name';
+    protected Model|Closure|string|null $selected = null;
+    protected array|Closure|null $filter_by = null;
+    protected string|null $child = null;
+    protected string|null $conditional_on = null;
+    protected string|int|null $conditional_value = null;
 
     public function __construct(
         public string $name
-    ) {
+    )
+    {
     }
 
-    public function nameField(string | Closure | null $name_field): static
+    public function nameField(string|Closure|null $name_field): static
     {
         $this->name_field = $name_field;
 
@@ -39,7 +43,7 @@ class ApiSelect extends Field implements Htmlable
         return $this->evaluate($this->name_field);
     }
 
-    public function selected(string | Model | Closure | null $selected): static
+    public function selected(string|Model|Closure|null $selected): static
     {
         $this->selected = $selected;
 
@@ -51,7 +55,7 @@ class ApiSelect extends Field implements Htmlable
         return $this->evaluate($this->selected);
     }
 
-    public function filterBy(array | Closure | null $filter_by): static
+    public function filterBy(array|Closure|null $filter_by): static
     {
         $this->filter_by = $filter_by;
 
@@ -69,8 +73,44 @@ class ApiSelect extends Field implements Htmlable
         return $evaluated;
     }
 
+    public function child(string|null $child): static
+    {
+        $this->child = $child;
+
+        return $this;
+    }
+
+    public function getChild(): ?string
+    {
+        return $this->child ?? '';
+    }
+
     public static function make(string $name): self
     {
         return new self($name);
+    }
+
+    public function conditionalOn($conditional_on, $conditional_value): self
+    {
+        $this->conditional_on = $conditional_on;
+        $this->conditional_value = $conditional_value;
+
+        return $this;
+    }
+
+    public function getConditionalOn(): ?string
+    {
+        return $this->conditional_on;
+    }
+
+    public function getConditionalValue(): int|string|null
+    {
+        return $this->conditional_value;
+    }
+
+    public function isConditional(): bool
+    {
+        return $this->conditional_on
+            && $this->conditional_value;
     }
 }

@@ -27,3 +27,4 @@ ij_php_comma_after_last_array_element = true
 ij_php_import_sorting = by_length
 ij_php_blank_lines_between_imports = 0
 ij_php_align_match_arm_bodies = true
+ij_php_spaces_around_pipe_in_union_type = true
