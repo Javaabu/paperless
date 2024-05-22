@@ -27,8 +27,7 @@ class ApiSelect extends Field implements Htmlable
 
     public function __construct(
         public string $name
-    )
-    {
+    ) {
     }
 
     public function nameField(string|Closure|null $name_field): static
