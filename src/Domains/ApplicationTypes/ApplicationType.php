@@ -116,7 +116,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     public function scopeWhereHasEntityType($query, EntityType | int $entity_type): void
     {
         $entity_type_id = $entity_type instanceof EntityType ? $entity_type->id : $entity_type;
-        $query->whereHas('entityTypes', fn($q) => $q->where('entity_types.id', $entity_type_id));
+        $query->whereHas('entityTypes', fn ($q) => $q->where('entity_types.id', $entity_type_id));
     }
 
     public function scopeUserVisible($query, ?\Javaabu\Auth\User $user = null): void
