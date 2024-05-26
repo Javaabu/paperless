@@ -1,6 +1,5 @@
 @php
     $name = $getName();
-    Log::info($name);
     $id = $getId();
     if ($isRepeatable()) {
         $repeating_instance = $getRepeatingInstance();

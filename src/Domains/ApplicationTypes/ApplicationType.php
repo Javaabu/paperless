@@ -113,10 +113,10 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         return $this->hasMany(FormField::class);
     }
 
-    public function scopeWhereHasEntityType($query, EntityType|int $entity_type): void
+    public function scopeWhereHasEntityType($query, EntityType | int $entity_type): void
     {
         $entity_type_id = $entity_type instanceof EntityType ? $entity_type->id : $entity_type;
-        $query->whereHas('entityTypes', fn ($q) => $q->where('entity_types.id', $entity_type_id));
+        $query->whereHas('entityTypes', fn($q) => $q->where('entity_types.id', $entity_type_id));
     }
 
     public function scopeUserVisible($query, ?\Javaabu\Auth\User $user = null): void
@@ -164,22 +164,42 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         };
     }
 
-    public function render(Applicant $entity, Collection|null $form_inputs = null, bool $with_admin_sections = false): string
+    public function render(Applicant $entity, Collection | null $form_inputs = null, bool $with_admin_sections = false): string
     {
+        // Get all the form sections of this Application Type
         $form_sections = $this->formSections;
+
+        // If it's not an admin, filter out the admin sections
+        // Note: This feature it not really used much throughout the system.
         if (! $with_admin_sections) {
             $form_sections = $form_sections->where('is_admin_section', false);
         }
 
+        /**
+         * Sort the FormSections by the order_column so that it reflects the order in which
+         * the elements are added to the ApplicationTypeFieldDefinition
+         */
         $form_sections = $form_sections->sortBy('order_column');
+
+        /**
+         * Sort the FormFields by the order_column so that it reflects the order in which
+         * the elements are added to the ApplicationTypeFieldDefinition
+         */
         $form_fields = $this->formFields->sortBy('order_column');
 
+        // Initialize the HTML string
         $html = '';
 
+        // Foreach FormSection
         /** @var FormSection $form_section */
         foreach ($form_sections as $form_section) {
+            // Get all the FormFields that belong to this specific FormSection
             $section_form_field_ids = $form_fields->where('form_section_id', $form_section->id)->pluck('id');
+
+            // Filter out the FormInputs that belong to this specific FormSection
             $section_inputs = $form_inputs->whereIn('form_field_id', $section_form_field_ids);
+
+            // Passing in the FormInputs for this section, render and append to the HTML string
             $html .= $form_section->render($entity, $section_inputs);
         }
 
@@ -229,7 +249,6 @@ class ApplicationType extends Model implements AdminModel, HasMedia
 
 
     }
-
 
 
     public function requiresPayment(): bool

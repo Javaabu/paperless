@@ -2,12 +2,14 @@
 
 namespace Javaabu\Paperless\Models;
 
+use Exception;
 use Javaabu\Paperless\Enums\Languages;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Support\Builders\ComponentBuilder;
 use Javaabu\Paperless\Support\Casts\FieldBuilderAttribute;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
@@ -117,24 +119,51 @@ class FormField extends Model
         return $this->getBuilder()->getValidationRules($applicant, $request_data);
     }
 
-    public function render(Applicant $entity, array|string $form_input = null, int|null $instance = null): string
+    /**
+     * @throws Exception
+     */
+    public function render(Applicant $entity, array | string $form_input = null, int | null $instance = null): string
     {
-        $parameters = $this->builder->getRenderParameters($this, $entity, $instance);
+        /**
+         * Get the render parameters as defined in the ComponentBuilder's getRenderParameters method.
+         * Your application should extend ComponentBuilder and implement the getRenderParameters method.
+         *
+         * @see ComponentBuilder::getRenderParameters()
+         */
+        $parameters = $this->getBuilder()->getRenderParameters($this, $entity, $instance);
+
         $form_input = $this->getRenderedFieldValue($form_input);
 
-        return $this->getBuilder()?->render($form_input, ...$parameters);
-    }
+        info("paperless:models:form_field:render -> {$this->getBuilder()?->getSlug()}");
 
+        $html = $this->getBuilder()?->render($form_input, ...$parameters);
+
+        // TODO: I'll find out if this breaks things soon enough
+        if (! filled($html)) {
+            throw new \Exception("Nothing was rendered for this FormField -> {$this->slug} on ApplicationType -> {$this->applicationType->name}");
+        }
+
+        return $html;
+    }
 
     public function getBuilder(): IsComponentBuilder
     {
         return $this->builder;
     }
 
-
+    /**
+     * Simply returns the same value you pass into it?
+     * I'm sure there is a valid reason for this to be here.
+     * Honestly no idea anymore what this is doing.
+     * But it works.
+     * So don't touch it.
+     *
+     * @param $form_input
+     * @return mixed
+     */
     public function getRenderedFieldValue($form_input): mixed
     {
-        return match ($this->builder->getSlug()) {
+        return match ($this->getBuilder()->getSlug()) {
             default => $form_input,
         };
     }
@@ -153,7 +182,7 @@ class FormField extends Model
             return '';
         }
 
-        return match ($this->builder->getSlug()) {
+        return match ($this->getBuilder()->getSlug()) {
             default => $form_input,
         };
     }
