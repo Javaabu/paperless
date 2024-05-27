@@ -9,6 +9,7 @@ use Javaabu\Paperless\Support\Components\Traits\HasApiUrl;
 use Javaabu\Paperless\Support\Components\Traits\HasOptions;
 use Javaabu\Paperless\Support\Components\Traits\CanMultiSelect;
 use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
+use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 
 class ApiSelect extends Field implements Htmlable
 {
@@ -16,14 +17,13 @@ class ApiSelect extends Field implements Htmlable
     use HasApiUrl;
     use HasOptions;
     use HasPlaceholder;
+    use HasConditionalDisplay;
 
     protected string $view = 'paperless::field-components.api-select';
     protected string|Closure|null $name_field = 'name';
     protected Model|Closure|string|null $selected = null;
     protected array|Closure|null $filter_by = null;
     protected string|null $child = null;
-    protected string|null $conditional_on = null;
-    protected string|int|null $conditional_value = null;
 
     public function __construct(
         public string $name
@@ -87,28 +87,5 @@ class ApiSelect extends Field implements Htmlable
     public static function make(string $name): self
     {
         return new self($name);
-    }
-
-    public function conditionalOn($conditional_on, $conditional_value): self
-    {
-        $this->conditional_on = $conditional_on;
-        $this->conditional_value = $conditional_value;
-
-        return $this;
-    }
-
-    public function getConditionalOn(): ?string
-    {
-        return $this->conditional_on;
-    }
-
-    public function getConditionalValue(): int|string|null
-    {
-        return $this->conditional_value;
-    }
-
-    public function isConditional(): bool
-    {
-        return $this->conditional_on && $this->conditional_value;
     }
 }

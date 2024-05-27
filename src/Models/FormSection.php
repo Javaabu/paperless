@@ -15,6 +15,12 @@ class FormSection extends Model
 {
     use HasFactory;
 
+    public function casts(): array
+    {
+        return [
+            'meta' => 'array',
+        ];
+    }
 
     public function applicationType(): BelongsTo
     {
@@ -29,6 +35,12 @@ class FormSection extends Model
     public function fieldGroups(): HasMany
     {
         return $this->hasMany(FieldGroup::class);
+    }
+
+    public function isConditional(): bool
+    {
+        return data_get($this->meta, 'conditional_on', false)
+            && data_get($this->meta, 'conditional_value', false);
     }
 
     public function scopeWhereHasApplication($query, $application_id): void
@@ -76,8 +88,14 @@ class FormSection extends Model
             $form_section =
                 Section::make($this->name)
                        ->description($this->description)
-                       ->schema($fields_html) // Schema here just refers to the rendered HTML string for the FormFields
-                       ->toHtml();
+                       ->schema($fields_html); // Schema here just refers to the rendered HTML string for the FormFields
+
+            // If this whole section is conditional, then wrap it in a conditional display wrapper
+            if ($this->isConditional()) {
+                $form_section->conditionalOn($this->meta['conditional_on'], $this->meta['conditional_value']);
+            }
+
+            return $form_section->toHtml();
         } else {
             $form_section = $fields_html;
         }

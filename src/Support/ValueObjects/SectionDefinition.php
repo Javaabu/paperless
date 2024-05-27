@@ -2,8 +2,12 @@
 
 namespace Javaabu\Paperless\Support\ValueObjects;
 
+use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
+
 class SectionDefinition
 {
+    use HasConditionalDisplay;
+
     private string | null $label = null;
     private string | null $description = null;
     private array | null $fields = [];

@@ -8,6 +8,7 @@ use Javaabu\Paperless\Support\Components\Traits\CanBeRemoved;
 use Javaabu\Paperless\Support\Components\Traits\HasDescription;
 use Javaabu\Paperless\Support\Components\Traits\HasChildComponents;
 use Javaabu\Paperless\Support\Components\Traits\HasContainerAttributes;
+use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 
 class Section extends Component
 {
@@ -16,6 +17,7 @@ class Section extends Component
     use HasContainerAttributes;
     use HasDescription;
     use HasHeading;
+    use HasConditionalDisplay;
 
     protected string $view = 'paperless::view-components.section';
 

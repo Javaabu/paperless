@@ -1,19 +1,9 @@
-@if($isConditional())
-    <x-forms::conditional-wrapper reference="#{{ $getConditionalOn() }}" :values="$getConditionalValue()">
-        <x-forms::select2
-            :name="$getName()"
-            :options="$getOptions()"
-            :default="$getSelected()"
-            :ajax-url="$getApiUrl()"
-            :filter-field="$getFilterBy()"
-            :name-field="$getNameField()"
-            :required="$isMarkedAsRequired()"
-            :placeholder="$getPlaceholder() ?? ''"
-            :child="$getChild()"
-            inline
-        />
-    </x-forms::conditional-wrapper>
-@else
+<x-paperless::conditional-wrapper
+    :is-conditional="$isConditional()"
+    enable-elem="#{{ $getConditionalOn() }}"
+    :value="$getConditionalValue()"
+    :hide-fields="$isReversedConditional()"
+>
     <x-forms::select2
         :name="$getName()"
         :options="$getOptions()"
@@ -26,4 +16,4 @@
         :child="$getChild()"
         inline
     />
-@endif
+</x-paperless::conditional-wrapper>

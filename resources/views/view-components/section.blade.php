@@ -1,25 +1,32 @@
-<x-forms::card
-    id="{{ $getContainerId() }}"
-    class="{{ $getContainerClass() }}"
+<x-paperless::conditional-wrapper
+    :is-conditional="$isConditional()"
+    enable-elem="#{{ $getConditionalOn() }}"
+    :value="$getConditionalValue()"
+    :hide-fields="$isHiddenUntilSelect()"
 >
-    <x-slot name="header">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <div class="card-title">{{ $getHeading() }}</div>
-                @if ($getDescription())
-                    <div class="card-subtitle">{{ $getDescription() }}</div>
+    <x-forms::card
+        id="{{ $getContainerId() }}"
+        class="{{ $getContainerClass() }}"
+    >
+        <x-slot name="header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="card-title">{{ $getHeading() }}</div>
+                    @if ($getDescription())
+                        <div class="card-subtitle">{{ $getDescription() }}</div>
+                    @endif
+                </div>
+                @if ($getCanBeRemoved() && ! empty($getContainerId()))
+                    <div>
+                        <button data-remove-section="#{{ $getContainerId() }}" class="btn btn-danger">{{ __('Remove') }}</button>
+                    </div>
                 @endif
             </div>
-            @if ($getCanBeRemoved() && ! empty($getContainerId()))
-                <div>
-                    <button data-remove-section="#{{ $getContainerId() }}" class="btn btn-danger">{{ __('Remove') }}</button>
-                </div>
-            @endif
-        </div>
-    </x-slot>
+        </x-slot>
 
-    {!! $getChildComponents() !!}
-</x-forms::card>
+        {!! $getChildComponents() !!}
+    </x-forms::card>
+</x-paperless::conditional-wrapper>
 
 @pushonce('scripts')
     <script>

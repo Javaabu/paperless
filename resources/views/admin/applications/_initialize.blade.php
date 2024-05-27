@@ -38,26 +38,6 @@
                       :ajax-url="route('api.application-types.index')"
     />
 
-    {{--    <x-admin.input-group for="application_type"--}}
-    {{--                         :label="__('For which service are you applying?')"--}}
-    {{--                         required--}}
-    {{--    >--}}
-    {{--        @php--}}
-    {{--            $selected = \App\Models\ApplicationType::query()->find(request()->input('application_type'));--}}
-    {{--        @endphp--}}
-    {{--        <x-admin.child-selector--}}
-    {{--            required--}}
-    {{--            extra-classes="applicant-selector"--}}
-    {{--            filter-field="applicant_type"--}}
-    {{--            :hide-child="true"--}}
-    {{--            name="application_type"--}}
-    {{--            :placeholder="__('Select A Application Type')"--}}
-    {{--            :selected="$selected"--}}
-    {{--            :ajax-url="route('api.application-types.index')"--}}
-    {{--        />--}}
-    {{--    </x-admin.input-group>--}}
-
-
     <x-forms::button-group :inline="true">
         <x-forms::submit color="success" class="btn--icon-text btn--raised">
             {{ __('Continue') }}<i class="ml-2 zmdi zmdi-arrow-right"></i>

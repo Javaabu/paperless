@@ -86,6 +86,7 @@ class CreatePaperlessMigrationsTable extends Migration
             $table->integer('order_column');
             $table->foreignId('application_type_id')->constrained('application_types')->cascadeOnDelete();
             $table->boolean('is_admin_section')->default(false);
+            $table->json('meta')->nullable();
             $table->timestamps();
         });
 

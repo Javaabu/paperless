@@ -51,8 +51,14 @@ class CreateFormFieldsAction
     public function seedSection(
         ApplicationType   $application_type,
         SectionDefinition $section_definition,
-        int|null          $section_order = null
-    ): FormSection {
+        int | null        $section_order = null
+    ): FormSection
+    {
+        $meta = [
+            'conditional_on'    => $section_definition->getConditionalOn(),
+            'conditional_value' => $section_definition->getConditionalValue(),
+        ];
+
         return FormSection::updateOrCreate([
             'slug' => $section_definition->getSlug(),
         ], [
@@ -61,6 +67,7 @@ class CreateFormFieldsAction
             'description'         => $section_definition->getDescription(),
             'application_type_id' => $application_type->id,
             'is_admin_section'    => $section_definition->getIsAdminSection(),
+            'meta'                => $meta,
         ]);
     }
 
@@ -68,8 +75,9 @@ class CreateFormFieldsAction
         ApplicationType      $application_type,
         FormSection          $form_section,
         FieldGroupDefinition $field_group_definition,
-        int|null             $group_order = null
-    ): FieldGroup {
+        int | null           $group_order = null
+    ): FieldGroup
+    {
         $meta = [
             'add_more_button' => $field_group_definition->getAddMoreButton(),
         ];
@@ -87,12 +95,13 @@ class CreateFormFieldsAction
     }
 
     public function seedField(
-        ApplicationType $application_type,
-        FormSection     $form_section,
-        FieldDefinition $field_definition,
-        FieldGroup|null $field_group = null,
-        int|null        $field_order = null
-    ): void {
+        ApplicationType   $application_type,
+        FormSection       $form_section,
+        FieldDefinition   $field_definition,
+        FieldGroup | null $field_group = null,
+        int | null        $field_order = null
+    ): void
+    {
         $meta = [
             'child'                => $field_definition->getChild(),
             'helper_for'           => $field_definition->getHelperForId(),

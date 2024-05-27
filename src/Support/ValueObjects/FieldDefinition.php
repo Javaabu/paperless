@@ -3,10 +3,12 @@
 namespace Javaabu\Paperless\Support\ValueObjects;
 
 use Javaabu\Paperless\Support\ValueObjects\Traits\HasApiHelperFields;
+use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 
 class FieldDefinition
 {
     use HasApiHelperFields;
+    use HasConditionalDisplay;
 
     private string | null $label = null;
     private int | null $order_column = null;
@@ -17,9 +19,6 @@ class FieldDefinition
     private bool $is_required = false;
     private string | null $additional_validation_rules = '';
     private string | null $options = '';
-    private string | null $conditional_on = '';
-    private string | int | null $conditional_value = '';
-
 
     public function __construct(
         private readonly ?string $slug,
@@ -118,23 +117,5 @@ class FieldDefinition
     public function getIsRequired(): string
     {
         return $this->is_required;
-    }
-
-    public function conditionalOn($field, $value): self
-    {
-        $this->conditional_on = $field;
-        $this->conditional_value = $value;
-
-        return $this;
-    }
-
-    public function getConditionalOn(): ?string
-    {
-        return $this->conditional_on;
-    }
-
-    public function getConditionalValue(): int|string|null
-    {
-        return $this->conditional_value;
     }
 }
