@@ -109,7 +109,6 @@ class ApiSelect extends Field implements Htmlable
 
     public function isConditional(): bool
     {
-        return $this->conditional_on
-            && $this->conditional_value;
+        return $this->conditional_on && $this->conditional_value;
     }
 }

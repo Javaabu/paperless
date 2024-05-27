@@ -134,12 +134,10 @@ class FormField extends Model
 
         $form_input = $this->getRenderedFieldValue($form_input);
 
-        info("paperless:models:form_field:render -> {$this->getBuilder()?->getSlug()}");
-
         $html = $this->getBuilder()?->render($form_input, ...$parameters);
 
-        // TODO: I'll find out if this breaks things soon enough
         if (! filled($html)) {
+            info("paperless:models:form_field:failed-render -> {$this->getBuilder()?->getSlug()}");
             throw new \Exception("Nothing was rendered for this FormField -> {$this->slug} on ApplicationType -> {$this->applicationType->name}");
         }
 
