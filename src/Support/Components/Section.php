@@ -14,10 +14,10 @@ class Section extends Component
 {
     use CanBeRemoved;
     use HasChildComponents;
+    use HasConditionalDisplay;
     use HasContainerAttributes;
     use HasDescription;
     use HasHeading;
-    use HasConditionalDisplay;
 
     protected string $view = 'paperless::view-components.section';
 
