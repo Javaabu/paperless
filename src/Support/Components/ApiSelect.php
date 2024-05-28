@@ -15,9 +15,9 @@ class ApiSelect extends Field implements Htmlable
 {
     use CanMultiSelect;
     use HasApiUrl;
+    use HasConditionalDisplay;
     use HasOptions;
     use HasPlaceholder;
-    use HasConditionalDisplay;
 
     protected string $view = 'paperless::field-components.api-select';
     protected string|Closure|null $name_field = 'name';
