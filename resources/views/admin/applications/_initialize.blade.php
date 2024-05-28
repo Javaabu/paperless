@@ -12,8 +12,12 @@
                       :options="$options"/>
 
 
-    <x-forms::conditional-wrapper reference="#applicant_type"
-                                  :values="$individual_entity_id">
+    <x-forms::conditional-wrapper
+        class="mb-5"
+        enable-elem="#applicant_type"
+        :enable-value="$individual_entity_id"
+        :hide-fields="true"
+    >
         <x-forms::select2
             name="applicant"
             :is-ajax="true"
