@@ -9,7 +9,7 @@
         :options="$getOptions()"
         :default="$getSelected()"
         :ajax-url="$getApiUrl()"
-        :filter-field="$getFilterBy()"
+        :filter-field="$getFilterBy() ? $getFilterBy() : 'name'"
         :name-field="$getNameField()"
         :required="$isMarkedAsRequired()"
         :placeholder="$getPlaceholder() ?? ''"

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Support\Htmlable;
 use Javaabu\Paperless\Support\Components\Traits\HasApiUrl;
 use Javaabu\Paperless\Support\Components\Traits\HasOptions;
+use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
 use Javaabu\Paperless\Support\Components\Traits\CanMultiSelect;
 use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
 use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
@@ -18,6 +19,7 @@ class ApiSelect extends Field implements Htmlable
     use HasConditionalDisplay;
     use HasOptions;
     use HasPlaceholder;
+    use CanBeRepeated;
 
     protected string $view = 'paperless::field-components.api-select';
     protected string|Closure|null $name_field = 'name';
@@ -63,7 +65,12 @@ class ApiSelect extends Field implements Htmlable
 
     public function getFilterBy(): null|array|string
     {
+
         $evaluated = $this->evaluate($this->filter_by);
+
+        if (is_null($evaluated)) {
+            return null;
+        }
 
         if (count($evaluated) === 1) {
             return $evaluated[0];
