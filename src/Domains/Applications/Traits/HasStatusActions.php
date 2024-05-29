@@ -31,7 +31,9 @@ trait HasStatusActions
 
         $service_class_instance = (new ($this->applicationType->getServiceClass()));
         if (method_exists($service_class_instance, $function_name)) {
-            return $service_class_instance->$function_name($this);
+            $fresh_application = $this->fresh();
+
+            return $service_class_instance->$function_name($fresh_application);
         }
 
         return null;
