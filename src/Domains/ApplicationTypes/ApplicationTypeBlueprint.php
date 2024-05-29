@@ -53,4 +53,28 @@ abstract class ApplicationTypeBlueprint implements IsAnApplicationType
 
         return null;
     }
+
+    public function getExtraBladeViewsToRender(string $page_name): array
+    {
+        return match ($page_name) {
+            'summary' => $this->extraBladeViewsToRenderForSummary(),
+            'details' => $this->extraBladeViewsToRenderForDetails(),
+            'history' => $this->extraBladeViewsToRenderForHistory(),
+        };
+    }
+
+    public function extraBladeViewsToRenderForSummary(): array
+    {
+        return [];
+    }
+
+    public function extraBladeViewsToRenderForDetails(): array
+    {
+        return [];
+    }
+
+    public function extraBladeViewsToRenderForHistory(): array
+    {
+        return [];
+    }
 }

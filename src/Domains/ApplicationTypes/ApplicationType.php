@@ -250,7 +250,6 @@ class ApplicationType extends Model implements AdminModel, HasMedia
 
     }
 
-
     public function requiresPayment(): bool
     {
         $this->loadMissing('services');
