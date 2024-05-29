@@ -45,10 +45,10 @@ class FormField extends Model
         return $this->belongsTo(ApplicationType::class);
     }
 
-    public function validationRules(ApplicationType $application_type, Applicant $applicant, string $applicant_type, ?array $request_data = []): array
+    public function validationRules(ApplicationType $application_type, Applicant $applicant, string $applicant_type, ?array $request_data = [], ?int $iteration = null) : array
     {
-        $default_validation_rules = $this->getDefaultValidationRules($applicant, $request_data);
-        $additional_validation_rules = $this->getAdditionalValidationRules($application_type, $applicant, $applicant_type, $request_data);
+        $default_validation_rules = $this->getDefaultValidationRules($applicant, $request_data, $iteration);
+        $additional_validation_rules = $this->getAdditionalValidationRules($application_type, $applicant, $applicant_type, $request_data, $iteration);
 
         foreach ($default_validation_rules as $key => $value) {
             if ($key == $this->slug) {
@@ -63,7 +63,7 @@ class FormField extends Model
         return $default_validation_rules;
     }
 
-    public function getAdditionalValidationRules(ApplicationType $application_type, Applicant $applicant, string $applicant_type, ?array $request_data = []): array
+    public function getAdditionalValidationRules(ApplicationType $application_type, Applicant $applicant, string $applicant_type, ?array $request_data = [], ?int $iteration = null): array
     {
         $additional_rules = [];
 
@@ -114,9 +114,9 @@ class FormField extends Model
         return $additional_validation_rules;
     }
 
-    public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = []): array
+    public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = [], ?int $iteration = null): array
     {
-        return $this->getBuilder()->getValidationRules($applicant, $request_data);
+        return $this->getBuilder()->getValidationRules($applicant, $request_data, $iteration);
     }
 
     /**

@@ -31,7 +31,7 @@ class EmailInputBuilder extends ComponentBuilder implements IsComponentBuilder
                         ->toHtml();
     }
 
-    public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = []): array
+    public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = [], ?int $iteration = null): array
     {
         $is_required = $this->form_field->is_required ? 'required' : 'nullable';
 

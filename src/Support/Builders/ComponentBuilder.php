@@ -22,7 +22,7 @@ abstract class ComponentBuilder
         return [];
     }
 
-    public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = []): array
+    public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = [], ?int $iteration = null): array
     {
         $is_required = $this->form_field->is_required ? 'required' : 'nullable';
 
@@ -31,9 +31,9 @@ abstract class ComponentBuilder
         ];
     }
 
-    public function getValidationRules(Applicant $applicant, ?array $request_data = []): array
+    public function getValidationRules(Applicant $applicant, ?array $request_data = [], ?int $iteration): array
     {
-        $rules = $this->getDefaultValidationRules($applicant, $request_data);
+        $rules = $this->getDefaultValidationRules($applicant, $request_data, $iteration);
 
         if ($this->form_field->field_group_id) {
             return $rules;

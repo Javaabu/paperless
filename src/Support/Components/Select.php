@@ -42,14 +42,14 @@ class Select extends Field implements Htmlable
         return $this->child ?? '';
     }
 
-    public function withHiddenInputHelpers()
+    public function withHiddenInputHelpers(): static
     {
         $this->with_hidden_input_helpers = true;
 
         return $this;
     }
 
-    public function getHiddenInputHelperClassName()
+    public function getHiddenInputHelperClassName(): ?string
     {
         if ($this->with_hidden_input_helpers) {
             return $this->name . '_helpers';

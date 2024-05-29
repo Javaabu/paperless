@@ -19,7 +19,7 @@ class SelectBuilder extends ComponentBuilder implements IsComponentBuilder
                      ->toHtml();
     }
 
-    public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = []): array
+    public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = [], ?int $iteration = null): array
     {
         $field_options = $this->form_field->type?->getSelectOptions($this->form_field) ?? [];
         $allowed_values = array_keys($field_options);
