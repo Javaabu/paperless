@@ -413,13 +413,18 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         });
     }
 
-    public function getFormInputValueForField(string $field_name): ?string
+    public function getFormInputForField(string $field_name): ?FormInput
     {
         return $this->formInputs()
                     ->whereHas('formField', function ($query) use ($field_name) {
                         $query->where('slug', $field_name);
                     })
-                    ->first()?->value;
+                    ->first();
+    }
+
+    public function getFormInputValueForField(string $field_name): ?string
+    {
+        return $this->getFormInputForField($field_name)?->value;
     }
 
     public function getFormInputsForAllFieldGroups(): array
