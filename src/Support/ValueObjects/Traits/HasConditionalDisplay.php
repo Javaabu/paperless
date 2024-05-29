@@ -5,7 +5,7 @@ namespace Javaabu\Paperless\Support\ValueObjects\Traits;
 trait HasConditionalDisplay
 {
     private string | null $conditional_on = '';
-    private string | int | null $conditional_value = '';
+    private string | int | bool | null $conditional_value = '';
 
     private bool $conditional_hidden = false;
 
@@ -25,6 +25,10 @@ trait HasConditionalDisplay
 
     public function getConditionalValue(): int | string | null
     {
+        if ($this->conditional_value === 1) {
+            return true;
+        }
+
         return $this->conditional_value;
     }
 
