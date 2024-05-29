@@ -95,7 +95,7 @@ class FormSection extends Model
                 $form_section->conditionalOn($this->meta['conditional_on'], $this->meta['conditional_value']);
             }
 
-            return $form_section->toHtml();
+            $form_section =  $form_section->toHtml();
         } else {
             $form_section = $fields_html;
         }
