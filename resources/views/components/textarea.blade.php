@@ -34,8 +34,8 @@
         ], $customAttribs);
 
 
-    $attributes_builder = (new \App\Helpers\FormBuilder\HtmlBuilder())->attributes($attribs);
-    $element_attributes = new \Illuminate\Support\HtmlString($attributes_builder);
+    $extra_attributes = (new \Javaabu\Paperless\Support\HtmlBuilder())->attributes($attribs);
+    $element_attributes = new \Illuminate\Support\HtmlString($extra_attributes);
 @endphp
 
 <div class="form-group w-100">

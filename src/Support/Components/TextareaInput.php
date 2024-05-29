@@ -4,10 +4,12 @@ namespace Javaabu\Paperless\Support\Components;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Javaabu\Paperless\Support\Components\Traits\HasInputType;
+use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
 use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
 
-class Textarea extends Field implements Htmlable
+class TextareaInput extends Field implements Htmlable
 {
+    use CanBeRepeated;
     use HasInputType;
     use HasPlaceholder;
 
