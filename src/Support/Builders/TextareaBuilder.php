@@ -3,8 +3,8 @@
 namespace Javaabu\Paperless\Support\Builders;
 
 use Javaabu\Paperless\Interfaces\Applicant;
-use Javaabu\Paperless\Support\Components\TextareaInput;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
+use Javaabu\Paperless\Support\Components\TextareaInput;
 use Javaabu\Paperless\Support\Components\RepeatingGroup;
 
 class TextareaBuilder extends ComponentBuilder implements IsComponentBuilder
@@ -18,13 +18,13 @@ class TextareaBuilder extends ComponentBuilder implements IsComponentBuilder
                             ->markAsRequired($this->form_field->is_required)
                             ->state($input)
                             ->repeatingGroup(function () {
-                           if ($this->form_field->field_group_id) {
-                               return RepeatingGroup::make($this->form_field->fieldGroup->name)
-                                                    ->id($this->form_field->fieldGroup->slug);
-                           }
+                                if ($this->form_field->field_group_id) {
+                                    return RepeatingGroup::make($this->form_field->fieldGroup->name)
+                                                         ->id($this->form_field->fieldGroup->slug);
+                                }
 
-                           return null;
-                       })
+                                return null;
+                            })
                        ->repeatingInstance($instance)
                        ->toHtml();
     }

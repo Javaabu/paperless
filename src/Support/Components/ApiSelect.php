@@ -14,12 +14,12 @@ use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 
 class ApiSelect extends Field implements Htmlable
 {
+    use CanBeRepeated;
     use CanMultiSelect;
     use HasApiUrl;
     use HasConditionalDisplay;
     use HasOptions;
     use HasPlaceholder;
-    use CanBeRepeated;
 
     protected string $view = 'paperless::field-components.api-select';
     protected string|Closure|null $name_field = 'name';

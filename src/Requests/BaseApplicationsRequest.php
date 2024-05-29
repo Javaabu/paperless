@@ -50,7 +50,7 @@ abstract class BaseApplicationsRequest extends FormRequest
          */
         foreach ($application_type->formSections as $section) {
             // Get the form fields that do not belong to any field group.
-            $fields = $section->formFields->filter(fn($field) => ! $field->field_group_id);
+            $fields = $section->formFields->filter(fn ($field) => ! $field->field_group_id);
 
             /**
              * Loop through each field to get its validation rules and merge them into the rules array.
@@ -62,7 +62,7 @@ abstract class BaseApplicationsRequest extends FormRequest
             }
 
             // Get the form fields that belong to field groups and group them by their field group ID.
-            $grouped_fields = $section->formFields->filter(fn($field) => $field->field_group_id)->groupBy('field_group_id');
+            $grouped_fields = $section->formFields->filter(fn ($field) => $field->field_group_id)->groupBy('field_group_id');
 
             // Loop through each field group.
             foreach ($grouped_fields as $group_id => $group_fields) {

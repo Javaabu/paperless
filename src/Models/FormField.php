@@ -45,7 +45,7 @@ class FormField extends Model
         return $this->belongsTo(ApplicationType::class);
     }
 
-    public function validationRules(ApplicationType $application_type, Applicant $applicant, string $applicant_type, ?array $request_data = [], ?int $iteration = null) : array
+    public function validationRules(ApplicationType $application_type, Applicant $applicant, string $applicant_type, ?array $request_data = [], ?int $iteration = null): array
     {
         $default_validation_rules = $this->getDefaultValidationRules($applicant, $request_data, $iteration);
         $additional_validation_rules = $this->getAdditionalValidationRules($application_type, $applicant, $applicant_type, $request_data, $iteration);
