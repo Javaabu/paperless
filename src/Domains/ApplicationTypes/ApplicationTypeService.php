@@ -20,7 +20,9 @@ abstract class ApplicationTypeService implements IsAnApplicationTypeService
     {
         $service_classes = (new GetClassesInDirectory())->handle(config('paperless.services.path'), config('paperless.services.namespace'));
         foreach ($service_classes as $service_class) {
+            /** @var ApplicationTypeBlueprint $application_type_class */
             $application_type_class = $service_class::getApplicationTypeClass();
+
             if ((new $application_type_class())->getCode() === $application_type->code) {
                 return new $service_class();
             }
