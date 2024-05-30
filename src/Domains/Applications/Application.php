@@ -29,11 +29,13 @@ use Javaabu\Paperless\StatusActions\Statuses\Verified;
 use Javaabu\Paperless\StatusActions\Statuses\Cancelled;
 use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
 use Javaabu\Paperless\Domains\Applications\Traits\HasStatusActions;
 use Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses;
 use Javaabu\Paperless\Exceptions\ApplicationStatusEnumDoesNotImplement;
+use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypeBlueprint;
 use Javaabu\Paperless\Domains\Applications\Enums\IsApplicationStatusesEnum;
 
 class Application extends Model implements HasMedia, Trackable, AdminModel, ApplicationContract
@@ -197,6 +199,22 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         $query->where('status', $this->getApplicationStatusEnum()::Cancelled);
     }
 
+    /**
+     * Scope to find applications filtered to a specific application type.
+     *
+     * @param  Builder  $query
+     * @param  string   $application_type_class
+     * @return Builder
+     */
+    public function scopeForApplicationType(Builder $query, string $application_type_class): Builder
+    {
+        /** @var ApplicationTypeBlueprint $application_type_class_instance */
+        $application_type_class_instance = new $application_type_class;
+        $application_type = ApplicationType::where('code', $application_type_class_instance->getCode())->first();
+
+        return $query->where('application_type_id', $application_type->id);
+    }
+
     public function formattedId(): Attribute
     {
         return Attribute::get(function () {
@@ -296,10 +314,11 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
     }
 
     public function renderDocuments(
-        Collection|null $documents = null,
-        Collection|null $uploaded_documents = null,
-        string|null     $section_label = null
-    ) {
+        Collection | null $documents = null,
+        Collection | null $uploaded_documents = null,
+        string | null     $section_label = null
+    )
+    {
         $documents_html = "";
         if ($documents) {
             foreach ($documents as $document) {
