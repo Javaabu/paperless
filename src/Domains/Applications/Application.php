@@ -209,7 +209,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
     public function scopeForApplicationType(Builder $query, string $application_type_class): Builder
     {
         /** @var ApplicationTypeBlueprint $application_type_class_instance */
-        $application_type_class_instance = new $application_type_class;
+        $application_type_class_instance = new $application_type_class();
         $application_type = ApplicationType::where('code', $application_type_class_instance->getCode())->first();
 
         return $query->where('application_type_id', $application_type->id);
@@ -317,8 +317,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         Collection | null $documents = null,
         Collection | null $uploaded_documents = null,
         string | null     $section_label = null
-    )
-    {
+    ) {
         $documents_html = "";
         if ($documents) {
             foreach ($documents as $document) {
