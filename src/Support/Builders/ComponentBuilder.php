@@ -90,9 +90,11 @@ abstract class ComponentBuilder
 
     public function renderInfoList(FormField $form_field, $value = null): string
     {
+        $config_admin_model = config('paperless.models.admin');
+
         return TextEntry::make($form_field->name)
                         ->markAsRequired($form_field->is_required)
-                        ->value($this->getValueForInfo($value, true))
+                        ->value($this->getValueForInfo($value, auth()->user() instanceof $config_admin_model))
                         ->toHtml();
     }
 
