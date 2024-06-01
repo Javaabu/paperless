@@ -5,7 +5,9 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Verified;
+use Javaabu\Paperless\Events\UpdatedApplicationStatus;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Events\UpdatingApplicationStatus;
 
 class ApproveTransition extends Transition
 {
@@ -19,6 +21,8 @@ class ApproveTransition extends Transition
     {
         $this->application->callServiceFunction('doBeforeApproval');
 
+        UpdatingApplicationStatus::dispatch($this->application);
+
         $this->application->status = new Approved($this->application);
         $this->application->approvedBy()->associate(auth()->user());
         $this->application->approved_at = now();
@@ -30,6 +34,9 @@ class ApproveTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterApproval');
+
+        // Give a fresh instance of the application as at this point, things would have changed.
+        UpdatedApplicationStatus::dispatch($this->application->fresh());
 
         return $this->application;
     }

@@ -5,7 +5,9 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 use Exception;
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
+use Javaabu\Paperless\Events\UpdatedApplicationStatus;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Events\UpdatingApplicationStatus;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\StatusActions\Actions\CheckPresenceOfRequiredFields;
@@ -39,6 +41,8 @@ class SubmitTransition extends Transition
 
         $this->application->callServiceFunction('doBeforeSubmitting');
 
+        UpdatingApplicationStatus::dispatch($this->application);
+
         $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
         $this->application->status = new PendingVerification($this->application);
         $this->application->submitted_at = now();
@@ -51,6 +55,9 @@ class SubmitTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterSubmitting');
+
+        // Give a fresh instance of the application as at this point, things would have changed.
+        UpdatedApplicationStatus::dispatch($this->application->fresh());
 
         return $this->application;
     }

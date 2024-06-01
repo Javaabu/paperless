@@ -4,7 +4,9 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Verified;
+use Javaabu\Paperless\Events\UpdatedApplicationStatus;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Events\UpdatingApplicationStatus;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 
 class VerifyTransition extends Transition
@@ -19,6 +21,8 @@ class VerifyTransition extends Transition
     {
         $this->application->callServiceFunction('doBeforeMarkingAsVerified');
 
+        UpdatingApplicationStatus::dispatch($this->application);
+
         $this->application->status = new Verified($this->application);
         $this->application->verifiedBy()->associate(auth()->user());
         $this->application->verified_at = now();
@@ -30,6 +34,9 @@ class VerifyTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsVerified');
+
+        // Give a fresh instance of the application as at this point, things would have changed.
+        UpdatedApplicationStatus::dispatch($this->application->fresh());
 
         return $this->application;
     }

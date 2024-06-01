@@ -4,7 +4,9 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Rejected;
+use Javaabu\Paperless\Events\UpdatedApplicationStatus;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Events\UpdatingApplicationStatus;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 
 class RejectTransition extends Transition
@@ -19,6 +21,8 @@ class RejectTransition extends Transition
     {
         $this->application->callServiceFunction('doBeforeMarkingAsRejected');
 
+        UpdatingApplicationStatus::dispatch($this->application);
+
         $this->application->status = new Rejected($this->application);
         $this->application->verifiedBy()->associate(auth()->user());
         $this->application->verified_at = now();
@@ -31,6 +35,9 @@ class RejectTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterMarkingAsRejected');
+
+        // Give a fresh instance of the application as at this point, things would have changed.
+        UpdatedApplicationStatus::dispatch($this->application->fresh());
 
         return $this->application;
     }

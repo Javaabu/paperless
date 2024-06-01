@@ -4,7 +4,9 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Exception;
 use Spatie\ModelStates\Transition;
+use Javaabu\Paperless\Events\UpdatedApplicationStatus;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Events\UpdatingApplicationStatus;
 use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
@@ -17,9 +19,10 @@ class ResubmitTransition extends Transition
     protected CheckPresenceOfRequiredFields $check_presence_of_required_fields;
 
     public function __construct(
-        public Application $application,
+        public Application   $application,
         public string | null $remarks = null,
-    ) {
+    )
+    {
         $this->check_presence_of_required_documents = app(CheckPresenceOfRequiredDocuments::class);
         $this->check_presence_of_required_fields = app(CheckPresenceOfRequiredFields::class);
     }
@@ -39,6 +42,8 @@ class ResubmitTransition extends Transition
 
         $this->application->callServiceFunction('doBeforeResubmitting');
 
+        UpdatingApplicationStatus::dispatch($this->application);
+
         $application_eta_days = $this->application?->applicationType?->eta_duration ?? 0;
         $this->application->status = new PendingVerification($this->application);
         $this->application->verifiedBy()->dissociate();
@@ -52,6 +57,9 @@ class ResubmitTransition extends Transition
         );
 
         $this->application->callServiceFunction('doAfterResubmitting');
+
+        // Give a fresh instance of the application as at this point, things would have changed.
+        UpdatedApplicationStatus::dispatch($this->application->fresh());
 
         return $this->application;
     }
