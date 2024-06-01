@@ -49,7 +49,7 @@ class SubmitTransition extends Transition
         $this->application->eta_at = now()->addDays($application_eta_days);
         $this->application->save();
 
-        $this->application->createStatusEvent(
+        $status_event = $this->application->createStatusEvent(
             new PendingVerification($this->application),
             $this->remarks ?? (new PendingVerification($this->application))->getRemarks()
         );
@@ -57,7 +57,7 @@ class SubmitTransition extends Transition
         $this->application->callServiceFunction('doAfterSubmitting');
 
         // Give a fresh instance of the application as at this point, things would have changed.
-        UpdatedApplicationStatus::dispatch($this->application->fresh());
+        UpdatedApplicationStatus::dispatch($this->application->fresh(), $status_event);
 
         return $this->application;
     }

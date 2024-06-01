@@ -28,7 +28,7 @@ class VerifyTransition extends Transition
         $this->application->verified_at = now();
         $this->application->save();
 
-        $this->application->createStatusEvent(
+        $status_event = $this->application->createStatusEvent(
             new Verified($this->application),
             $this->remarks ?? (new Verified($this->application))->getRemarks()
         );
@@ -36,7 +36,7 @@ class VerifyTransition extends Transition
         $this->application->callServiceFunction('doAfterMarkingAsVerified');
 
         // Give a fresh instance of the application as at this point, things would have changed.
-        UpdatedApplicationStatus::dispatch($this->application->fresh());
+        UpdatedApplicationStatus::dispatch($this->application->fresh(), $status_event);
 
         return $this->application;
     }

@@ -2,11 +2,13 @@
 
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
+use Javaabu\Paperless\Notifications\Traits\SendsApplicationNotifications;
 use Javaabu\Paperless\Domains\ApplicationTypes\Traits\SeedsApplicationTypes;
 
 abstract class ApplicationTypeBlueprint implements IsAnApplicationType
 {
     use SeedsApplicationTypes;
+    use SendsApplicationNotifications;
 
     public int $eta_duration = 5;
 

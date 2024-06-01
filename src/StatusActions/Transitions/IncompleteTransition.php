@@ -29,7 +29,7 @@ class IncompleteTransition extends Transition
         $this->application->eta_at = null;
         $this->application->save();
 
-        $this->application->createStatusEvent(
+        $status_event = $this->application->createStatusEvent(
             new Incomplete($this->application),
             $this->remarks ?? (new Incomplete($this->application))->getRemarks()
         );
@@ -37,7 +37,7 @@ class IncompleteTransition extends Transition
         $this->application->callServiceFunction('doAfterMarkingAsIncomplete');
 
         // Give a fresh instance of the application as at this point, things would have changed.
-        UpdatedApplicationStatus::dispatch($this->application->fresh());
+        UpdatedApplicationStatus::dispatch($this->application->fresh(), $status_event);
 
         return $this->application;
     }

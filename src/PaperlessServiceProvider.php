@@ -4,16 +4,15 @@ namespace Javaabu\Paperless;
 
 use Route;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
-use Javaabu\StatusEvents\Models\StatusEvent;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Javaabu\Paperless\Providers\EventServiceProvider;
 use Javaabu\Paperless\Routing\PaperlessRouteModelFinder;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
 use Illuminate\Contracts\Container\BindingResolutionException;
+use Javaabu\Paperless\Support\StatusEvents\Models\StatusEvent;
 use Javaabu\Paperless\Console\Commands\PaperlessInstallCommand;
 use Javaabu\Paperless\Exceptions\PolicyModelClassesNotConfigured;
 use Javaabu\Paperless\Middleware\OverridePaperlessComponentViews;
