@@ -10,6 +10,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 use Javaabu\StatusEvents\Models\StatusEvent;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Javaabu\Paperless\Providers\EventServiceProvider;
 use Javaabu\Paperless\Routing\PaperlessRouteModelFinder;
 use Javaabu\Paperless\Console\Commands\PaperlessTestCommand;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -38,6 +39,8 @@ class PaperlessServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'paperless');
+
+        $this->app->register(EventServiceProvider::class);
 
         $this->ensureStorageDiskForUploadsInitialized();
 
