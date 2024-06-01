@@ -4,6 +4,7 @@ namespace Javaabu\Paperless\Notifications\Traits;
 
 use Illuminate\Support\Arr;
 use Javaabu\Paperless\Support\StatusEvents\Models\StatusEvent;
+
 ;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypeBlueprint;
@@ -42,7 +43,7 @@ trait SendsApplicationNotifications
             =>
                 function (Application $application, StatusEvent $statusEvent, ApplicationTypeBlueprint $applicationType) {
                     return [
-                        $application, $statusEvent, $applicationType
+                        $application, $statusEvent, $applicationType,
                     ];
                 },
             // Add more closures here
@@ -50,7 +51,7 @@ trait SendsApplicationNotifications
 
         $parameter_closure = $parameter_mapping[$notification_class];
 
-        if ( ! $parameter_closure instanceof \Closure) {
+        if (! $parameter_closure instanceof \Closure) {
             return Arr::wrap($parameter_closure);
         }
 

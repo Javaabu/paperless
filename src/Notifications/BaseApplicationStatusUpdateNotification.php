@@ -4,13 +4,13 @@ namespace Javaabu\Paperless\Notifications;
 
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Support\StatusEvents\Models\StatusEvent;
+
 ;
 use Illuminate\Notifications\Messages\MailMessage;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Support\Notifications\Markdown\Tables\Alignments;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypeBlueprint;
 use Javaabu\Paperless\Support\Notifications\Markdown\Tables\MarkdownRenderer;
-
 
 abstract class BaseApplicationStatusUpdateNotification extends QuickNotification
 {
@@ -19,8 +19,7 @@ abstract class BaseApplicationStatusUpdateNotification extends QuickNotification
         public StatusEvent              $statusEvent,
         public ApplicationTypeBlueprint $applicationType,
         public bool                     $should_render_details_table = true,
-    )
-    {
+    ) {
     }
 
     protected function getSubject($notifiable): string
@@ -59,11 +58,11 @@ abstract class BaseApplicationStatusUpdateNotification extends QuickNotification
     protected function getMessageParams($notifiable): array
     {
         return [
-            'application_no' => $this->application->formatted_id,
+            'application_no'   => $this->application->formatted_id,
             'application_type' => $this->applicationType->getName(),
-            'new_status'     => $this->statusEvent->getStatusClass()->getLabel(),
-            'remarks'        => $this->getRemarks(),
-            'rating'         => $this->application->star_rating,
+            'new_status'       => $this->statusEvent->getStatusClass()->getLabel(),
+            'remarks'          => $this->getRemarks(),
+            'rating'           => $this->application->star_rating,
         ];
     }
 
@@ -86,7 +85,7 @@ abstract class BaseApplicationStatusUpdateNotification extends QuickNotification
     {
         $name = $notifiable->name;
 
-        $mail = (new MailMessage)
+        $mail = (new MailMessage())
             ->subject($this->getSubject($notifiable))
             ->greeting("Hi $name,");
 
@@ -116,6 +115,7 @@ abstract class BaseApplicationStatusUpdateNotification extends QuickNotification
 
         // unpack the array directly to the constructor
         $renderer = new MarkdownRenderer(...$data);
+
         return $renderer->render();
     }
 

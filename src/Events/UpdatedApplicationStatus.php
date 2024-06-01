@@ -10,7 +10,9 @@ use Javaabu\Paperless\Support\StatusEvents\Models\StatusEvent;
 
 class UpdatedApplicationStatus
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * Create a new event instance.
@@ -18,5 +20,6 @@ class UpdatedApplicationStatus
     public function __construct(
         public Application $application,
         public StatusEvent $statusEvent,
-    ) {}
+    ) {
+    }
 }

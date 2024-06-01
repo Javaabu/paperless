@@ -21,8 +21,7 @@ class ResubmitTransition extends Transition
     public function __construct(
         public Application   $application,
         public string | null $remarks = null,
-    )
-    {
+    ) {
         $this->check_presence_of_required_documents = app(CheckPresenceOfRequiredDocuments::class);
         $this->check_presence_of_required_fields = app(CheckPresenceOfRequiredFields::class);
     }

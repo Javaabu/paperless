@@ -9,12 +9,15 @@ use Javaabu\Paperless\Domains\Applications\Application;
 
 class UpdatingApplicationStatus
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     /**
      * Create a new event instance.
      */
     public function __construct(
         public Application $application,
-    ) {}
+    ) {
+    }
 }
