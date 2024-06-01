@@ -2,6 +2,7 @@
 
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
+use Exception;
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
@@ -23,9 +24,11 @@ class ResubmitTransition extends Transition
         $this->check_presence_of_required_fields = app(CheckPresenceOfRequiredFields::class);
     }
 
+    /**
+     * @throws Exception
+     */
     public function handle(): Application
     {
-
         if (! $this->check_presence_of_required_fields->handle($this->application)) {
             throw new InvalidOperationException('Cannot submit the application request. Please fill all the required fields.');
         }

@@ -2,6 +2,7 @@
 
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
+use Exception;
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
 use Javaabu\Paperless\Domains\Applications\Application;
@@ -23,6 +24,9 @@ class SubmitTransition extends Transition
         $this->check_presence_of_required_fields = app(CheckPresenceOfRequiredFields::class);
     }
 
+    /**
+     * @throws Exception
+     */
     public function handle(): Application
     {
         if (! $this->check_presence_of_required_fields->handle($this->application)) {
