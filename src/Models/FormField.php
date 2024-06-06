@@ -3,9 +3,11 @@
 namespace Javaabu\Paperless\Models;
 
 use Exception;
+use Spatie\MediaLibrary\HasMedia;
 use Javaabu\Paperless\Enums\Languages;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Interfaces\Applicant;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Javaabu\Paperless\Domains\Applications\Application;
@@ -13,8 +15,10 @@ use Javaabu\Paperless\Support\Builders\ComponentBuilder;
 use Javaabu\Paperless\Support\Casts\FieldBuilderAttribute;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
-class FormField extends Model
+class FormField extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     protected $attributes = [
         'language' => Languages::English,
     ];
@@ -192,5 +196,18 @@ class FormField extends Model
         foreach ($form_fields as $form_field) {
             $form_field->getBuilder()->saveInputs($application, $form_field, $form_inputs);
         }
+    }
+
+    public function getAttachmentUrl(string $collection_name, ?int $instance = null): ?string
+    {
+        $media_filters = [];
+
+        if (filled($instance)){
+            $media_filters = ['instance' => $instance];
+        }
+
+        $media = $this->getFirstMedia($collection_name, $media_filters);
+
+        return $media?->getUrl();
     }
 }
