@@ -12,7 +12,6 @@ use Javaabu\Helpers\Traits\HasOrderbys;
 use Illuminate\Support\Facades\Validator;
 use Javaabu\Paperless\Models\FormSection;
 use Javaabu\Helpers\Http\Controllers\Controller;
-use Spatie\ModelStates\Exceptions\InvalidConfig;
 use Spatie\ModelStates\Validation\ValidStateRule;
 use Illuminate\Auth\Access\AuthorizationException;
 use Javaabu\Paperless\Domains\EntityTypes\EntityType;
