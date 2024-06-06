@@ -202,7 +202,7 @@ class FormField extends Model implements HasMedia
     {
         $media_filters = [];
 
-        if (filled($instance)){
+        if (filled($instance)) {
             $media_filters = ['instance' => $instance];
         }
 
