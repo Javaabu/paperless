@@ -24,18 +24,13 @@
                 let targetWrapper = $(this).data('repeat-section');
                 let repeaterHtml = getRepeaterHtml(numberOfRepetitions);
 
-                // let firstNationalitySelect = '#repeater-wrapper-1 #nationality_0';
-                // $(firstNationalitySelect).select2('destroy');
-
                 document.getElementById(targetWrapper).append(stringToHTML(repeaterHtml));
 
                 let newRepeater = "#repeater-" + numberOfRepetitions;
 
                 bindSelectCustom($(newRepeater));
 
-                // $(firstNationalitySelect).select2();
                 numberOfRepetitions++;
-
             });
 
             let stringToHTML = function (str) {
@@ -80,8 +75,6 @@
 
                 return htmlString;
             }
-
-
         });
     </script>
 @endpushonce('scripts')
