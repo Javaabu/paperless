@@ -126,7 +126,7 @@ class FormField extends Model implements HasMedia
     /**
      * @throws Exception
      */
-    public function render(Applicant $entity, array | string $form_input = null, int | null $instance = null): string
+    public function render(Application $application, Applicant $entity, array | string $form_input = null, int | null $instance = null): string
     {
         /**
          * Get the render parameters as defined in the ComponentBuilder's getRenderParameters method.
@@ -134,7 +134,7 @@ class FormField extends Model implements HasMedia
          *
          * @see ComponentBuilder::getRenderParameters()
          */
-        $parameters = $this->getBuilder()->getRenderParameters($this, $entity, $instance);
+        $parameters = $this->getBuilder()->getRenderParameters($this, $application, $entity, $instance);
 
         $form_input = $this->getRenderedFieldValue($form_input);
 
@@ -196,18 +196,5 @@ class FormField extends Model implements HasMedia
         foreach ($form_fields as $form_field) {
             $form_field->getBuilder()->saveInputs($application, $form_field, $form_inputs);
         }
-    }
-
-    public function getAttachmentUrl(string $collection_name, ?int $instance = null): ?string
-    {
-        $media_filters = [];
-
-        if (filled($instance)) {
-            $media_filters = ['instance' => $instance];
-        }
-
-        $media = $this->getFirstMedia($collection_name, $media_filters);
-
-        return $media?->getUrl();
     }
 }

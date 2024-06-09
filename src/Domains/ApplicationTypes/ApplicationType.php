@@ -164,7 +164,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
         };
     }
 
-    public function render(Applicant $entity, Collection | null $form_inputs = null, bool $with_admin_sections = false): string
+    public function render(Application $application, Applicant $entity, Collection | null $form_inputs = null, bool $with_admin_sections = false): string
     {
         // Get all the form sections of this Application Type
         $form_sections = $this->formSections;
@@ -200,7 +200,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
             $section_inputs = $form_inputs->whereIn('form_field_id', $section_form_field_ids);
 
             // Passing in the FormInputs for this section, render and append to the HTML string
-            $html .= $form_section->render($entity, $section_inputs);
+            $html .= $form_section->render($application, $entity, $section_inputs);
         }
 
         return $html;

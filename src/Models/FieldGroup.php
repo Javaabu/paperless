@@ -39,7 +39,7 @@ class FieldGroup extends Model
         return $this->hasMany(FormField::class);
     }
 
-    public function render($entity, Collection|null $form_inputs = null): string
+    public function render($entity, $application, Collection|null $form_inputs = null): string
     {
         $this->loadMissing('formFields');
 

@@ -9,15 +9,18 @@ use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\Support\InfoLists\Components\TextEntry;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 
 abstract class ComponentBuilder
 {
     public function __construct(
         public FormField $form_field,
-    ) {
+    )
+    {
     }
 
-    public function getRenderParameters($field, $entity, int|null $instance = null): array
+    public function getRenderParameters($field, $application, $entity, int | null $instance = null): array
     {
         return [];
     }
@@ -44,7 +47,7 @@ abstract class ComponentBuilder
         ];
     }
 
-    public function saveInputs(Application $application, FormField $form_field, array|null $form_inputs = []): void
+    public function saveInputs(Application $application, FormField $form_field, array | null $form_inputs = []): void
     {
         $form_input_value = $form_inputs[$form_field->slug] ?? null;
         $array_value = static::getValue() == 'select';
@@ -58,6 +61,23 @@ abstract class ComponentBuilder
 
         $form_input->value = $array_value ? json_encode($form_input_value) : $form_input_value;
         $form_input->save();
+    }
+
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    public function saveFileForFormField(Application $application, FormField $form_field, array | null $input_files = []): void
+    {
+        if (! in_array($form_field->slug, array_keys($input_files))) {
+            return;
+        }
+
+        /** @var FormInput $form_input */
+        $form_input = $application->formInputs()->where('form_field_id', $form_field->id)->first();
+
+        $form_input?->addMediaFromRequest($form_field->slug)
+                   ->toMediaCollection('attachment');
     }
 
     public function saveFieldGroupInputs(Application $application, FormField $form_field, FieldGroup $field_group, int $group_instance_number, ?array $form_inputs = []): void

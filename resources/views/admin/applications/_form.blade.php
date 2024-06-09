@@ -12,5 +12,5 @@
         </div>
     </div>
 @else
-    {!! $application_type->render($applicant, $form_inputs) !!}
+    {!! $application_type->render($application, $applicant, $form_inputs) !!}
 @endif

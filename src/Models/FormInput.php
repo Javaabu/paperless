@@ -2,12 +2,18 @@
 
 namespace Javaabu\Paperless\Models;
 
+use Spatie\MediaLibrary\HasMedia;
+use Javaabu\Helpers\Media\UpdateMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Javaabu\Paperless\Domains\Applications\Application;
 
-class FormInput extends Model
+class FormInput extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+    use UpdateMedia;
+
     protected $fillable = [
         'value',
     ];
@@ -25,5 +31,24 @@ class FormInput extends Model
     public function fieldGroup(): BelongsTo
     {
         return $this->belongsTo(FieldGroup::class);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('attachment')
+             ->singleFile();
+    }
+
+    public function getAttachmentUrl(string $collection_name, ?int $instance = null): ?string
+    {
+        $media_filters = [];
+
+        if (filled($instance)) {
+            $media_filters = ['instance' => $instance];
+        }
+
+        $media = $this->getFirstMedia($collection_name, $media_filters);
+
+        return $media?->getUrl();
     }
 }

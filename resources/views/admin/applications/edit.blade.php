@@ -1,7 +1,7 @@
 @extends('paperless::admin.applications.applications')
 
 @section('inner-content')
-    <x-forms::form method="PATCH" :model="$application" :action="route('admin.applications.update', $application)">
+    <x-forms::form method="PATCH" files :model="$application" :action="route('admin.applications.update', $application)">
         @include('paperless::admin.applications._form')
 
         <x-forms::button-group :inline="true" class="d-flex justify-content-between mt-0">
