@@ -280,7 +280,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
 
             foreach ($validated_field_group_data as $iteration => $field_group_validated_data) {
                 foreach ($field_group->formFields as $form_field) {
-                    $form_field->getBuilder()->saveFieldGroupFormFieldFile($this, $form_field, $field_group, $iteration, $field_group_validated_data);
+                    $form_field->getBuilder()->saveFieldGroupFormFieldFile($this, $form_field, $field_group, $iteration, $request_files);
                 }
             }
         }
@@ -295,7 +295,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         foreach ($form_sections as $form_section) {
             $section_form_field_ids = $form_fields->where('form_section_id', $form_section->id)->pluck('id');
             $section_inputs = $this->formInputs->whereIn('form_field_id', $section_form_field_ids);
-            $html .= $form_section->renderInfoList($this->applicant, $section_inputs);
+            $html .= $form_section->renderInfoList($this, $this->applicant, $section_inputs);
         }
 
         return $html;

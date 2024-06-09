@@ -171,12 +171,12 @@ class FormField extends Model implements HasMedia
         };
     }
 
-    public function renderInfoList($entity, $form_input = null): string
+    public function renderInfoList($application, $entity, $form_input = null): string
     {
         $value = $this->getFormInputValue($form_input);
         $builder = $this->getBuilder();
 
-        return $builder?->renderInfoList($this, $value);
+        return $builder?->renderInfoList($application, $this, $value);
     }
 
     public function getFormInputValue($form_input = null): ?string

@@ -80,6 +80,37 @@ abstract class ComponentBuilder
                    ->toMediaCollection('attachment');
     }
 
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    public function saveFieldGroupFormFieldFile(
+        Application $application,
+        FormField   $form_field,
+        FieldGroup  $field_group,
+        int         $group_instance_number,
+        ?array      $input_files = []
+    ): void
+    {
+        /** @var FormInput $form_input */
+        $form_input = $application->formInputs()
+                                  ->where('form_field_id', $form_field->id)
+                                  ->where('field_group_id', $field_group->id)
+                                  ->where('group_instance_number', $group_instance_number)
+                                  ->first();
+
+        $file_key = $input_files[$field_group->slug][$group_instance_number][$form_field->slug] ?? null;
+
+        if ($file_key) {
+            $form_input?->addMedia($file_key)
+                       ->withCustomProperties([
+                           'instance' => $group_instance_number,
+                       ])
+                       ->toMediaCollection('attachment');
+        }
+    }
+
+
     public function saveFieldGroupInputs(Application $application, FormField $form_field, FieldGroup $field_group, int $group_instance_number, ?array $form_inputs = []): void
     {
         $form_input_value = $form_inputs[$form_field->slug] ?? null;
@@ -108,7 +139,7 @@ abstract class ComponentBuilder
         return $value;
     }
 
-    public function renderInfoList(FormField $form_field, $value = null): string
+    public function renderInfoList(Application $application, FormField $form_field, $value = null): string
     {
         $config_admin_model = config('paperless.models.admin');
 

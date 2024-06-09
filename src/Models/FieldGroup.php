@@ -39,14 +39,14 @@ class FieldGroup extends Model
         return $this->hasMany(FormField::class);
     }
 
-    public function render($entity, $application, Collection|null $form_inputs = null): string
+    public function render($application, $entity, Collection | null $form_inputs = null): string
     {
         $this->loadMissing('formFields');
 
         $form_fields = $this->formFields->sortBy('order_column');
 
         $field_group_form_inputs = $form_inputs?->where('field_group_id', $this->id)->groupBy('group_instance_number');
-        $fields_html = $this->generateFieldsHtml($form_fields, $entity);
+        $fields_html = $this->generateFieldsHtml($application, $form_fields, $entity);
 
         $fields_section_html = Section::make($this->name)
                                       ->containerClass('repeater')
@@ -58,7 +58,7 @@ class FieldGroup extends Model
         $old_data = collect(old($this->slug));
 
         if ($old_data->isNotEmpty()) {
-            $repeating_group = $this->generateRepeatingGroupHtml($old_data, $form_fields, $entity);
+            $repeating_group = $this->generateRepeatingGroupHtml($old_data, $form_fields, $application, $entity);
 
             return RepeatingGroup::make($this->name)
                                  ->id($this->slug)
@@ -79,7 +79,7 @@ class FieldGroup extends Model
 
 
         if ($field_group_form_inputs->isNotEmpty() && $old_data->isEmpty()) {
-            $repeating_group = $this->generateRepeatingGroupHtml($field_group_form_inputs, $form_fields, $entity);
+            $repeating_group = $this->generateRepeatingGroupHtml($field_group_form_inputs, $form_fields, $application, $entity);
 
             return RepeatingGroup::make($this->name)
                                  ->id($this->slug)
@@ -92,7 +92,7 @@ class FieldGroup extends Model
         return '';
     }
 
-    public function renderInfoList($entity, Collection|null $form_inputs = null): string
+    public function renderInfoList($entity, Collection | null $form_inputs = null): string
     {
         return RepeatingGroupInfo::make()
                                  ->fieldGroup($this)
@@ -100,18 +100,19 @@ class FieldGroup extends Model
                                  ->toHtml();
     }
 
-    public function generateFieldsHtml($form_fields, $entity): string
+    public function generateFieldsHtml($application, $form_fields, $entity): string
     {
         $fields_html = '';
+        /** @var FormField $form_field */
         foreach ($form_fields as $form_field) {
             $form_field->setRelation('fieldGroup', $this);
-            $fields_html .= $form_field->render($entity);
+            $fields_html .= $form_field->render($application, $entity);
         }
 
         return $fields_html;
     }
 
-    public function generateRepeatingGroupHtml($field_group_form_inputs, $form_fields, $entity): string
+    public function generateRepeatingGroupHtml($field_group_form_inputs, $form_fields, $application, $entity): string
     {
         $repeating_group = '';
         foreach ($field_group_form_inputs as $key => $group_form_inputs) {
@@ -145,7 +146,7 @@ class FieldGroup extends Model
                 //                }
 
                 $form_field->setRelation('fieldGroup', $this);
-                $field_html .= $form_field->render($entity, $form_input, $key);
+                $field_html .= $form_field->render($application, $entity, $form_input, $key);
             }
 
             $repeating_group .= Section::make($this->name)
