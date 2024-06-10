@@ -449,13 +449,20 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         });
     }
 
-    public function getFormInputForField(string $field_name): ?FormInput
+    public function getFormInputForField(string $field_name, ?int $instnace = null): ?FormInput
     {
-        return $this->formInputs()
+        $query = $this->formInputs()
                     ->whereHas('formField', function ($query) use ($field_name) {
                         $query->where('slug', $field_name);
-                    })
-                    ->first();
+                    });
+
+        // Useful for inputs where there is a related instance number.
+        if (filled($instnace)) {
+            $query->where('group_instance_number', $instnace);
+        }
+
+        return $query->first();
+
     }
 
     public function getFormInputValueForField(string $field_name): ?string

@@ -43,9 +43,9 @@ class FormInput extends Model implements HasMedia
     {
         $media_filters = [];
 
-        if (filled($instance)) {
-            $media_filters = ['instance' => $instance];
-        }
+        // if (filled($instance)) {
+        //     $media_filters = ['instance' => $instance];
+        // }
 
         $media = $this->getFirstMedia($collection_name, $media_filters);
 
