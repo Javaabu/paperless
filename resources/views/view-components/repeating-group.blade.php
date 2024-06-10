@@ -73,6 +73,12 @@
                 let field_names = 'name="' + field_group + '[' + suffix + '][$1]"';
                 htmlString = htmlString.replace(regex, field_names);
 
+                let data_new_entity_regex = /data-new-entity="#([A-Za-z0-9_-]+)_(\d+)"/g;
+                htmlString = htmlString.replace(data_new_entity_regex, function(match, p1, p2) {
+                    let newValue = parseInt(p2) + suffix;
+                    return 'data-new-entity="#' + p1 + '_' + newValue + '"';
+                });
+
                 return htmlString;
             }
         });
