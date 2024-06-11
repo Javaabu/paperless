@@ -16,8 +16,7 @@ abstract class ComponentBuilder
 {
     public function __construct(
         public FormField $form_field,
-    )
-    {
+    ) {
     }
 
     public function getRenderParameters($field, $application, $entity, int | null $instance = null): array
@@ -94,8 +93,7 @@ abstract class ComponentBuilder
         FieldGroup  $field_group,
         int         $group_instance_number,
         ?array      $input_files = []
-    ): void
-    {
+    ): void {
         /** @var FormInput $form_input */
         $form_input = $application->formInputs()
                                   ->where('form_field_id', $form_field->id)
