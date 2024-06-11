@@ -39,6 +39,11 @@ class FormInput extends Model implements HasMedia
              ->singleFile();
     }
 
+    public function isFilled(): bool
+    {
+        return $this->formField->getBuilder()->isFilled($this, $this->application, $this->formField);
+    }
+
     public function getAttachmentUrl(string $collection_name, ?int $instance = null): ?string
     {
         $media_filters = [];

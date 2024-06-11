@@ -16,7 +16,8 @@ abstract class ComponentBuilder
 {
     public function __construct(
         public FormField $form_field,
-    ) {
+    )
+    {
     }
 
     public function getRenderParameters($field, $application, $entity, int | null $instance = null): array
@@ -75,8 +76,12 @@ abstract class ComponentBuilder
         /** @var FormInput $form_input */
         $form_input = $application->formInputs()->where('form_field_id', $form_field->id)->first();
 
-        $form_input?->addMediaFromRequest($form_field->slug)
-                   ->toMediaCollection('attachment');
+        if ($form_input) {
+            $form_input->value = 'attachment';
+            $form_input->save();
+            $form_input->addMediaFromRequest($form_field->slug)
+                       ->toMediaCollection('attachment');
+        }
     }
 
     /**
@@ -89,7 +94,8 @@ abstract class ComponentBuilder
         FieldGroup  $field_group,
         int         $group_instance_number,
         ?array      $input_files = []
-    ): void {
+    ): void
+    {
         /** @var FormInput $form_input */
         $form_input = $application->formInputs()
                                   ->where('form_field_id', $form_field->id)
@@ -99,8 +105,11 @@ abstract class ComponentBuilder
 
         $file_key = $input_files[$field_group->slug][$group_instance_number][$form_field->slug] ?? null;
 
-        if ($file_key) {
-            $form_input?->addMedia($file_key)
+        if ($form_input && $file_key) {
+            $form_input->value = 'attachment';
+            $form_input->save();
+
+            $form_input->addMedia($file_key)
                        ->withCustomProperties([
                            'instance' => $group_instance_number,
                        ])
@@ -145,6 +154,11 @@ abstract class ComponentBuilder
                         ->markAsRequired($form_field->is_required)
                         ->value($this->getValueForInfo($value, auth()->user() instanceof $config_admin_model))
                         ->toHtml();
+    }
+
+    public function isFilled(FormInput $formInput, Application $application, FormField $formField): bool
+    {
+        return filled($formInput->value);
     }
 
     public static function getValue(): string
