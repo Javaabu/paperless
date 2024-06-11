@@ -161,6 +161,11 @@ abstract class ComponentBuilder
         return filled($formInput->value);
     }
 
+    public function getFormInputValue(FormInput $formInput, Application $application, FormField $formField)
+    {
+        return $formInput->value;
+    }
+
     public static function getValue(): string
     {
         return static::$value;

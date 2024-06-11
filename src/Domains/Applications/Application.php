@@ -500,7 +500,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
                 foreach ($form_fields as $form_field) {
                     $form_input = $form_inputs->where('form_field_id', $form_field->id)->first();
                     $form_field_slug = $form_field->slug;
-                    $form_field_value = $form_input->value;
+                    $form_field_value = $form_input->getValue();
 
                     $field_group_data[$form_field_slug] = $form_field_value;
                 }

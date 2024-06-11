@@ -44,6 +44,11 @@ class FormInput extends Model implements HasMedia
         return $this->formField->getBuilder()->isFilled($this, $this->application, $this->formField);
     }
 
+    public function getValue()
+    {
+        return $this->formField->getBuilder()->getFormInputValue($this, $this->application, $this->formField);
+    }
+
     public function getAttachmentUrl(string $collection_name, ?int $instance = null): ?string
     {
         $media_filters = [];
