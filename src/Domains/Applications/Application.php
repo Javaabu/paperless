@@ -237,7 +237,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         $this->addMediaCollection('documents')
              ->useDisk(config('paperless.storage_disk'))
              ->acceptsMimeTypes(
-                 AllowedMimeTypes::getAllowedMimeTypes(['document', 'image'])
+                 config('paperless.allowed_mime_type_class')::getAllowedMimeTypes(['document', 'image'])
              );
     }
 

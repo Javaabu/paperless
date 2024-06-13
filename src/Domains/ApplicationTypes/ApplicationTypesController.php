@@ -109,7 +109,7 @@ class ApplicationTypesController extends Controller
 
         $rules = [
             'url'   => ['string', 'url', 'required_without:image'],
-            'image' => AllowedMimeTypes::getValidationRule('image') . '|required_without:url',
+            'image' => config('paperless.allowed_mime_type_class')::getValidationRule('image') . '|required_without:url',
         ];
 
         $this->validate($request, $rules);

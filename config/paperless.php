@@ -131,6 +131,8 @@ return [
         'application_status' => \Javaabu\Paperless\Domains\Applications\Enums\ApplicationStatuses::class,
     ],
 
+    'allowed_mime_type_class' => \Javaabu\Helpers\Media\AllowedMimeTypes::class,
+
     /**
      * This config section defines what relationships on the Paperless package should be active.
      * Currently, this is only applicable for Services (AKA Automatic Payment raising).

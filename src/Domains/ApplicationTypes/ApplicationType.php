@@ -136,7 +136,7 @@ class ApplicationType extends Model implements AdminModel, HasMedia
     {
         $this->addMediaCollection('description_images')
              ->acceptsFile(function (File $file) {
-                 return AllowedMimeTypes::isAllowedMimeType($file->mimeType, 'image');
+                 return config('paperless.allowed_mime_type_class')::isAllowedMimeType($file->mimeType, 'image');
              });
     }
 
