@@ -3,12 +3,13 @@
 namespace Javaabu\Paperless\Notifications\Traits;
 
 use Illuminate\Support\Arr;
-use Javaabu\Paperless\Support\StatusEvents\Models\StatusEvent;
-
-;
+use Illuminate\Support\Collection;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Support\StatusEvents\Models\StatusEvent;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypeBlueprint;
 use Javaabu\Paperless\Notifications\Applicants\ApplicationStatusUpdatedNotification;
+
+;
 
 trait SendsApplicationNotifications
 {
@@ -28,12 +29,14 @@ trait SendsApplicationNotifications
         ][$recipient];
     }
 
-    public function getNotificationRecipients(Application $application, $recipient): array
+    public function getNotificationRecipients(Application $application, $recipient): Collection
     {
-        return [
+        $recipients = [
             'applicant' => [$application->applicant],
             // 'group_leaders' => $application->applicant->group->leaders,
         ][$recipient];
+
+        return collect($recipients);
     }
 
     public function getNotificationParameters(Application $application, StatusEvent $statusEvent, string $notification_class): array
