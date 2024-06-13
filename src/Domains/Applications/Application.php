@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\FormInput;
 use Javaabu\Paperless\Models\FieldGroup;
 use Illuminate\Database\Eloquent\Builder;
-use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Javaabu\StatusEvents\Interfaces\Trackable;

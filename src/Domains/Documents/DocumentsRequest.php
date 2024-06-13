@@ -5,7 +5,6 @@ namespace Javaabu\Paperless\Domains\Documents;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
-use Javaabu\Helpers\Media\AllowedMimeTypes;
 
 class DocumentsRequest extends FormRequest
 {
