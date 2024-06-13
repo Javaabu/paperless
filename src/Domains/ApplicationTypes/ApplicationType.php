@@ -10,7 +10,6 @@ use Javaabu\Paperless\Models\FormField;
 use Javaabu\Paperless\Models\FieldGroup;
 use Javaabu\Paperless\Models\FormSection;
 use Javaabu\Helpers\AdminModel\AdminModel;
-use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Javaabu\Paperless\Interfaces\Applicant;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\InteractsWithMedia;

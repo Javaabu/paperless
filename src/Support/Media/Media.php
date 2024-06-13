@@ -2,9 +2,8 @@
 
 namespace Javaabu\Paperless\Support\Media;
 
-use Javaabu\Helpers\Media\AllowedMimeTypes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
 class Media extends BaseMedia
