@@ -129,7 +129,7 @@ abstract class BaseApplicationStatusUpdateNotification extends QuickNotification
             ],
             'rows'      => [
                 ['**Applicant**',
-                    $this->application->applicant?->name],
+                    $this->application->applicant?->formatted_name],
                 ['**Application No**',
                     "**{$this->application?->formatted_id}**"],
                 ['**Application Type**',
