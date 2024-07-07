@@ -9,6 +9,8 @@ use Javaabu\Paperless\Interfaces\Applicant;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Helpers\Exceptions\InvalidOperationException;
 use Javaabu\Paperless\Support\InfoLists\Components\TextEntry;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 
 abstract class ComponentBuilder
 {
@@ -17,7 +19,7 @@ abstract class ComponentBuilder
     ) {
     }
 
-    public function getRenderParameters($field, $entity, int|null $instance = null): array
+    public function getRenderParameters($field, $application, $entity, int | null $instance = null): array
     {
         return [];
     }
@@ -44,7 +46,7 @@ abstract class ComponentBuilder
         ];
     }
 
-    public function saveInputs(Application $application, FormField $form_field, array|null $form_inputs = []): void
+    public function saveInputs(Application $application, FormField $form_field, array | null $form_inputs = []): void
     {
         $form_input_value = $form_inputs[$form_field->slug] ?? null;
         $array_value = static::getValue() == 'select';
@@ -59,6 +61,60 @@ abstract class ComponentBuilder
         $form_input->value = $array_value ? json_encode($form_input_value) : $form_input_value;
         $form_input->save();
     }
+
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    public function saveFileForFormField(Application $application, FormField $form_field, array | null $input_files = []): void
+    {
+        if (! in_array($form_field->slug, array_keys($input_files))) {
+            return;
+        }
+
+        /** @var FormInput $form_input */
+        $form_input = $application->formInputs()->where('form_field_id', $form_field->id)->first();
+
+        if ($form_input) {
+            $form_input->value = 'attachment';
+            $form_input->save();
+            $form_input->addMediaFromRequest($form_field->slug)
+                       ->toMediaCollection('attachment');
+        }
+    }
+
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    public function saveFieldGroupFormFieldFile(
+        Application $application,
+        FormField   $form_field,
+        FieldGroup  $field_group,
+        int         $group_instance_number,
+        ?array      $input_files = []
+    ): void {
+        /** @var FormInput $form_input */
+        $form_input = $application->formInputs()
+                                  ->where('form_field_id', $form_field->id)
+                                  ->where('field_group_id', $field_group->id)
+                                  ->where('group_instance_number', $group_instance_number)
+                                  ->first();
+
+        $file_key = $input_files[$field_group->slug][$group_instance_number][$form_field->slug] ?? null;
+
+        if ($form_input && $file_key) {
+            $form_input->value = 'attachment';
+            $form_input->save();
+
+            $form_input->addMedia($file_key)
+                       ->withCustomProperties([
+                           'instance' => $group_instance_number,
+                       ])
+                       ->toMediaCollection('attachment');
+        }
+    }
+
 
     public function saveFieldGroupInputs(Application $application, FormField $form_field, FieldGroup $field_group, int $group_instance_number, ?array $form_inputs = []): void
     {
@@ -88,7 +144,7 @@ abstract class ComponentBuilder
         return $value;
     }
 
-    public function renderInfoList(FormField $form_field, $value = null): string
+    public function renderInfoList(Application $application, FormField $form_field, $value = null): string
     {
         $config_admin_model = config('paperless.models.admin');
 
@@ -96,6 +152,16 @@ abstract class ComponentBuilder
                         ->markAsRequired($form_field->is_required)
                         ->value($this->getValueForInfo($value, auth()->user() instanceof $config_admin_model))
                         ->toHtml();
+    }
+
+    public function isFilled(FormInput $formInput, Application $application, FormField $formField): bool
+    {
+        return filled($formInput->value);
+    }
+
+    public function getFormInputValue(FormInput $formInput, Application $application, FormField $formField)
+    {
+        return $formInput->value;
     }
 
     public static function getValue(): string

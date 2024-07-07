@@ -2,6 +2,7 @@
 
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
+use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Notifications\Traits\SendsApplicationNotifications;
 use Javaabu\Paperless\Domains\ApplicationTypes\Traits\SeedsApplicationTypes;
 
@@ -56,6 +57,11 @@ abstract class ApplicationTypeBlueprint implements IsAnApplicationType
         return null;
     }
 
+    public function getExtraProcessActions(string $current_status, Application $application): array
+    {
+        return [];
+    }
+
     public function getExtraBladeViewsToRender(string $page_name): array
     {
         return match ($page_name) {
@@ -78,5 +84,10 @@ abstract class ApplicationTypeBlueprint implements IsAnApplicationType
     public function extraBladeViewsToRenderForHistory(): array
     {
         return [];
+    }
+
+    public function isStatusBeforeApprove($application): bool
+    {
+        return true;
     }
 }

@@ -1,6 +1,13 @@
 @php
     $process_actions = config('paperless.enums.application_status')::getProcessActions();
     $available_process_actions = $application->status->transitionableStates();
+
+    $hidden_transitions = $application->status->hiddenTransitions();
+    $available_process_actions = array_diff($available_process_actions, $hidden_transitions);
+
+    $extra_process_actions = $application->applicationType->getApplicationTypeClassInstance()->getExtraProcessActions($application->status->getValue(), $application);
+    $available_process_actions = array_merge($available_process_actions, $extra_process_actions);
+
 @endphp
 
 @if ($available_process_actions)

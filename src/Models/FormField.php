@@ -3,9 +3,11 @@
 namespace Javaabu\Paperless\Models;
 
 use Exception;
+use Spatie\MediaLibrary\HasMedia;
 use Javaabu\Paperless\Enums\Languages;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Interfaces\Applicant;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Javaabu\Paperless\Domains\Applications\Application;
@@ -13,8 +15,10 @@ use Javaabu\Paperless\Support\Builders\ComponentBuilder;
 use Javaabu\Paperless\Support\Casts\FieldBuilderAttribute;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
-class FormField extends Model
+class FormField extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     protected $attributes = [
         'language' => Languages::English,
     ];
@@ -122,7 +126,7 @@ class FormField extends Model
     /**
      * @throws Exception
      */
-    public function render(Applicant $entity, array | string $form_input = null, int | null $instance = null): string
+    public function render(Application $application, Applicant $entity, array | string $form_input = null, int | null $instance = null): string
     {
         /**
          * Get the render parameters as defined in the ComponentBuilder's getRenderParameters method.
@@ -130,7 +134,7 @@ class FormField extends Model
          *
          * @see ComponentBuilder::getRenderParameters()
          */
-        $parameters = $this->getBuilder()->getRenderParameters($this, $entity, $instance);
+        $parameters = $this->getBuilder()->getRenderParameters($this, $application, $entity, $instance);
 
         $form_input = $this->getRenderedFieldValue($form_input);
 
@@ -167,12 +171,12 @@ class FormField extends Model
         };
     }
 
-    public function renderInfoList($entity, $form_input = null): string
+    public function renderInfoList($application, $entity, $form_input = null): string
     {
         $value = $this->getFormInputValue($form_input);
         $builder = $this->getBuilder();
 
-        return $builder?->renderInfoList($this, $value);
+        return $builder?->renderInfoList($application, $this, $value);
     }
 
     public function getFormInputValue($form_input = null): ?string

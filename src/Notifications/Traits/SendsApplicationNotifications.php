@@ -3,11 +3,13 @@
 namespace Javaabu\Paperless\Notifications\Traits;
 
 use Illuminate\Support\Arr;
-use Javaabu\Paperless\Support\StatusEvents\Models\StatusEvent;
-;
+use Illuminate\Support\Collection;
 use Javaabu\Paperless\Domains\Applications\Application;
+use Javaabu\Paperless\Support\StatusEvents\Models\StatusEvent;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationTypeBlueprint;
 use Javaabu\Paperless\Notifications\Applicants\ApplicationStatusUpdatedNotification;
+
+;
 
 trait SendsApplicationNotifications
 {
@@ -27,12 +29,14 @@ trait SendsApplicationNotifications
         ][$recipient];
     }
 
-    public function getNotificationRecipients(Application $application, $recipient): array
+    public function getNotificationRecipients(Application $application, $recipient): Collection
     {
-        return [
+        $recipients = [
             'applicant' => [$application->applicant],
             // 'group_leaders' => $application->applicant->group->leaders,
         ][$recipient];
+
+        return collect($recipients);
     }
 
     public function getNotificationParameters(Application $application, StatusEvent $statusEvent, string $notification_class): array
@@ -42,7 +46,7 @@ trait SendsApplicationNotifications
             =>
                 function (Application $application, StatusEvent $statusEvent, ApplicationTypeBlueprint $applicationType) {
                     return [
-                        $application, $statusEvent, $applicationType
+                        $application, $statusEvent, $applicationType,
                     ];
                 },
             // Add more closures here
@@ -50,7 +54,7 @@ trait SendsApplicationNotifications
 
         $parameter_closure = $parameter_mapping[$notification_class];
 
-        if ( ! $parameter_closure instanceof \Closure) {
+        if (! $parameter_closure instanceof \Closure) {
             return Arr::wrap($parameter_closure);
         }
 

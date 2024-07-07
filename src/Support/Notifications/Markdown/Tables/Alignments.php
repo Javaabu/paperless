@@ -4,7 +4,7 @@ namespace Javaabu\Paperless\Support\Notifications\Markdown\Tables;
 
 abstract class Alignments
 {
-    const LEFT = 'L';
-    const CENTER = 'C';
-    const RIGHT = 'R';
+    public const LEFT = 'L';
+    public const CENTER = 'C';
+    public const RIGHT = 'R';
 }

@@ -2,6 +2,7 @@
 
 namespace Javaabu\Paperless\Models;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Interfaces\Applicant;
@@ -9,6 +10,7 @@ use Javaabu\Paperless\Support\Components\Section;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 
 class FormSection extends Model
@@ -55,12 +57,14 @@ class FormSection extends Model
     /**
      * Render the FormSection and all of it's FormFields
      *
+     * @param  Application      $application
      * @param  Applicant        $entity
      * @param  Collection|null  $form_inputs
      * @param  bool             $with_card
      * @return string
+     * @throws Exception
      */
-    public function render(Applicant $entity, Collection | null $form_inputs = null, bool $with_card = true): string
+    public function render(Application $application, Applicant $entity, Collection | null $form_inputs = null, bool $with_card = true): string
     {
         // Initialize the HTML string
         $fields_html = '';
@@ -80,7 +84,7 @@ class FormSection extends Model
             $form_input = $form_inputs->where('form_field_id', $form_field->id)->first()?->value;
 
             // Passing in the FormInput, render the FormField and append to the HTML string
-            $fields_html .= $form_field->render($entity, $form_input);
+            $fields_html .= $form_field->render($application, $entity, $form_input);
         }
 
         // If the $with_card is true, wrap the FormSection in a Section component, which will render it inside a card.
@@ -112,13 +116,13 @@ class FormSection extends Model
         /** @var FieldGroup $field_group */
         foreach ($field_groups as $field_group) {
             // Passing in the whole of $form_inputs, Render the FieldGroup and append to the FieldGroup HTML string
-            $field_group_html .= $field_group->render($entity, $form_inputs);
+            $field_group_html .= $field_group->render($application, $entity, $form_inputs);
         }
 
         return $form_section . $field_group_html;
     }
 
-    public function renderInfoList(Applicant $entity, Collection | null $form_inputs = null, bool $with_card = true): string
+    public function renderInfoList(Application $application, Applicant $entity, Collection | null $form_inputs = null, bool $with_card = true): string
     {
         $fields_html = '';
 
@@ -127,7 +131,7 @@ class FormSection extends Model
 
         foreach ($form_fields as $form_field) {
             $form_input = $form_inputs->where('form_field_id', $form_field->id)->first()?->value;
-            $fields_html .= $form_field->renderInfoList($entity, $form_input);
+            $fields_html .= $form_field->renderInfoList($application, $entity, $form_input);
         }
 
         if ($with_card) {

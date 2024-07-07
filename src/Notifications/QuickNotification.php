@@ -2,8 +2,8 @@
 
 namespace Javaabu\Paperless\Notifications;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 abstract class QuickNotification extends BaseNotification implements ShouldQueue
@@ -14,7 +14,7 @@ abstract class QuickNotification extends BaseNotification implements ShouldQueue
      * @param $notifiable
      * @return string
      */
-    protected abstract function getTitle($notifiable): string;
+    abstract protected function getTitle($notifiable): string;
 
     /**
      * Get the message
@@ -23,7 +23,7 @@ abstract class QuickNotification extends BaseNotification implements ShouldQueue
      * @param  bool  $for_sms
      * @return string
      */
-    protected abstract function getMessage($notifiable, bool $for_sms = false): string;
+    abstract protected function getMessage($notifiable, bool $for_sms = false): string;
 
     /**
      * Get the message params
@@ -31,7 +31,7 @@ abstract class QuickNotification extends BaseNotification implements ShouldQueue
      * @param $notifiable
      * @return array
      */
-    protected abstract function getMessageParams($notifiable): array;
+    abstract protected function getMessageParams($notifiable): array;
 
     /**
      * Get the thumb
@@ -39,7 +39,7 @@ abstract class QuickNotification extends BaseNotification implements ShouldQueue
      * @param $notifiable
      * @return string|null
      */
-    protected abstract function getThumb($notifiable): ?string;
+    abstract protected function getThumb($notifiable): ?string;
 
     /**
      * Get the url
@@ -47,7 +47,7 @@ abstract class QuickNotification extends BaseNotification implements ShouldQueue
      * @param $notifiable
      * @return string|null
      */
-    protected abstract function getUrl($notifiable): ?string;
+    abstract protected function getUrl($notifiable): ?string;
 
     /**
      * Get the model
@@ -55,7 +55,7 @@ abstract class QuickNotification extends BaseNotification implements ShouldQueue
      * @param $notifiable
      * @return Model|null
      */
-    protected abstract function getModel($notifiable): ?Model;
+    abstract protected function getModel($notifiable): ?Model;
 
     /**
      * Get the action text
@@ -116,7 +116,7 @@ abstract class QuickNotification extends BaseNotification implements ShouldQueue
     {
         $name = $notifiable->name;
 
-        $mail = (new MailMessage)
+        $mail = (new MailMessage())
             ->subject($this->getTitle($notifiable))
             ->greeting("Hi $name,");
 

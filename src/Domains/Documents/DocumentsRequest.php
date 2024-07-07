@@ -5,7 +5,6 @@ namespace Javaabu\Paperless\Domains\Documents;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
-use Javaabu\Helpers\Media\AllowedMimeTypes;
 
 class DocumentsRequest extends FormRequest
 {
@@ -25,7 +24,7 @@ class DocumentsRequest extends FormRequest
 
         $rules = [
             'file'          => [
-                'mimetypes:' . AllowedMimeTypes::getAllowedMimeTypesString('document'),
+                'mimetypes:' . config('paperless.allowed_mime_type_class')::getAllowedMimeTypesString('document'),
                 'max:' . get_setting('max_upload_file_size'),
             ],
             'name'          => ['nullable', 'string', 'max:255'],

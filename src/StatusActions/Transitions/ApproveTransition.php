@@ -3,9 +3,9 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
+use Javaabu\Paperless\Events\UpdatedApplicationStatus;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
 use Javaabu\Paperless\StatusActions\Statuses\Verified;
-use Javaabu\Paperless\Events\UpdatedApplicationStatus;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Events\UpdatingApplicationStatus;
 

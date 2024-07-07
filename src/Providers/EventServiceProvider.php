@@ -16,6 +16,12 @@ class EventServiceProvider extends \Illuminate\Foundation\Support\Providers\Even
         ],
     ];
 
+    protected function configureEmailVerification()
+    {
+        // fix for Registered Event listener getting registered multiple times
+        // see https://github.com/laravel/framework/issues/50783#issuecomment-2072411615
+    }
+
     /**
      * Register any events for your application.
      *

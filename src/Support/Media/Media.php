@@ -3,7 +3,6 @@
 namespace Javaabu\Paperless\Support\Media;
 
 use Illuminate\Support\Str;
-use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\MediaCollections\Models\Media as BaseMedia;
 
@@ -63,7 +62,7 @@ class Media extends BaseMedia
      */
     public function getTypeSlugAttribute(): string
     {
-        return AllowedMimeTypes::getType($this->mime_type);
+        return config('paperless.allowed_mime_type_class')::getType($this->mime_type);
     }
 
     /**
@@ -92,14 +91,14 @@ class Media extends BaseMedia
 
     public function getWebIcon(string $prefix = 'fa fa-'): string
     {
-        $icon = AllowedMimeTypes::getWebIcon($this->mime_type);
+        $icon = config('paperless.allowed_mime_type_class')::getWebIcon($this->mime_type);
 
         return $prefix.($icon ?: 'file');
     }
 
     public function getIcon(string $prefix = 'zmdi zmdi-'): string
     {
-        $icon = AllowedMimeTypes::getIcon($this->mime_type);
+        $icon = config('paperless.allowed_mime_type_class')::getIcon($this->mime_type);
 
         return $prefix.($icon ?: 'file');
     }
@@ -113,7 +112,7 @@ class Media extends BaseMedia
      */
     public function scopeHasType($query, string $type)
     {
-        return $query->whereIn('mime_type', AllowedMimeTypes::getAllowedMimeTypes($type));
+        return $query->whereIn('mime_type', config('paperless.allowed_mime_type_class')::getAllowedMimeTypes($type));
     }
 
     /**

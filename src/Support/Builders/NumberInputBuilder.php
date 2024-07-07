@@ -11,7 +11,7 @@ class NumberInputBuilder extends ComponentBuilder implements IsComponentBuilder
 {
     public static string $value = 'number_input';
 
-    public function getRenderParameters($field, $entity, ?int $instance = null): array
+    public function getRenderParameters($field, $application, $entity, ?int $instance = null): array
     {
         return [
             $instance,

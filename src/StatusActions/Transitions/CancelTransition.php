@@ -4,11 +4,11 @@ namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
-use Javaabu\Paperless\StatusActions\Statuses\Verified;
 use Javaabu\Paperless\Events\UpdatedApplicationStatus;
+use Javaabu\Paperless\StatusActions\Statuses\Verified;
 use Javaabu\Paperless\Domains\Applications\Application;
-use Javaabu\Paperless\StatusActions\Statuses\Cancelled;
 use Javaabu\Paperless\Events\UpdatingApplicationStatus;
+use Javaabu\Paperless\StatusActions\Statuses\Cancelled;
 use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 

@@ -2,18 +2,19 @@
 
 namespace Javaabu\Paperless\Notifications;
 
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notification;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Str;
 use Javaabu\Paperless\Notifications\SmsNotification\SendsSms;
 use Javaabu\Paperless\Notifications\SmsNotification\SmsNotification;
 
-
 abstract class BaseNotification extends Notification implements SmsNotification
 {
-    use Queueable, SerializesModels, SendsSms;
+    use Queueable;
+    use SendsSms;
+    use SerializesModels;
 
     /**
      * @var string
@@ -99,7 +100,7 @@ abstract class BaseNotification extends Notification implements SmsNotification
      *
      * @param  mixed  $notifiable
      * @param         $channel
-     * @return boolean
+     * @return bool
      */
     public function wantsToReceiveVia($notifiable, $channel): bool
     {
@@ -116,7 +117,7 @@ abstract class BaseNotification extends Notification implements SmsNotification
      * Check whether db notification should be sent
      *
      * @param  mixed  $notifiable
-     * @return boolean
+     * @return bool
      */
     public function shouldSendDb($notifiable): bool
     {
@@ -127,7 +128,7 @@ abstract class BaseNotification extends Notification implements SmsNotification
      * Check whether email should be sent
      *
      * @param  mixed  $notifiable
-     * @return boolean
+     * @return bool
      */
     public function shouldSendEmail($notifiable): bool
     {
@@ -138,7 +139,7 @@ abstract class BaseNotification extends Notification implements SmsNotification
      * Check whether sms should be sent
      *
      * @param  mixed  $notifiable
-     * @return boolean
+     * @return bool
      */
     public function shouldSendSms($notifiable): bool
     {
@@ -172,8 +173,7 @@ abstract class BaseNotification extends Notification implements SmsNotification
         $url = null,
         ?Model $model = null,
         $thumb = null
-    ): array
-    {
+    ): array {
         $params = $this->parseMessageParams($message_params);
         $translated_message = __($message, $params);
 

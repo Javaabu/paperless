@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Models\FormInput;
 use Javaabu\Paperless\Models\FieldGroup;
 use Illuminate\Database\Eloquent\Builder;
-use Javaabu\Helpers\Media\AllowedMimeTypes;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Javaabu\StatusEvents\Interfaces\Trackable;
@@ -20,7 +19,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Javaabu\Paperless\StatusActions\Statuses\Draft;
 use Javaabu\Paperless\Contracts\ApplicationContract;
-use Javaabu\StatusEvents\Interfaces\TrackingSubject;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Javaabu\Paperless\StatusActions\Statuses\Approved;
@@ -29,7 +27,6 @@ use Javaabu\Paperless\StatusActions\Statuses\Verified;
 use Javaabu\Paperless\StatusActions\Statuses\Cancelled;
 use Javaabu\Paperless\StatusActions\Statuses\Incomplete;
 use Javaabu\Helpers\AdminModel\{AdminModel, IsAdminModel};
-use Javaabu\Paperless\Support\StatusEvents\Models\StatusEvent;
 use Javaabu\Paperless\Domains\ApplicationTypes\ApplicationType;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;
 use Javaabu\Paperless\Support\InfoLists\Components\DocumentLister;
@@ -239,7 +236,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         $this->addMediaCollection('documents')
              ->useDisk(config('paperless.storage_disk'))
              ->acceptsMimeTypes(
-                 AllowedMimeTypes::getAllowedMimeTypes(['document', 'image'])
+                 config('paperless.allowed_mime_type_class')::getAllowedMimeTypes(['document', 'image'])
              );
     }
 
@@ -249,7 +246,6 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         foreach ($form_fields as $form_field) {
             $form_field->getBuilder()->saveInputs($this, $form_field, $validated_data);
         }
-
 
         $field_groups = $this->applicationType->fieldGroups;
         foreach ($field_groups as $field_group) {
@@ -270,6 +266,25 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         }
     }
 
+    public function updateFormInputFiles(array $request_files)
+    {
+        $form_fields = $this->applicationType->formFields->whereNull('field_group_id');
+        foreach ($form_fields as $form_field) {
+            $form_field->getBuilder()->saveFileForFormField($this, $form_field, $request_files);
+        }
+
+        $field_groups = $this->applicationType->fieldGroups;
+        foreach ($field_groups as $field_group) {
+            $validated_field_group_data = data_get($request_files, $field_group->slug, []);
+
+            foreach ($validated_field_group_data as $iteration => $field_group_validated_data) {
+                foreach ($field_group->formFields as $form_field) {
+                    $form_field->getBuilder()->saveFieldGroupFormFieldFile($this, $form_field, $field_group, $iteration, $request_files);
+                }
+            }
+        }
+    }
+
     public function renderInfoList(): string
     {
         $form_sections = $this->applicationType->formSections->sortBy('order_column');
@@ -279,7 +294,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         foreach ($form_sections as $form_section) {
             $section_form_field_ids = $form_fields->where('form_section_id', $form_section->id)->pluck('id');
             $section_inputs = $this->formInputs->whereIn('form_field_id', $section_form_field_ids);
-            $html .= $form_section->renderInfoList($this->applicant, $section_inputs);
+            $html .= $form_section->renderInfoList($this, $this->applicant, $section_inputs);
         }
 
         return $html;
@@ -433,13 +448,20 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
         });
     }
 
-    public function getFormInputForField(string $field_name): ?FormInput
+    public function getFormInputForField(string $field_name, ?int $instnace = null): ?FormInput
     {
-        return $this->formInputs()
+        $query = $this->formInputs()
                     ->whereHas('formField', function ($query) use ($field_name) {
                         $query->where('slug', $field_name);
-                    })
-                    ->first();
+                    });
+
+        // Useful for inputs where there is a related instance number.
+        if (filled($instnace)) {
+            $query->where('group_instance_number', $instnace);
+        }
+
+        return $query->first();
+
     }
 
     public function getFormInputValueForField(string $field_name): ?string
@@ -477,7 +499,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
                 foreach ($form_fields as $form_field) {
                     $form_input = $form_inputs->where('form_field_id', $form_field->id)->first();
                     $form_field_slug = $form_field->slug;
-                    $form_field_value = $form_input->value;
+                    $form_field_value = $form_input->getValue();
 
                     $field_group_data[$form_field_slug] = $form_field_value;
                 }

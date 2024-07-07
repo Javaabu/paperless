@@ -48,15 +48,6 @@ abstract class ApplicationTypeService implements IsAnApplicationTypeService
         return collect(self::$serviceMapping[static::class]);
     }
 
-
-    public function doBeforeSubmitting(Application $application): void
-    {
-    }
-
-    public function doAfterSubmitting(Application $application): void
-    {
-    }
-
     public function associateDocuments(Application $application, HasMedia $generated_model, array $document_types = []): void
     {
         $documents = $application->getMedia('documents');

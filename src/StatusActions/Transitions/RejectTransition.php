@@ -3,8 +3,8 @@
 namespace Javaabu\Paperless\StatusActions\Transitions;
 
 use Spatie\ModelStates\Transition;
-use Javaabu\Paperless\StatusActions\Statuses\Rejected;
 use Javaabu\Paperless\Events\UpdatedApplicationStatus;
+use Javaabu\Paperless\StatusActions\Statuses\Rejected;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Events\UpdatingApplicationStatus;
 use Javaabu\Paperless\StatusActions\Statuses\PendingVerification;

@@ -45,12 +45,15 @@ class ApplicationService
             $status_enum::Draft->getRemarks()
         );
 
+        $application->updateFormInputFiles($request->allFiles());
+
         return $application;
     }
 
     public function update($request, $application)
     {
         $application->updateFormInputs($request->validated());
+        $application->updateFormInputFiles($request->allFiles());
 
         return $application;
     }

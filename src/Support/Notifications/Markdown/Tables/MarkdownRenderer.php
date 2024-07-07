@@ -24,16 +24,18 @@ class MarkdownRenderer
         if ($headers) {
             $this->header = $headers;
         } elseif ($rows) {
-            foreach ($rows[0] as $key => $value)
+            foreach ($rows[0] as $key => $value) {
                 $this->header[$key] = $key;
+            }
         }
 
         foreach ($this->header as $key => $label) {
             $this->len[$key] = strlen($label);
         }
 
-        if (is_array($alignment))
+        if (is_array($alignment)) {
             $this->setAlgin($alignment);
+        }
 
         $this->addData($rows);
     }
@@ -69,6 +71,7 @@ class MarkdownRenderer
         }
 
         $this->data = $this->data + $content;
+
         return $this;
     }
 
@@ -80,11 +83,13 @@ class MarkdownRenderer
     private function renderDelimiter(): string
     {
         $res = '|';
-        foreach ($this->len as $key => $l)
+        foreach ($this->len as $key => $l) {
             $res .= (isset($this->align[$key]) && ($this->align[$key] == 'C' || $this->align[$key] == 'L') ? ':' : ' ')
                 . str_repeat('-', $l)
                 . (isset($this->align[$key]) && ($this->align[$key] == 'C' || $this->align[$key] == 'R') ? ':' : ' ')
                 . '|';
+        }
+
         return $res . "\r\n";
     }
 
@@ -116,8 +121,9 @@ class MarkdownRenderer
 
         $res = $this->renderRow($this->header)
             . $this->renderDelimiter();
-        foreach ($this->data as $row)
+        foreach ($this->data as $row) {
             $res .= $this->renderRow($row);
+        }
 
         return $res;
     }

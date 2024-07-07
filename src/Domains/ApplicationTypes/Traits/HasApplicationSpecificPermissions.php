@@ -9,10 +9,19 @@ trait HasApplicationSpecificPermissions
         $application_type_permissions = [];
         $application_types = config('paperless.application_types');
         foreach ($application_types as $application_type) {
-            $name = str((new $application_type())->getName() . ' application type')->lower();
-            $slug = (new $application_type())->getSlug() . '_application_type';
+            $application_type_instance = new $application_type();
+
+            $name = str($application_type_instance->getName() . ' application type')->lower();
+            $slug = $application_type_instance->getSlug() . '_application_type';
+
+            $permission_list = self::getPermissionList();
+            if (method_exists($application_type_instance, 'extraPermissions')) {
+                $permission_list = array_merge($permission_list, $application_type_instance->extraPermissions());
+            }
+
             $permissions = [];
-            foreach (self::getPermissionList() as $value => $label) {
+
+            foreach ($permission_list as $value => $label) {
                 $updated_value = str($value)->replace('application_type', $slug)->__toString();
                 $updated_label = str($label)->replace('application type', $name)->__toString();
                 $permissions[$updated_value] = $updated_label;
