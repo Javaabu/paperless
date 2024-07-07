@@ -66,14 +66,14 @@ class DocumentsController extends Controller
 
             // Return the response using the temporary file
             return response()->file($tempFile, [
-                'Content-Type' => $media->mime_type,
+                'Content-Type'        => $media->mime_type,
                 'Content-Disposition' => 'inline; filename="' . $media->file_name . '"',
             ]);
         }
 
         // If the media is not on an 's3' driver, return the file directly
         return response()->file($media->getPath(), [
-            'Content-Type' => $media->mime_type,
+            'Content-Type'        => $media->mime_type,
             'Content-Disposition' => 'inline; filename="' . $media->file_name . '"',
         ]);
     }
