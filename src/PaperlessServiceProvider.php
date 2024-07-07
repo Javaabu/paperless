@@ -41,8 +41,6 @@ class PaperlessServiceProvider extends ServiceProvider
 
         $this->app->register(EventServiceProvider::class);
 
-        $this->ensureStorageDiskForUploadsInitialized();
-
         Relation::enforceMorphMap([
             'application'      => config('paperless.models.application'),
             'application_type' => config('paperless.models.application_type'),
@@ -210,21 +208,5 @@ class PaperlessServiceProvider extends ServiceProvider
         }
 
         return $policies;
-    }
-
-    public function ensureStorageDiskForUploadsInitialized(): void
-    {
-        $paperless_uploads_disk = config('paperless.storage_disk');
-
-        // check if the app config has a disk called 'paperless_uploads' configured
-        if (! config("filesystems.disks.{$paperless_uploads_disk}")) {
-            // Log::warning("javaabu/paperless::The disk configuration for `{$paperless_uploads_disk}` is not set in the `filesystem` config. Adding it now. (Suppress this warning by `creating` the disk configuration in the `filesystems` config)");
-
-            // if not, add the disk configuration to the app config
-            $this->app['config']->set("filesystems.disks.{$paperless_uploads_disk}", [
-                'driver' => 'local',
-                'root'   => storage_path('paperless_uploads'),
-            ]);
-        }
     }
 }
