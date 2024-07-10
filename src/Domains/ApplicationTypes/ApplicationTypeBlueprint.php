@@ -2,6 +2,7 @@
 
 namespace Javaabu\Paperless\Domains\ApplicationTypes;
 
+use Illuminate\Database\Eloquent\Model;
 use Javaabu\Paperless\Domains\Applications\Application;
 use Javaabu\Paperless\Notifications\Traits\SendsApplicationNotifications;
 use Javaabu\Paperless\Domains\ApplicationTypes\Traits\SeedsApplicationTypes;
@@ -91,8 +92,12 @@ abstract class ApplicationTypeBlueprint implements IsAnApplicationType
         return true;
     }
 
-    public function canStart(): bool
+    public function canStart($entity): bool
     {
-        return true;
+        if ($entity instanceof Model) {
+            $entity = $entity->getMorphClass();
+        }
+
+        return in_array($entity, $this->getEntityTypes());
     }
 }
