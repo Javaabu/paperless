@@ -90,4 +90,9 @@ abstract class ApplicationTypeBlueprint implements IsAnApplicationType
     {
         return true;
     }
+
+    public function canStart(): bool
+    {
+        return true;
+    }
 }
