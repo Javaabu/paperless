@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Javaabu\Helpers\Exceptions\AppException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -50,9 +51,30 @@ class DocumentsController extends Controller
     {
         $this->authorize('view', $media);
 
+        // Check if the driver of the disk is 's3'
+        $diskDriver = config("filesystems.disks.{$media->disk}.driver");
+        if ($diskDriver === 's3') {
+            // Generate a temporary signed URL valid for 5 minutes
+            $temporaryUrl = Storage::disk($media->disk)->temporaryUrl($media->getPath(), now()->addMinutes(5));
+
+            // Get the file content from the temporary URL
+            $fileContent = file_get_contents($temporaryUrl);
+
+            // Create a temporary file and write the content to it
+            $tempFile = tempnam(sys_get_temp_dir(), 'tempfile');
+            file_put_contents($tempFile, $fileContent);
+
+            // Return the response using the temporary file
+            return response()->file($tempFile, [
+                'Content-Type'        => $media->mime_type,
+                'Content-Disposition' => 'inline; filename="' . $media->file_name . '"',
+            ]);
+        }
+
+        // If the media is not on an 's3' driver, return the file directly
         return response()->file($media->getPath(), [
             'Content-Type'        => $media->mime_type,
-            'Content-Disposition' => 'inline; filename="'.$media->file_name.'"',
+            'Content-Disposition' => 'inline; filename="' . $media->file_name . '"',
         ]);
     }
 
