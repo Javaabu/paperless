@@ -72,6 +72,17 @@ class FormSection extends Model
         // Load in the relations
         $this->loadMissing('formFields', 'fieldGroups');
 
+        if (data_get($this->meta, 'view') !== null) {
+            return view($this->meta['view'], [
+                'application' => $application,
+                'entity'      => $entity,
+                'field_groups' => $this->fieldGroups,
+                'form_fields' => $this->formFields,
+                'form_inputs' => $form_inputs,
+                'form_section' => $this,
+            ])->render();
+        }
+
         // Get all the FormFields that belong to this FormSection, but filter out anything that belongs to a FieldGroup
         $form_fields = $this->formFields->whereNull('field_group_id')->sortBy('order_column');
 

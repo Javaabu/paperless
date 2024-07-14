@@ -53,11 +53,6 @@ class CreateFormFieldsAction
         SectionDefinition $section_definition,
         int | null        $section_order = null
     ): FormSection {
-        $meta = [
-            'conditional_on'    => $section_definition->getConditionalOn(),
-            'conditional_value' => $section_definition->getConditionalValue(),
-        ];
-
         return FormSection::updateOrCreate([
             'slug' => $section_definition->getSlug(),
         ], [
@@ -66,7 +61,7 @@ class CreateFormFieldsAction
             'description'         => $section_definition->getDescription(),
             'application_type_id' => $application_type->id,
             'is_admin_section'    => $section_definition->getIsAdminSection(),
-            'meta'                => $meta,
+            'meta'                => $section_definition->metaValuesForSeeding(),
         ]);
     }
 

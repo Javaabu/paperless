@@ -88,4 +88,12 @@ class SectionDefinition
     {
         return $this->is_admin_section;
     }
+
+    public function metaValuesForSeeding(): array
+    {
+        return [
+            'conditional_on' => $this->getConditionalOn(),
+            'conditional_value' => $this->getConditionalValue(),
+        ];
+    }
 }
