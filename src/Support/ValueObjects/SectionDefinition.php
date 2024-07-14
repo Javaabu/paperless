@@ -92,7 +92,7 @@ class SectionDefinition
     public function metaValuesForSeeding(): array
     {
         return [
-            'conditional_on' => $this->getConditionalOn(),
+            'conditional_on'    => $this->getConditionalOn(),
             'conditional_value' => $this->getConditionalValue(),
         ];
     }
