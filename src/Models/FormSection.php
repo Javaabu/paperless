@@ -74,11 +74,11 @@ class FormSection extends Model
 
         if (data_get($this->meta, 'view') !== null) {
             return view($this->meta['view'], [
-                'application' => $application,
-                'entity'      => $entity,
+                'application'  => $application,
+                'entity'       => $entity,
                 'field_groups' => $this->fieldGroups,
-                'form_fields' => $this->formFields,
-                'form_inputs' => $form_inputs,
+                'form_fields'  => $this->formFields,
+                'form_inputs'  => $form_inputs,
                 'form_section' => $this,
             ])->render();
         }
