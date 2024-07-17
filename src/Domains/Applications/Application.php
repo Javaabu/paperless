@@ -261,7 +261,7 @@ class Application extends Model implements HasMedia, Trackable, AdminModel, Appl
             $this
                 ->formInputs()
                 ->where('field_group_id', $field_group->id)
-                ->where('group_instance_number', '>=', count($validated_field_group_data))
+                ->where('group_instance_number', '>', count($validated_field_group_data))
                 ->delete();
         }
     }
