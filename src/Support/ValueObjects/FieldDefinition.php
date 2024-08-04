@@ -19,6 +19,7 @@ class FieldDefinition
     private bool $is_required = false;
     private string | null $additional_validation_rules = '';
     private string | null $options = '';
+    private string | null $prefix = null;
 
     public function __construct(
         private readonly ?string $slug,
@@ -117,5 +118,17 @@ class FieldDefinition
     public function getIsRequired(): string
     {
         return $this->is_required;
+    }
+
+    public function prefix(string $prefix): static
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+
+    public function getPrefix(): ?string
+    {
+        return $this->prefix;
     }
 }

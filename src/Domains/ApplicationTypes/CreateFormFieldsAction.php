@@ -101,6 +101,7 @@ class CreateFormFieldsAction
             'helper_target_column' => $field_definition->getHelperTargetColumn(),
             'conditional_on'       => $field_definition->getConditionalOn(),
             'conditional_value'    => $field_definition->getConditionalValue(),
+            'prefix'               => $field_definition->getPrefix(),
         ];
 
         FormField::updateOrCreate([

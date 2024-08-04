@@ -13,6 +13,7 @@
         $class = ' linked-hidden-input';
     }
 
+dump($getPrefix());
 @endphp
 
 <x-forms::text
@@ -28,4 +29,10 @@
     data-api-url="{{ filled($getApiUrl()) ? (route($getApiUrl()) . '/:id') : null }}"
     data-target-column="{{ $getApiTargetColumn() }}"
     class="{{ $getIsHelperField() ? ' linked-hidden-input' : null }}"
-/>
+>
+    @if(filled($getPrefix()))
+        <x-slot:prepend>
+            <div class="input-group-text prepend">{{ $getPrefix() }}</div>
+        </x-slot:prepend>
+    @endif
+</x-forms::text>

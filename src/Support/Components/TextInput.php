@@ -15,7 +15,7 @@ class TextInput extends Field implements Htmlable
 
     protected string $view = 'paperless::field-components.text-input';
 
-    protected string|null $child = null;
+    protected string | null $child = null;
 
     protected bool $helper_field = false;
 
@@ -23,9 +23,12 @@ class TextInput extends Field implements Htmlable
 
     protected string | null $api_target_column = null;
 
+    protected string | null $prefix = null;
+
     public function __construct(
         string $name
-    ) {
+    )
+    {
         $this->name = str($name)->slug('_')->__toString();
     }
 
@@ -80,5 +83,17 @@ class TextInput extends Field implements Htmlable
     public function getApiTargetColumn()
     {
         return $this->api_target_column;
+    }
+
+    public function prefix(null | string $prefix): self
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+
+    public function getPrefix(): ?string
+    {
+        return $this->prefix;
     }
 }

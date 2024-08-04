@@ -23,6 +23,7 @@ class TextInputBuilder extends ComponentBuilder implements IsComponentBuilder
                             return null;
                         })
                         ->repeatingInstance($instance)
+                        ->prefix($this->form_field->meta['prefix'] ?? null)
                         ->label($this->form_field->name)
                         ->dhivehi($this->form_field->language->isDhivehi())
                         ->markAsRequired($this->form_field->is_required)
@@ -34,6 +35,6 @@ class TextInputBuilder extends ComponentBuilder implements IsComponentBuilder
     {
         $is_required = $this->form_field->is_required ? 'required' : 'nullable';
 
-        return  [$is_required, 'string', 'max:255'];
+        return [$is_required, 'string', 'max:255'];
     }
 }

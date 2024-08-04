@@ -8,16 +8,12 @@
     }
 @endphp
 
-<x-paperless::input-group
-    for="{{ $id }}"
+<x-forms::date
+    :id="$id"
+    :name="$name"
     :label="$getLabel()"
     :required="$isMarkedAsRequired()"
->
-    <x-paperless::date-picker
-        :id="$id"
-        :name="$name"
-        :required="$isMarkedAsRequired()"
-        :value="$getState()"
-        :placeholder="$getPlaceholder()"
-    />
-</x-paperless::input-group>
+    :value="$getState()"
+    :placeholder="$getPlaceholder()"
+    inline
+/>
