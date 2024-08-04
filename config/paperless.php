@@ -33,7 +33,7 @@ return [
      * The disk to use for storing the uploaded files. The disk should be ideally a disk that
      * is not publicly accessible over the default Laravel public storage route.
      */
-    'storage_disk'                => 'paperless_uploads',
+    'storage_disk'                => env('PAPERLESS_STORAGE_DISK', 'paperless_uploads'),
 
     /*
      * IMPORTANT:
