@@ -183,6 +183,6 @@ abstract class ComponentBuilder
             }
         }
 
-        throw new InvalidOperationException("Field type not found: {$builder}");
+        throw new InvalidOperationException("Field type builder not found: {$builder}");
     }
 }

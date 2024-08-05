@@ -7,27 +7,26 @@ use Javaabu\Paperless\Support\ValueObjects\Traits\HasChild;
 use Javaabu\Paperless\Support\Components\Traits\HasInputType;
 use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
 use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
+use Javaabu\Paperless\Support\Components\Traits\HasChildComponents;
 use Javaabu\Paperless\Support\Components\Traits\HasPrependAndAppend;
 use Javaabu\Paperless\Support\ValueObjects\Traits\HasApiHelperFields;
 use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 
-class TextInput extends Field implements Htmlable
+class EmailInput extends Field implements Htmlable
 {
     use CanBeRepeated;
     use HasInputType;
     use HasPlaceholder;
     use HasPrependAndAppend;
     use HasConditionalDisplay;
-    use HasChild;
     use HasApiHelperFields;
+    use HasChild;
 
-    protected string $view = 'paperless::field-components.text-input';
-
+    protected string $view = 'paperless::field-components.email-input';
 
     public function __construct(
         string $name
-    )
-    {
+    ) {
         $this->name = str($name)->slug('_')->__toString();
     }
 
@@ -35,4 +34,5 @@ class TextInput extends Field implements Htmlable
     {
         return new self($name);
     }
+
 }

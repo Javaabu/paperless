@@ -9,7 +9,7 @@ use Javaabu\Paperless\Support\Components\RepeatingGroup;
 
 class TextareaBuilder extends ComponentBuilder implements IsComponentBuilder
 {
-    public static string $value = 'textarea';
+    public static string $value = 'textarea_input';
 
     public function render(?string $input = null, int | null $instance = null)
     {

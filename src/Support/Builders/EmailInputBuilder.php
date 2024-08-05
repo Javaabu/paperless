@@ -3,17 +3,17 @@
 namespace Javaabu\Paperless\Support\Builders;
 
 use Javaabu\Paperless\Interfaces\Applicant;
-use Javaabu\Paperless\Support\Components\TextInput;
+use Javaabu\Paperless\Support\Components\EmailInput;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
 use Javaabu\Paperless\Support\Components\RepeatingGroup;
 
 class EmailInputBuilder extends ComponentBuilder implements IsComponentBuilder
 {
-    public static string $value = 'text_input';
+    public static string $value = 'email_input';
 
-    public function render(?string $input = null, int|null $instance = null)
+    public function render(?string $input = null, int | null $instance = null)
     {
-        return TextInput::make($this->form_field->slug)
+        return EmailInput::make($this->form_field->slug)
                         ->repeatingGroup(function () {
                             if ($this->form_field->field_group_id) {
                                 return RepeatingGroup::make($this->form_field->fieldGroup->name)
@@ -22,12 +22,16 @@ class EmailInputBuilder extends ComponentBuilder implements IsComponentBuilder
 
                             return null;
                         })
+                        ->conditionalOn(
+                            $this->form_field->meta['conditional_on'],
+                            $this->form_field->meta['conditional_value'],
+                            checkbox: $this->form_field->meta['conditional_checkbox']
+                        )
                         ->repeatingInstance($instance)
                         ->label($this->form_field->name)
                         ->dhivehi($this->form_field->language->isDhivehi())
                         ->markAsRequired($this->form_field->is_required)
                         ->state($input)
-                        ->type('email')
                         ->toHtml();
     }
 

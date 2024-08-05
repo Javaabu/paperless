@@ -8,7 +8,8 @@ trait HasApiHelperFields
     private string | null $helper_for = '';
     private string | null $api_url = '';
     private string | null $helper_target_column = '';
-
+    private bool $helper_field = false;
+    private string | null $api_target_column = null;
 
     public function withHiddenInputHelpers(): self
     {
@@ -55,5 +56,46 @@ trait HasApiHelperFields
     public function getHelperTargetColumn(): ?string
     {
         return $this->helper_target_column;
+    }
+
+    public function getChildSelector()
+    {
+        return $this->child;
+    }
+
+    public function isHelperField(): static
+    {
+        $this->helper_field = true;
+
+        return $this;
+    }
+
+    public function apiUrl(string $api_url): static
+    {
+        $this->api_url = $api_url;
+
+        return $this;
+    }
+
+    public function getApiUrl(): ?string
+    {
+        return $this->api_url;
+    }
+
+    public function getIsHelperField(): bool
+    {
+        return $this->helper_field;
+    }
+
+    public function apiTargetColumn(string $target): static
+    {
+        $this->api_target_column = $target;
+
+        return $this;
+    }
+
+    public function getApiTargetColumn(): ?string
+    {
+        return $this->api_target_column;
     }
 }
