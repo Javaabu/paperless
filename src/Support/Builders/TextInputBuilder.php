@@ -23,6 +23,11 @@ class TextInputBuilder extends ComponentBuilder implements IsComponentBuilder
                             return null;
                         })
                         ->repeatingInstance($instance)
+                        ->conditionalOn(
+                            $this->form_field->meta['conditional_on'],
+                            $this->form_field->meta['conditional_value'],
+                            checkbox: $this->form_field->meta['conditional_checkbox']
+                        )
                         ->prefix($this->form_field->meta['prefix'] ?? null)
                         ->label($this->form_field->name)
                         ->dhivehi($this->form_field->language->isDhivehi())

@@ -9,11 +9,14 @@ trait HasConditionalDisplay
 
     private bool $conditional_hidden = false;
 
-    public function conditionalOn(string $field, string | int $value, bool $hidden = false): self
+    private bool $conditional_checkbox = false;
+
+    public function conditionalOn(string $field, string | int $value, bool $hidden = false, bool $checkbox = false): self
     {
         $this->conditional_on = $field;
         $this->conditional_value = $value;
         $this->conditional_hidden = $hidden;
+        $this->conditional_checkbox = $checkbox;
 
         return $this;
     }
@@ -46,5 +49,10 @@ trait HasConditionalDisplay
     public function isReversedConditional(): bool
     {
         return ! filled($this->conditional_value);
+    }
+
+    public function isConditionalCheckbox(): bool
+    {
+        return $this->conditional_checkbox;
     }
 }

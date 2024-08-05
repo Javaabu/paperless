@@ -5,11 +5,13 @@ namespace Javaabu\Paperless\Support\Components;
 use Illuminate\Contracts\Support\Htmlable;
 use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
 use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
+use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 
 class DatePicker extends Field implements Htmlable
 {
     use CanBeRepeated;
     use HasPlaceholder;
+    use HasConditionalDisplay;
 
     protected string $view = 'paperless::field-components.date-picker';
 

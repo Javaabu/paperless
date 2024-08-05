@@ -23,6 +23,11 @@ class DatePickerBuilder extends ComponentBuilder implements IsComponentBuilder
 
                              return null;
                          })
+            ->conditionalOn(
+                $this->form_field->meta['conditional_on'],
+                $this->form_field->meta['conditional_value'],
+                checkbox: $this->form_field->meta['conditional_checkbox']
+            )
                          ->markAsRequired($this->form_field->is_required)
                          ->state($input)
                          ->toHtml();

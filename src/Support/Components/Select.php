@@ -7,6 +7,7 @@ use Javaabu\Paperless\Support\Components\Traits\HasOptions;
 use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
 use Javaabu\Paperless\Support\Components\Traits\CanMultiSelect;
 use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
+use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 
 class Select extends Field implements Htmlable
 {
@@ -14,6 +15,7 @@ class Select extends Field implements Htmlable
     use CanMultiSelect;
     use HasOptions;
     use HasPlaceholder;
+    use HasConditionalDisplay;
 
     protected string $view = 'paperless::field-components.select';
     protected string|null $child = null;

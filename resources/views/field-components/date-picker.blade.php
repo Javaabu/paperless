@@ -7,7 +7,13 @@
         $name = "{$getRepeatingGroupId()}[{$repeating_instance}][$name]";
     }
 @endphp
-
+<x-paperless::conditional-wrapper
+    :is-conditional="$isConditional()"
+    :is-checkbox="$isConditionalCheckbox()"
+    enable-elem="#{{ $getConditionalOn() }}"
+    :value="$getConditionalValue()"
+    :hide-fields="$isReversedConditional()"
+>
 <x-forms::date
     :id="$id"
     :name="$name"
@@ -17,3 +23,4 @@
     :placeholder="$getPlaceholder()"
     inline
 />
+</x-paperless::conditional-wrapper>

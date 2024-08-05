@@ -6,12 +6,16 @@ use Illuminate\Contracts\Support\Htmlable;
 use Javaabu\Paperless\Support\Components\Traits\HasInputType;
 use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
 use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
+use Javaabu\Paperless\Support\Components\Traits\HasPrependAndAppend;
+use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 
 class TextInput extends Field implements Htmlable
 {
     use CanBeRepeated;
     use HasInputType;
     use HasPlaceholder;
+    use HasPrependAndAppend;
+    use HasConditionalDisplay;
 
     protected string $view = 'paperless::field-components.text-input';
 
@@ -22,8 +26,6 @@ class TextInput extends Field implements Htmlable
     protected string | null $api_url = null;
 
     protected string | null $api_target_column = null;
-
-    protected string | null $prefix = null;
 
     public function __construct(
         string $name
@@ -83,17 +85,5 @@ class TextInput extends Field implements Htmlable
     public function getApiTargetColumn()
     {
         return $this->api_target_column;
-    }
-
-    public function prefix(null | string $prefix): self
-    {
-        $this->prefix = $prefix;
-
-        return $this;
-    }
-
-    public function getPrefix(): ?string
-    {
-        return $this->prefix;
     }
 }

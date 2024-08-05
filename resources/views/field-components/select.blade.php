@@ -17,7 +17,13 @@
     }
 
 @endphp
-
+<x-paperless::conditional-wrapper
+    :is-conditional="$isConditional()"
+    :is-checkbox="$isConditionalCheckbox()"
+    enable-elem="#{{ $getConditionalOn() }}"
+    :value="$getConditionalValue()"
+    :hide-fields="$isReversedConditional()"
+>
 <x-forms::select2
     :label="$getLabel()"
     :name="$name"
@@ -31,3 +37,4 @@
     inline
     class="{{ $class }}"
 />
+</x-paperless::conditional-wrapper>
