@@ -7,7 +7,6 @@ use Javaabu\Paperless\Support\ValueObjects\Traits\HasChild;
 use Javaabu\Paperless\Support\Components\Traits\HasInputType;
 use Javaabu\Paperless\Support\Components\Traits\CanBeRepeated;
 use Javaabu\Paperless\Support\Components\Traits\HasPlaceholder;
-use Javaabu\Paperless\Support\Components\Traits\HasChildComponents;
 use Javaabu\Paperless\Support\Components\Traits\HasPrependAndAppend;
 use Javaabu\Paperless\Support\ValueObjects\Traits\HasApiHelperFields;
 use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
@@ -15,12 +14,12 @@ use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 class EmailInput extends Field implements Htmlable
 {
     use CanBeRepeated;
+    use HasApiHelperFields;
+    use HasChild;
+    use HasConditionalDisplay;
     use HasInputType;
     use HasPlaceholder;
     use HasPrependAndAppend;
-    use HasConditionalDisplay;
-    use HasApiHelperFields;
-    use HasChild;
 
     protected string $view = 'paperless::field-components.email-input';
 

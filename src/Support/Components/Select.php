@@ -13,9 +13,9 @@ class Select extends Field implements Htmlable
 {
     use CanBeRepeated;
     use CanMultiSelect;
+    use HasConditionalDisplay;
     use HasOptions;
     use HasPlaceholder;
-    use HasConditionalDisplay;
 
     protected string $view = 'paperless::field-components.select';
     protected string|null $child = null;
