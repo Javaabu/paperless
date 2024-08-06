@@ -42,8 +42,10 @@ class NumberInputBuilder extends ComponentBuilder implements IsComponentBuilder
 
     public function getDefaultValidationRules(Applicant $applicant, ?array $request_data = [], ?int $iteration = null): array
     {
+        $is_required = $this->form_field->is_required ? 'required' : 'nullable';
+
         return [
-            'required',
+            $is_required,
             'integer',
             'min:1',
             'max:999999999',

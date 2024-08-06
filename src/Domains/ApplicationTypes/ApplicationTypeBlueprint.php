@@ -29,6 +29,13 @@ abstract class ApplicationTypeBlueprint implements IsAnApplicationType
         return str($this->getName())->slug('_');
     }
 
+    public function hasAnyFormFields(): bool
+    {
+        $form_field_definition = $this->getRequiredFormFields();
+
+        return count($form_field_definition) > 0;
+    }
+
     public function getRequiredDocumentTypes(): array
     {
         return [];
