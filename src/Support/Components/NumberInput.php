@@ -12,10 +12,10 @@ use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 class NumberInput extends Field implements Htmlable
 {
     use CanBeRepeated;
+    use HasConditionalDisplay;
     use HasInputType;
     use HasPlaceholder;
     use HasPrependAndAppend;
-    use HasConditionalDisplay;
 
     protected string $view = 'paperless::field-components.number-input';
 

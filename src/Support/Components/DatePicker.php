@@ -10,8 +10,8 @@ use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 class DatePicker extends Field implements Htmlable
 {
     use CanBeRepeated;
-    use HasPlaceholder;
     use HasConditionalDisplay;
+    use HasPlaceholder;
 
     protected string $view = 'paperless::field-components.date-picker';
 

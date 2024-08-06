@@ -3,8 +3,8 @@
 namespace Javaabu\Paperless\Support\Builders;
 
 use Javaabu\Paperless\Interfaces\Applicant;
-use Javaabu\Paperless\Support\Components\EmailInput;
 use Javaabu\Paperless\Interfaces\IsComponentBuilder;
+use Javaabu\Paperless\Support\Components\EmailInput;
 use Javaabu\Paperless\Support\Components\RepeatingGroup;
 
 class EmailInputBuilder extends ComponentBuilder implements IsComponentBuilder

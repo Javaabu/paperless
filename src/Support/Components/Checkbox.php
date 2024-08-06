@@ -10,8 +10,7 @@ class Checkbox extends Field implements Htmlable
 
     public function __construct(
         string $name
-    )
-    {
+    ) {
         $this->name = str($name)->slug('_')->__toString();
     }
 

@@ -14,20 +14,19 @@ use Javaabu\Paperless\Support\ValueObjects\Traits\HasConditionalDisplay;
 class TextInput extends Field implements Htmlable
 {
     use CanBeRepeated;
+    use HasApiHelperFields;
+    use HasChild;
+    use HasConditionalDisplay;
     use HasInputType;
     use HasPlaceholder;
     use HasPrependAndAppend;
-    use HasConditionalDisplay;
-    use HasChild;
-    use HasApiHelperFields;
 
     protected string $view = 'paperless::field-components.text-input';
 
 
     public function __construct(
         string $name
-    )
-    {
+    ) {
         $this->name = str($name)->slug('_')->__toString();
     }
 
