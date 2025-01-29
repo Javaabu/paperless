@@ -7,8 +7,8 @@
     class="mt-2"
     :label="$getLabel()"
     :name="$name"
-    :value="$getState()"
+    :value="$getState() ?? 1"
     :required="$isMarkedAsRequired()"
-    :default="$getState()"
+    :default="$getState() ?? false"
     inline
 />
