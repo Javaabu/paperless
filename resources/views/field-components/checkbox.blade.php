@@ -9,5 +9,6 @@
     :name="$name"
     :value="$getState()"
     :required="$isMarkedAsRequired()"
+    :default="$getState()"
     inline
 />
