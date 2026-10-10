@@ -9,7 +9,7 @@ Application workflow handling on steroids
 
 ## Documentation
 
-You'll find the documentation on [https://docs.javaabu.com/docs/paperless](https://docs.javaabu.com/docs/paperless).
+You'll find the documentation on [https://docs.javaabu.com/paperless](https://docs.javaabu.com/paperless).
 
 Find yourself stuck using the package? Found a bug? Do you have general questions or suggestions for improving this package? Feel free to create an [issue](../../issues) on GitHub, we'll try to address it as soon as possible.
 
